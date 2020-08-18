@@ -13,7 +13,7 @@ create table if not exists assignment(
 	actual_points integer,
 	total_points integer not null,
 	due_date varchar(50) not null,
-	class_id integer references class(id) on delete cascade
+	pair_id integer references class_student(id) on delete cascade
 );
 
 create table if not exists teacher(
@@ -38,6 +38,7 @@ create table if not exists student(
 );
 
 create table if not exists class_student(
+	id serial primary key,
 	class_id integer references class(id) on delete cascade,
 	student_id integer references student(id) on delete cascade
 );
@@ -48,3 +49,4 @@ drop table assignment;
 drop table teacher;
 drop table class;
 drop table student;
+drop table class_student;
