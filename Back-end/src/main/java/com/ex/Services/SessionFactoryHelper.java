@@ -27,7 +27,8 @@ public class SessionFactoryHelper {
             throw new ExceptionInInitializerError(ex);
         }
 
-        //StandardServiceRegistryBuilder.destroy((org.hibernate.service.ServiceRegistry) registry);
+
+    //    StandardServiceRegistryBuilder.destroy((org.hibernate.service.ServiceRegistry) registry);
 
     }
 
