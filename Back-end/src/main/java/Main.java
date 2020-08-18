@@ -1,8 +1,5 @@
 import com.ex.Services.SessionFactoryHelper;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
 import java.util.List;
 
@@ -15,7 +12,10 @@ public class Main {
         Transaction tx = null;
         try{
             tx=session.beginTransaction();
+            SQLQuery query = session.createSQLQuery("select first_name from admin where id = 1");
+            //Query query = session.createQuery("from AdminEntity");
             System.out.println("we are in the session");
+            System.out.println(query.list());
 //            Query query = session.createQuery(); //You will get Weayher object
             tx.commit();
         }catch(HibernateException e){
@@ -24,7 +24,8 @@ public class Main {
         }finally{
             session.close();
         }
-    }}
+    }
+}
 
 
 
