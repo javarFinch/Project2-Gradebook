@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Class } from '../model/class';
 
 @Component({
   selector: 'app-student',
@@ -7,18 +8,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentComponent implements OnInit {
 
-  classList: string[];
+  classList: Class[];
+  activeClass:string;
 
   
   constructor() {
     this.classList = [
-      'Math 101',
-      'Bio 101',
-      'Gym',
-      'English 101'
+      {name:'Math 101',
+      active:false
+      },
+      {name:'Bio 101',
+      active:false
+      },
+      {name:'Gym',
+      active:false
+      },
+      {name:'English 101',
+      active:false
+      }
     ];
   
-   }
+    this.activeClass='Class Details go here';
+  }
+
+  setActiveClass(state){
+    this.activeClass=state.name;
+    state.active=true;
+    for(let o of this.classList){
+      if(o!==state){
+        o.active=false
+      }
+    }
+  }
 
   ngOnInit(): void {
   }
