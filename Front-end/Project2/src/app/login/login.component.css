@@ -5,4 +5,8 @@
     justify-content: center;
     align-items: center;
   }
+
+  input[name="username"] {
+    margin: 10px;
+  }
   

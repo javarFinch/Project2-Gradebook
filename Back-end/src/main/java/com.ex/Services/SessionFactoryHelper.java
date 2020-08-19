@@ -10,7 +10,6 @@ import java.util.List;
 
 public class SessionFactoryHelper {
 
-
     static SessionFactory factory;
     static ServiceRegistry registry;
 
@@ -27,11 +26,9 @@ public class SessionFactoryHelper {
             throw new ExceptionInInitializerError(ex);
         }
 
-
     //    StandardServiceRegistryBuilder.destroy((org.hibernate.service.ServiceRegistry) registry);
 
     }
-
 
     public static SessionFactory getSessionFactory() {
         return factory;

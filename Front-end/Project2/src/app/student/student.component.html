@@ -14,15 +14,16 @@
 </nav>
 
 <div class="row">
-    <div class="col-2 offset-1" style="background-color:rgba(0, 0, 255, 0.267)">
-        <div class="classList" *ngFor = "let class of classList">
-            <p>{{ class }}<p>
+    <div class="col-3" style="background-color:rgba(0, 255, 64, 0.267)">
+        <div  (click)="setActiveClass(class)" class="classList offset-1" *ngFor = "let class of classList">
+            <p >{{ class.name }},{{class.active}}<p>
         </div>
     </div>
     <p></p>
     
     <div class ="col-8" style="background-color: rgba(140, 0, 255, 0.281)">
-        <p>Put Class details and assigment list here<p>
+        <!-- <app-login></app-login> -->
+        <p >{{activeClass}}<p>
     </div>
     
 </div>
