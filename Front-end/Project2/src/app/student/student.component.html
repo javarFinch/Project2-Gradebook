@@ -1,19 +1,27 @@
 
-<nav class="navbar">
-    <div class="navbar-right">
-        <p> Welcome Student <p>
+<nav ngbNav #nav="ngbNav" class="navbar-light navbar-toggler">
+    
+    <div class="ml-auto">
+        <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
+          <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>Username</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>Settings</button>
+            <button ngbDropdownItem>Logout</button>
+            
+          </div>
+        </div>
     </div>
 </nav>
 
 <div class="row">
-    <div class="col-2 offset-1" style="background-color:blue">
+    <div class="col-2 offset-1" style="background-color:rgba(0, 0, 255, 0.267)">
         <div class="classList" *ngFor = "let class of classList">
             <p>{{ class }}<p>
         </div>
     </div>
     <p></p>
     
-    <div class ="col-9" style="background-color: rgb(140, 0, 255)">
+    <div class ="col-8" style="background-color: rgba(140, 0, 255, 0.281)">
         <p>Put Class details and assigment list here<p>
     </div>
     

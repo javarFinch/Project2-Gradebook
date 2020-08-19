@@ -45,4 +45,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-app.module.ts
+node_modules
+.idea
