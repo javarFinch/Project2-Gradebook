@@ -1,9 +1,4 @@
-.welcomeBanner {
-    width: 500px;
-    height: 100px;
-    border: 1px solid #000;
-}
+nav{
 
-.navbar{
-    background-color: lightgreen;
+    background-color: rgb(211, 238, 243);
 }
