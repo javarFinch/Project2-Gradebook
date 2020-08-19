@@ -1,5 +1,7 @@
 package com.ex.Models;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
