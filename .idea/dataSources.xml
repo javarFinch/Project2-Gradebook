@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+<<<<<<< HEAD
+    <data-source source="LOCAL" name="postgres@revature-project0.chbhk7uwz5xg.us-west-2.rds.amazonaws.com" uuid="c5946925-b21e-458e-99af-7837f8ac8b86">
+=======
     <data-source source="LOCAL" name="postgres@revature-project0.chbhk7uwz5xg.us-west-2.rds.amazonaws.com" uuid="e6adec6c-2f6c-4c53-86b6-56facb030bf0">
+>>>>>>> feb5340d1067eb6821d12a7368ea6ebfe5d5d182
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
