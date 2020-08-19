@@ -1,5 +1,6 @@
 
 <nav ngbNav #nav="ngbNav" class="navbar-light navbar-toggler">
+    <img src="assets/JERC-basic.png" height="40px"/>
     
     <div class="ml-auto">
         <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
@@ -23,7 +24,8 @@
     
     <div class ="col-8" style="background-color: rgba(140, 0, 255, 0.281)">
         <!-- <app-login></app-login> -->
-        <p >{{activeClass}}<p>
+        <app-student-class-details [class]="activeClass"></app-student-class-details>
+        
     </div>
-    
+     
 </div>

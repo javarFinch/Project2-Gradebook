@@ -12,7 +12,7 @@ public class Main {
         Transaction tx = null;
         try{
             tx=session.beginTransaction();
-            SQLQuery query = session.createSQLQuery("select first_name from admin where id = 1");
+            SQLQuery query = session.createSQLQuery("select first_name from admin where id = 100");
             //Query query = session.createQuery("from AdminEntity");
             System.out.println("we are in the session");
             System.out.println(query.list());
