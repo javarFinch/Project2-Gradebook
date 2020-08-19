@@ -10,7 +10,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+<<<<<<< HEAD
       <module name="Project2" target="1.5" />
+=======
+      <module name="Project2" target="1.8" />
+>>>>>>> feb5340d1067eb6821d12a7368ea6ebfe5d5d182
     </bytecodeTargetLevel>
   </component>
 </project>
