@@ -6,19 +6,25 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { StudentComponent } from './student/student.component';
+import { ClassService } from './services/class-service.service';
+import { HttpClientModule } from '@angular/common/http';
+
+import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    StudentComponent
+    StudentComponent,
+    StudentClassDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
