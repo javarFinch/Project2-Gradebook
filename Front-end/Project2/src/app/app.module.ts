@@ -6,19 +6,23 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { StudentComponent } from './student/student.component';
+import { ClassService } from './services/class-service.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    StudentComponent
+    StudentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
