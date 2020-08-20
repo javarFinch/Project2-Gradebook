@@ -1,6 +1,9 @@
 import com.ex.Dao.Dao;
 import com.ex.Dao.DaoImpl;
+import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -14,6 +17,9 @@ public class Main {
         System.out.println(user.getPassword());
         System.out.println(user.getType());
 
+        DaoImpl d = new DaoImpl();
+
+        System.out.println(d.getClassForStudent);
         //System.out.println(dao.getClassForStudent());
         //System.out.println(dao.getAssignmentsForStudentPerClass());
     }
