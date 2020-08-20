@@ -13,11 +13,9 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <mapping resource="AdminEntity.hbm.xml" />
+        <mapping resource="UsersEntity.hbm.xml" />
         <mapping resource="AssignmentEntity.hbm.xml" />
         <mapping resource="ClazzEntity.hbm.xml" />
-        <mapping resource="StudentEntity.hbm.xml" />
-        <mapping resource="TeacherEntity.hbm.xml" />
 
 
     </session-factory>
