@@ -8,6 +8,7 @@ public class Main {
     {
         Dao dao = new DaoImpl();
         UsersEntity user = (dao.logIn(3, "password"));
+        System.out.println(user);
         System.out.println(user.getId());
         System.out.println(user.getFirstName());
         System.out.println(user.getLastName());
