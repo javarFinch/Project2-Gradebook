@@ -1,13 +1,11 @@
 package com.ex.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Table(name = "assignment", schema = "public", catalog = "postgres")
 public class AssignmentEntity {
+
     private int id;
     private String assignmentName;
     private String assignmentType;
@@ -93,15 +91,16 @@ public class AssignmentEntity {
         AssignmentEntity that = (AssignmentEntity) o;
         return id == that.id &&
                 totalPoints == that.totalPoints &&
-                Objects.equals(assignmentName, that.assignmentName) &&
-                Objects.equals(assignmentType, that.assignmentType) &&
-                Objects.equals(actualPoints, that.actualPoints) &&
-                Objects.equals(dueDate, that.dueDate) &&
-                Objects.equals(pairId, that.pairId);
+                assignmentName.equals(that.assignmentName) &&
+                assignmentType.equals(that.assignmentType) &&
+                actualPoints.equals(that.actualPoints) &&
+                dueDate.equals(that.dueDate) &&
+                pairId.equals(that.pairId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, assignmentName, assignmentType, actualPoints, totalPoints, dueDate, pairId);
     }
+
 }
