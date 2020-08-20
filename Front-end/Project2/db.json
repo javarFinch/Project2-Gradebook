@@ -1,0 +1,24 @@
+{
+    "classList": [
+        {
+            "name": "Math 101",
+            "active": false
+        },
+        {
+            "name": "Bio 101",
+            "active": false
+        },
+        {
+            "name": "Gym",
+            "active": false
+        },
+        {
+            "name": "English 101",
+            "active": false
+        },
+        {
+            "name": "Angular 101",
+            "active": false
+        }   
+    ]   
+}

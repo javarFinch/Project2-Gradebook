@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Class } from '../models/class';
+import { Class } from '../model/class';
+import { ClassService } from '../services/class-service.service';
 
 @Component({
   selector: 'app-student',
@@ -11,8 +12,10 @@ export class StudentComponent implements OnInit {
   classList: Class[];
   activeClass:Class;
 
-  
-  constructor() {
+  //newClassList: Class[] = new Class (' ', true);
+  newClassList: Class[];
+
+  constructor(private classService: ClassService) {
     this.classList = [
       {name:'Math 101',
       active:false
@@ -42,6 +45,12 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Initiating Class List');
+
+    //When the Observable is being returned, we can subscribe and listen to the changes.
+    // It will continuously change as long as there is data coming in.
+    this.classService.getClassList().subscribe((c: Class[]) => (this.newClassList = c));
+    
   }
 
 }
