@@ -9,8 +9,8 @@ import { ClassService } from '../services/class-service.service';
 })
 export class StudentComponent implements OnInit {
 
-  classList: Class[] = [];
-  activeClass:string;
+  classList: Class[];
+  activeClass:Class;
 
   //newClassList: Class[] = new Class (' ', true);
   newClassList: Class[];
@@ -31,11 +31,11 @@ export class StudentComponent implements OnInit {
       }
     ];
   
-    this.activeClass='Class Details go here';
+    this.activeClass={name:'',active:true};
   }
 
   setActiveClass(state){
-    this.activeClass=state.name;
+    this.activeClass=state;
     state.active=true;
     for(let o of this.classList){
       if(o!==state){

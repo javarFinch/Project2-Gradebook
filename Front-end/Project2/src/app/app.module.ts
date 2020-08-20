@@ -9,12 +9,14 @@ import { StudentComponent } from './student/student.component';
 import { ClassService } from './services/class-service.service';
 import { HttpClientModule } from '@angular/common/http';
 
+import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     StudentComponent,
+    StudentClassDetailsComponent
   ],
   imports: [
     BrowserModule,
