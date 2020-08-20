@@ -19,7 +19,10 @@ public class Main {
 
         DaoImpl d = new DaoImpl();
 
-        System.out.println(d.getClassForStudent);
+        ArrayList<ClazzEntity> nList = new ArrayList<>();
+        nList = d.getClassForStudent(3);
+        System.out.println("in main : " + nList.get(0).getClassName());
+
         //System.out.println(dao.getClassForStudent());
         //System.out.println(dao.getAssignmentsForStudentPerClass());
     }
