@@ -1,4 +1,11 @@
 nav{
-
-    background-color: rgb(207, 215, 216);
+    height:50px;
+    background-color: rgb(233, 221, 183);
+}
+#info{
+    position:absolute;
+    top:50px;
+    bottom: 0;
+    width:100%
+    
 }
