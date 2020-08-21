@@ -1,10 +1,8 @@
 package com.ex.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
+
 
 @Table(name = "class", schema = "public", catalog = "postgres")
 public class ClazzEntity {
