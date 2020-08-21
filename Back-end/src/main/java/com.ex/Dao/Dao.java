@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Repository
 @Transactional
@@ -22,3 +21,5 @@ public interface Dao {
     public ArrayList<AssignmentEntity> getAssignmentsForStudentPerClass(int clazzID, int studentID);
 
 }
+
+
