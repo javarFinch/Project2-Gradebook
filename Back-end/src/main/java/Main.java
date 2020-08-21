@@ -1,5 +1,4 @@
 import com.ex.Dao.Dao;
-import com.ex.Dao.DaoImpl;
 import com.ex.Models.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -18,7 +17,7 @@ public class Main {
 
     public static void main(String args[])
     {
-        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-context.xml");
+        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("WEB-INF/application-context.xml");
 
         Main main = ac.getBean("main", Main.class);
 

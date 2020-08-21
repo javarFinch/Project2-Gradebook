@@ -15,6 +15,21 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class ORMConfig {
+//  //@Value("${connection.driver_class}")
+//  private String driverClassName = "org.postgresql.Driver";
+//
+//  //@Value("${connection.url}")
+//  private String dbUrl = "jdbc:postgresql://revature-project0.chbhk7uwz5xg.us-west-2.rds.amazonaws.com:5432/postgres";
+//
+//  //@Value("${connection.username}")
+//  private String username = System.getenv("DB_USERNAME");
+//
+//  //@Value("${connection.password}")
+//  private String password = System.getenv("DB_PASSWORD");
+//
+//  //@Value("${hibernate.db.dialect}")
+//  private String dbDialect = "org.hibernate.dialect.PostgreSQL9Dialect";
+
   @Value("${connection.driver_class}")
   private String driverClassName;
 
@@ -44,7 +59,7 @@ public class ORMConfig {
   public LocalSessionFactoryBean sessionFactoryBean(DataSource ds) {
     LocalSessionFactoryBean sfBean = new LocalSessionFactoryBean();
     sfBean.setDataSource(ds);
-    sfBean.setPackagesToScan("com.ex.models");
+    sfBean.setPackagesToScan("ex.Models");
     sfBean.setHibernateProperties(getSfProps());
     return sfBean;
   }
