@@ -4,10 +4,7 @@ addons:
     - google-chrome-stable
   sources: 
     - google-chrome
-before_install: 
-  - "cd /home/travis/build/veitej/Project2-Gradebook/front-end/Project2"
-before_script: 
-  - "cd /home/travis/build/veitej/Project2-Gradebook/front-end/Project2"
+
 cache: 
   directories: 
     - ./node_modules
