@@ -18,8 +18,12 @@ cache:
 install:
   - npm install
 
+nv:
+  - TEST_DIR=front-end/Project2
+ 
+
 script:
-  - npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - cd $TEST_DIR && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
   notifications:
   email: roberte.flaherty@gmail.com
