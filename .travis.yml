@@ -14,8 +14,6 @@ env:
   - TEST_DIR=front-end/Project2
 language: node_js
 node_js: 
-  before_install: 
-    - "cd /home/travis/build/veitej/Project2-Gradebook/front-end"
 notifications: 
   ? "-email"
   : roberte.flaherty@gmail.com
