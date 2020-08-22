@@ -54,7 +54,6 @@ public class DaoImpl implements Dao {
         ArrayList<ClazzEntity> list = new ArrayList<>();
 
         Session session = sessionFactory.getCurrentSession();
-        UsersEntity user = new UsersEntity();
 
         SQLQuery query1 = session.createSQLQuery("select class_id from class_student where student_id = ?");
 
@@ -271,7 +270,7 @@ public class DaoImpl implements Dao {
         return clazz;
     }
 
-    public int overAllGrade(int pairID) {
+    public double overAllGrade(int pairID) {
         Session session = sessionFactory.getCurrentSession();
 
         SQLQuery query1 = session.createSQLQuery("select class_id from class_student where pair_id = ?");
@@ -291,34 +290,78 @@ public class DaoImpl implements Dao {
         SQLQuery query = session.createSQLQuery("select actual_points, total_points, assignment_type from assignment where pair_id = ? and actual_points is not null");
         query.setInteger(0, pairID);
 
-        List<String[]> gradeInfo = query.list();
-        Map<String, Integer[]> map;
+        List<Object[]> gradeInfo = query.list();
         int ta = 0, tt = 0;
         int qa = 0, qt = 0;
         int ha = 0, ht = 0;
         int pa = 0, pt = 0;
-        for (String[] row : gradeInfo) {
-            if (row[2].equalsIgnoreCase("Test")) {
-                ta = ta + Integer.parseInt(row[0]);
-                tt = tt + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Quiz")) {
-                qa = qa + Integer.parseInt(row[0]);
-                qt = qt + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Homework")) {
-                ha = ha + Integer.parseInt(row[0]);
-                ht = ht + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Participation")) {
-                pa = pa + Integer.parseInt(row[0]);
-                pt = pt + Integer.parseInt(row[1]);
+        boolean[] check = new boolean[4];
+        check [0] = false;
+        check [1] = false;
+        check [2] = false;
+        check [3] = false;
+
+        for (Object[] row : gradeInfo) {
+            if (row[2].toString().equalsIgnoreCase("Test")) {
+                check[0] = true;
+                ta = ta + Integer.parseInt(row[0].toString());
+                tt = tt + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Quiz")) {
+                check[1] = true;
+                qa = qa + Integer.parseInt(row[0].toString());
+                qt = qt + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Homework")) {
+                check[2] = true;
+                ha = ha + Integer.parseInt(row[0].toString());
+                ht = ht + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Participation")) {
+                check[3] = true;
+                pa = pa + Integer.parseInt(row[0].toString());
+                pt = pt + Integer.parseInt(row[1].toString());
             }
         }
-        int tGrade = ta/tt;
-        int qGrade = qa/qt;
-        int hGrade = ha/ht;
-        int pGrade = pa/pt;
+        System.out.println(ta+" "+qa+" "+ha+" "+pa);
+//        int tGrade = 100;
+//        int qGrade = 100;
+//        int hGrade = 100;
+//        int pGrade = 100;
+//        if (tt!=0) {
+//            tGrade = ta/tt;
+//        }
+//        if (qt!=0) {
+//            qGrade = qa/qt;
+//        }
+//        if (ht!=0) {
+//            hGrade = ha/ht;
+//        }
+//        if (pt!=0) {
+//            pGrade = pa/pt;
+//        }
 
-        int overAll =  (tGrade*testW + qGrade*quizW + hGrade*homeworkW + pGrade*participationW)/100;
-        return overAll;
+        double overAll = 0;
+        int weight = 0;
+        if (check[0]) {
+            overAll+=(((double)ta)/tt)*testW;
+            weight+=testW;
+        }
+        if (check[1]) {
+            System.out.println("This should fucking work");
+            System.out.println((qa*100)/qt);
+            System.out.println(((double)qa)/qt);
+            System.out.println((qa/qt)*100);
+            System.out.println(qa+" "+qt);
+            overAll+=(((double)qa)/qt)*quizW;
+            weight+=quizW;
+        }
+        if (check[2]) {
+            overAll+=(((double)ha)/ht)*homeworkW;
+            weight+=homeworkW;
+        }
+        if (check[3]) {
+            overAll+=(((double)pa)/pt)*participationW;
+            weight+=participationW;
+        }
+
+        return (overAll/weight)*100;
     }
-
 }

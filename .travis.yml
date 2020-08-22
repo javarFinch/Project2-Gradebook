@@ -1,0 +1,25 @@
+--- 
+addons: 
+  packages: 
+    - google-chrome-stable
+  sources: 
+    - google-chrome
+before_install: 
+  - "cd front-end/Project2"
+before_script: 
+  - "cd front-end/Project2"
+cache: 
+  directories: 
+    - ./node_modules
+dist: trusty
+env: 
+  - TEST_DIR=front-end/Project2
+language: node_js
+node_js: 
+  - "8"
+notifications: 
+  ? "-email"
+  : roberte.flaherty@gmail.com
+script: 
+  - "npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox"
+sudo: false

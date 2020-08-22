@@ -59,6 +59,7 @@ public class StudentController {
             map.put("QuizGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "quiz"));
             map.put("HomeworkGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "homework"));
             map.put("ParticipationGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "participation"));
+            map.put("OverAllGrade", dao.overAllGrade(dao.getPairID(classes.get(i).getId(), id)));
             arraylist1.add(map);
         }
 

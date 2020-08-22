@@ -94,7 +94,7 @@ public interface Dao {
     public ClazzEntity getClazzById(int ID);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public int overAllGrade(int pairID);
+    public double overAllGrade(int pairID);
 
 }
 
