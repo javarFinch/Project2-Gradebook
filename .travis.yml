@@ -20,7 +20,7 @@ env:
  
 
 script:
-  - cd $TEST_DIR && npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - cd front-end/Project2 && npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
   notifications:
   email: roberte.flaherty@gmail.com
