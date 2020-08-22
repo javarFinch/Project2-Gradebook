@@ -22,10 +22,9 @@ before_script:
  - cd front-end/Project2
  
  script:
- - npm install && 
+ - npm install
 
- script:
- - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+ 
   
   notifications:
   email: roberte.flaherty@gmail.com
