@@ -238,7 +238,7 @@ class LoginComponent {
         if (this.user) {
             this.errorMessage = ' ';
             if (this.user.type == 'student') {
-                this.router.navigate(['student']);
+                this.router.navigate(['student'], { state: this.user });
             }
         }
         else {
@@ -440,19 +440,22 @@ class StudentComponent {
     }
     ngOnInit() {
         console.log('Initiating Class List');
+        console.log(history.state);
+        this.user = history.state;
+        this.username = this.user.firstName + " " + this.user.lastName;
         //When the Observable is being returned, we can subscribe and listen to the changes.
         // It will continuously change as long as there is data coming in.
-        this.classService.getClassList().subscribe((c) => (this.newClassList = c));
+        //this.classService.getClassList().subscribe((c: Class[]) => (this.newClassList = c));
     }
 }
 StudentComponent.ɵfac = function StudentComponent_Factory(t) { return new (t || StudentComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_class_service_service__WEBPACK_IMPORTED_MODULE_1__["ClassService"])); };
-StudentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: StudentComponent, selectors: [["app-student"]], decls: 18, vars: 3, consts: [["ngbNav", "", 1, "navbar-light", "navbar-toggler"], ["nav", "ngbNav"], ["src", "assets/JERC-basic.png", "height", "40px"], [1, "ml-auto"], ["ngbDropdown", "", "placement", "bottom-right auto", 1, "d-inline-block"], ["id", "dropdownBasic1", "ngbDropdownToggle", "", 1, "btn", "btn-outline-none", 2, "background-color", "transparent"], ["ngbDropdownMenu", "", "aria-labelledby", "dropdownBasic1"], ["ngbDropdownItem", ""], [1, "row"], [1, "col-3", 2, "background-color", "rgba(0, 255, 64, 0.267)"], ["class", "classList offset-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "col-10"], [1, "classList", "offset-1", 3, "click"]], template: function StudentComponent_Template(rf, ctx) { if (rf & 1) {
+StudentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: StudentComponent, selectors: [["app-student"]], decls: 18, vars: 4, consts: [["ngbNav", "", 1, "navbar-light", "navbar-toggler"], ["nav", "ngbNav"], ["src", "assets/JERC-basic.png", "height", "40px"], [1, "ml-auto"], ["ngbDropdown", "", "placement", "bottom-right auto", 1, "d-inline-block"], ["id", "dropdownBasic1", "ngbDropdownToggle", "", 1, "btn", "btn-outline-none", 2, "background-color", "transparent"], ["ngbDropdownMenu", "", "aria-labelledby", "dropdownBasic1"], ["ngbDropdownItem", ""], [1, "row"], [1, "col-3", 2, "background-color", "rgba(0, 255, 64, 0.267)"], ["class", "classList offset-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "col-10"], [1, "classList", "offset-1", 3, "click"]], template: function StudentComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "nav", 0, 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "img", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "button", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "Username");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "button", 7);
@@ -475,7 +478,9 @@ StudentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.username);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.newClassList);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassMap"](ctx.activeClass);
