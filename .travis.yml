@@ -19,7 +19,7 @@ install:
   - npm install
 
 script:
-  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
   notifications:
   email: roberte.flaherty@gmail.com
