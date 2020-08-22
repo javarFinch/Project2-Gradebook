@@ -10,15 +10,12 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--  load the values in this file into the environment-->
     <context:property-placeholder location="WEB-INF/application.properties"/>
-
     <!-- enable annotation configuration -->
     <context:annotation-config/>
-
     <!-- enable component scanning for bean discovery -->
-    <context:component-scan base-package="ex"/>
-
+    <context:component-scan base-package="com.ex"/>
     <!-- enable web mvc annotations -->
     <mvc:annotation-driven/>
-    <!--  turn on transactionals-->
+    <!--  turn on transactional-->
     <tx:annotation-driven/>
 </beans>
