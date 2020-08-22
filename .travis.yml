@@ -4,3 +4,6 @@ sudo: false
 language: node_js
 node_js:
   - '8'
+script:
+  -  npm install && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  
