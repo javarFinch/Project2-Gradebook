@@ -20,3 +20,8 @@ install:
 
 script:
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  
+  notifications:
+  email: roberte.flaherty@gmail.com
+  email: erick.hernandez@revature.net
+  email: christian.torre.1@gmail.com
