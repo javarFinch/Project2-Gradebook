@@ -3,6 +3,7 @@ package com.ex.Dao;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -51,22 +52,24 @@ public class DaoImpl implements Dao {
     public ArrayList<ClazzEntity> getClassForStudent(int studentID) {
 
         ArrayList<ClazzEntity> list = new ArrayList<>();
-        ClazzEntity clazz = new ClazzEntity();
 
         Session session = sessionFactory.getCurrentSession();
-        UsersEntity user = new UsersEntity();
 
         SQLQuery query1 = session.createSQLQuery("select class_id from class_student where student_id = ?");
 
         query1.setInteger(0, studentID);
         List<Integer> classIds = query1.list();
 
-        for (int i : classIds) {
+        System.out.println(classIds.get(0));
+        System.out.println(classIds.get(1));
+
+        for (int i=0; i<classIds.size(); i++) {
             SQLQuery query2 = session.createSQLQuery("select * from class where id = ?");
-            query2.setInteger(0, i);
+            query2.setInteger(0, classIds.get(i));
 
             List<Object[]> classData = query2.list();
             for (Object [] row : classData) {
+                ClazzEntity clazz = new ClazzEntity();
                 clazz.setId(Integer.parseInt(row[0].toString()));
                 clazz.setClassName(row[1].toString());
                 clazz.setClassSubject(row[2].toString());
@@ -76,6 +79,7 @@ public class DaoImpl implements Dao {
                 clazz.setHomeworkWeight(Integer.parseInt(row[6].toString()));
                 clazz.setParticipationWeight(Integer.parseInt(row[7].toString()));
                 list.add(clazz);
+                System.out.println(clazz.getId());
             }
         }
         if (!list.isEmpty()) {
@@ -87,7 +91,6 @@ public class DaoImpl implements Dao {
     public ArrayList<AssignmentEntity> getAssignmentsForStudentPerClass(int clazzID, int studentID) {
 
         Session session = sessionFactory.getCurrentSession();
-        AssignmentEntity assignment = new AssignmentEntity();
         ArrayList<AssignmentEntity> list = new ArrayList<>();
 
         SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ? and student_id = ?");
@@ -96,14 +99,20 @@ public class DaoImpl implements Dao {
         query1.setInteger(1, studentID);
         int pairId = Integer.parseInt(query1.list().get(0).toString());
 
-        SQLQuery query2 = session.createSQLQuery("select * from assignment where pair_id = " + pairId);
+        SQLQuery query2 = session.createSQLQuery("select * from assignment where pair_id = ?");
+        query2.setInteger(0, pairId);
         List<Object[]> assignmentData = query2.list();
 
         for (Object[] row : assignmentData) {
+            AssignmentEntity assignment = new AssignmentEntity();
             assignment.setId(Integer.parseInt(row[0].toString()));
             assignment.setAssignmentName(row[1].toString());
             assignment.setAssignmentType(row[2].toString());
-            assignment.setActualPoints(Integer.parseInt(row[3].toString()));
+            if (row[3] == null) {
+                assignment.setActualPoints(0);
+            } else {
+                assignment.setActualPoints(Integer.parseInt(row[3].toString()));
+            }
             assignment.setTotalPoints(Integer.parseInt(row[4].toString()));
             assignment.setDueDate(row[5].toString());
             assignment.setPairId(Integer.parseInt(row[6].toString()));
@@ -116,25 +125,81 @@ public class DaoImpl implements Dao {
     }
 
     public String[] createUser() {
-//        Session session = sessionFactory.getCurrentSession();
-//
-//        SQLQuery query = session.createSQLQuery("insert into users (id, first_name, last_name, password, type) " +
-//                "values (?, ?, ?, ?, ?");
-//        query.setInteger(0, ID);
-//        query.setString(1, firstName);
-//        query.setString(2, lastName);
-//        query.setString(3, password);
-//        query.setString(4, type);
-//
-//        if (query.executeUpdate()!=0) {
-//            return true;
-//        }
-//        return false;
+        Session session = sessionFactory.getCurrentSession();
+
+        String pw = RandomStringUtils.randomAlphanumeric(8);
+
+        SQLQuery query1 = session.createSQLQuery("insert into users (first_name, last_name, password, type) " +
+                "values (null, null, ?, null)");
+        query1.setString(0, pw);
+
+        if (query1.executeUpdate()!=0) {
+            SQLQuery query2 = session.createSQLQuery("select id from users where password = ?");
+            query2.setString(0, pw);
+            List<Integer> ID = query2.list();
+            if (!ID.isEmpty()) {
+                int userID = ID.get(0);
+                String[] ret = new String[] {Integer.toString(userID), pw};
+                return ret;
+            }
+        }
         return null;
     }
 
     public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type) {
+        Session session = sessionFactory.getCurrentSession();
+
+        UsersEntity user = new UsersEntity();
+
+        SQLQuery query = session.createSQLQuery("update users set first_name = ?, last_name = ?, type = ? where id = ? and password = ?");
+        query.setString(0, firstName);
+        query.setString(1, lastName);
+        query.setString(2, type);
+        query.setInteger(3, ID);
+        query.setString(4, password);
+
+        if (query.executeUpdate()!=0) {
+            user.setId(ID);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setType(type);
+            user.setPassword(password);
+            return user;
+        }
         return null;
+    }
+
+    public String getTeacherName(int ID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("Select first_name, last_name from users where " +
+                "id = ?");
+        query.setInteger(0, ID);
+
+        List<Object[]> name = query.list();
+        if (name.isEmpty()) {
+            return null;
+        }
+        for (Object[] row : name) {
+            String s1 = row[0].toString();
+            String s2 = row[1].toString();
+            String s3 = s1 + " " + s2;
+            return s3;
+        }
+        return null;
+    }
+
+    public boolean updatePassword (String oldPassword, String newPassword) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("update users set password = ? where password = ?");
+        query.setString(0, newPassword);
+        query.setString(1, oldPassword);
+
+        if (query.executeUpdate()!=0) {
+            return true;
+        }
+        return false;
     }
 
     public boolean deleteUser(int ID) {
@@ -147,6 +212,21 @@ public class DaoImpl implements Dao {
             return true;
         }
         return false;
+    }
+
+    public int getPairID(int classID, int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where class_id = ? " +
+                "and student_id = ?");
+        query.setInteger(0, classID);
+        query.setInteger(1, studentID);
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return -1;
+        }
+        return pairID.get(0);
     }
 
     public int assignmentTypeGrade(int pairID, String type) {
@@ -170,7 +250,8 @@ public class DaoImpl implements Dao {
         Session session = sessionFactory.getCurrentSession();
         ClazzEntity clazz = new ClazzEntity();
 
-        SQLQuery query = session.createSQLQuery("select * from class where id = " + ID);
+        SQLQuery query = session.createSQLQuery("select * from class where id = ?");
+        query.setInteger(0, ID);
 
         List<Object[]> clazzData = query.list();
         if (clazzData.isEmpty()) {
@@ -189,10 +270,11 @@ public class DaoImpl implements Dao {
         return clazz;
     }
 
-    public int overAllGrade(int pairID) {
+    public double overAllGrade(int pairID) {
         Session session = sessionFactory.getCurrentSession();
 
-        SQLQuery query1 = session.createSQLQuery("select class_id from class_student where pair_id = " + pairID);
+        SQLQuery query1 = session.createSQLQuery("select class_id from class_student where pair_id = ?");
+        query1.setInteger(0, pairID);
         List<Integer> class_id = query1.list();
         if (class_id.isEmpty()) {
             return -1;
@@ -205,36 +287,81 @@ public class DaoImpl implements Dao {
         int homeworkW = clazz.getHomeworkWeight();
         int participationW = clazz.getParticipationWeight();
 
-        SQLQuery query = session.createSQLQuery("select actual_points, total_points, assignment_type from assignment where pair_id = " + pairID + " and actual_points is not null");
+        SQLQuery query = session.createSQLQuery("select actual_points, total_points, assignment_type from assignment where pair_id = ? and actual_points is not null");
+        query.setInteger(0, pairID);
 
-        List<String[]> gradeInfo = query.list();
-        Map<String, Integer[]> map;
+        List<Object[]> gradeInfo = query.list();
         int ta = 0, tt = 0;
         int qa = 0, qt = 0;
         int ha = 0, ht = 0;
         int pa = 0, pt = 0;
-        for (String[] row : gradeInfo) {
-            if (row[2].equalsIgnoreCase("Test")) {
-                ta = ta + Integer.parseInt(row[0]);
-                tt = tt + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Quiz")) {
-                qa = qa + Integer.parseInt(row[0]);
-                qt = qt + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Homework")) {
-                ha = ha + Integer.parseInt(row[0]);
-                ht = ht + Integer.parseInt(row[1]);
-            } else if (row[2].equalsIgnoreCase("Participation")) {
-                pa = pa + Integer.parseInt(row[0]);
-                pt = pt + Integer.parseInt(row[1]);
+        boolean[] check = new boolean[4];
+        check [0] = false;
+        check [1] = false;
+        check [2] = false;
+        check [3] = false;
+
+        for (Object[] row : gradeInfo) {
+            if (row[2].toString().equalsIgnoreCase("Test")) {
+                check[0] = true;
+                ta = ta + Integer.parseInt(row[0].toString());
+                tt = tt + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Quiz")) {
+                check[1] = true;
+                qa = qa + Integer.parseInt(row[0].toString());
+                qt = qt + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Homework")) {
+                check[2] = true;
+                ha = ha + Integer.parseInt(row[0].toString());
+                ht = ht + Integer.parseInt(row[1].toString());
+            } else if (row[2].toString().equalsIgnoreCase("Participation")) {
+                check[3] = true;
+                pa = pa + Integer.parseInt(row[0].toString());
+                pt = pt + Integer.parseInt(row[1].toString());
             }
         }
-        int tGrade = ta/tt;
-        int qGrade = qa/qt;
-        int hGrade = ha/ht;
-        int pGrade = pa/pt;
+        System.out.println(ta+" "+qa+" "+ha+" "+pa);
+//        int tGrade = 100;
+//        int qGrade = 100;
+//        int hGrade = 100;
+//        int pGrade = 100;
+//        if (tt!=0) {
+//            tGrade = ta/tt;
+//        }
+//        if (qt!=0) {
+//            qGrade = qa/qt;
+//        }
+//        if (ht!=0) {
+//            hGrade = ha/ht;
+//        }
+//        if (pt!=0) {
+//            pGrade = pa/pt;
+//        }
 
-        int overAll =  (tGrade*testW + qGrade*quizW + hGrade*homeworkW + pGrade*participationW)/100;
-        return overAll;
+        double overAll = 0;
+        int weight = 0;
+        if (check[0]) {
+            overAll+=(((double)ta)/tt)*testW;
+            weight+=testW;
+        }
+        if (check[1]) {
+            System.out.println("This should fucking work");
+            System.out.println((qa*100)/qt);
+            System.out.println(((double)qa)/qt);
+            System.out.println((qa/qt)*100);
+            System.out.println(qa+" "+qt);
+            overAll+=(((double)qa)/qt)*quizW;
+            weight+=quizW;
+        }
+        if (check[2]) {
+            overAll+=(((double)ha)/ht)*homeworkW;
+            weight+=homeworkW;
+        }
+        if (check[3]) {
+            overAll+=(((double)pa)/pt)*participationW;
+            weight+=participationW;
+        }
+
+        return (overAll/weight)*100;
     }
-
 }

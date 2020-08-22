@@ -25,7 +25,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(name = "first_name", length = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -35,7 +35,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "last_name", nullable = false, length = 50)
+    @Column(name = "last_name", length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -55,7 +55,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = false, length = 50)
+    @Column(name = "type", length = 50)
     public String getType() {
         return type;
     }
