@@ -6,7 +6,6 @@ node_js:
   - '8'
 
 addons:
-  apt:
     sources:
       - google-chrome
     packages:
