@@ -10,13 +10,17 @@ import { ClassService } from './services/class-service.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
+import { AdminComponent } from './admin/admin.component';
+import { DisplayComponent } from './display/display.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     StudentComponent,
-    StudentClassDetailsComponent
+    StudentClassDetailsComponent,
+    AdminComponent,
+    DisplayComponent
   ],
   imports: [
     BrowserModule,
