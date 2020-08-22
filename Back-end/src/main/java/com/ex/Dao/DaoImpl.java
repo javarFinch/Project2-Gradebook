@@ -115,21 +115,26 @@ public class DaoImpl implements Dao {
         return null;
     }
 
-    public boolean createUser(int ID, String firstName, String lastName, String password, String type) {
-        Session session = sessionFactory.getCurrentSession();
+    public String[] createUser() {
+//        Session session = sessionFactory.getCurrentSession();
+//
+//        SQLQuery query = session.createSQLQuery("insert into users (id, first_name, last_name, password, type) " +
+//                "values (?, ?, ?, ?, ?");
+//        query.setInteger(0, ID);
+//        query.setString(1, firstName);
+//        query.setString(2, lastName);
+//        query.setString(3, password);
+//        query.setString(4, type);
+//
+//        if (query.executeUpdate()!=0) {
+//            return true;
+//        }
+//        return false;
+        return null;
+    }
 
-        SQLQuery query = session.createSQLQuery("insert into users (id, first_name, last_name, password, type) " +
-                "values (?, ?, ?, ?, ?");
-        query.setInteger(0, ID);
-        query.setString(1, firstName);
-        query.setString(2, lastName);
-        query.setString(3, password);
-        query.setString(4, type);
-
-        if (query.executeUpdate()!=0) {
-            return true;
-        }
-        return false;
+    public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type) {
+        return null;
     }
 
     public boolean deleteUser(int ID) {

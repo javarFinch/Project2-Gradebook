@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(path="/login")
-public class LogInController {
+@RequestMapping(path="/user")
+public class UserController {
 
     Dao dao;
 
     @Autowired
-    public LogInController(Dao dao) {
+    public UserController(Dao dao) {
         this.dao = dao;
     }
 
-    @RequestMapping(produces = "application/json")
+    @RequestMapping(path="/{id}/{password}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<String> login(/*@RequestParam("username") int id, @RequestParam("password") String pw*/) {
-        int id = 1;
-        String pw = "password";
-        UsersEntity user = dao.logIn(id, pw);
+    public ResponseEntity<String> login(@PathVariable int id, @PathVariable String password) {
+        UsersEntity user = dao.logIn(id, password);
         if (user == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else {

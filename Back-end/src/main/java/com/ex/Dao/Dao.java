@@ -41,15 +41,22 @@ public interface Dao {
 
     /***
      * This method is used to create a new user. Admins will have access to a form to create students, teachers and other admins
+     * @return This will return true if the user was successfully created or false if otherwise
+     */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public String[] createUser();
+
+    /***
+     *
      * @param ID
      * @param firstName
      * @param lastName
      * @param password
      * @param type
-     * @return This will return true if the user was successfully created or false if otherwise
+     * @return
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean createUser(int ID, String firstName, String lastName, String password, String type);
+    public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type);
 
     /***
      * This method is delete a user from the system
