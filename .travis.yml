@@ -15,15 +15,12 @@ cache:
   directories:
     - ./node_modules
 
-install:
-  - npm install
-
-nv:
-  - TEST_DIR=/home/travis/build/veitej/Project2-Gradebook/front-end/Project2
+env:
+  - TEST_DIR=front-end/Project2
  
 
 script:
-  - cd $TEST_DIR && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - cd $TEST_DIR && npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
   notifications:
   email: roberte.flaherty@gmail.com
