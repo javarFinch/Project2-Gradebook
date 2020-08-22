@@ -23,8 +23,3 @@ before_script:
  
  script:
  - npm install
-
- 
-  
-  notifications:
-  email: roberte.flaherty@gmail.com
