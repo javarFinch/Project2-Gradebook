@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -12,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
 import { AdminComponent } from './admin/admin.component';
 import { DisplayComponent } from './display/display.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { DisplayComponent } from './display/display.component';
     StudentClassDetailsComponent,
     AdminComponent,
     DisplayComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]

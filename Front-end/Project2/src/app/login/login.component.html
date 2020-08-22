@@ -6,16 +6,17 @@
         </div>
         <div >
             <!-- <label for="username">Username: </label> -->
-            <input type = "text" name = "username" placeholder="Username"/>
+            <input type = "text" [(ngModel)]="model.username" required name = "username" placeholder="Username"/>
         </div>
         
         
         <div>
             <!-- <label for="password">Password: </label> -->
-            <input class="lg" type = "password" name = "password" placeholder = "Password"/>
+            <input class="lg" type = "password" [(ngModel)]="model.password" required name = "password" placeholder = "Password"/>
             
         </div>
-        <br>
+        <p class="error">{{errorMessage}}</p>
+        
         <button (click)="onSubmit()" class="btn-primary btn-lg" >Submit</button>
     </form>     
     
