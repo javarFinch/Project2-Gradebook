@@ -20,16 +20,33 @@ export class LoginComponent implements OnInit {
   user: User;
 
   nextLink:string;
- 
+  showError:boolean;
+  errorMessage:string;
+
   constructor(public router:Router, private classService: ClassService) { }
 
 
   ngOnInit(): void {
+    
+    this.errorMessage=' ';
   }
 
   onSubmit():void{
-    this.classService.getUserByName(this.model.username,this.model.password).subscribe((c: User) => (this.user = c));
-    //this.router.navigate(['student']);
+    this.classService.getUserByName(this.model.username,this.model.password).subscribe((c: User) => {(this.user = c); console.log(this.user);this.changePages()});
+    
+  }
+
+  changePages():void{
+    if(this.user){
+      this.errorMessage=' '
+      if(this.user.type=='student'){
+        this.router.navigate(['student']);
+      }
+    }else{
+      this.errorMessage='Invalid Username or Password'
+    
+    }
+    
   }
 
 }
