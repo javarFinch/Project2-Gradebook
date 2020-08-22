@@ -23,5 +23,5 @@ install:
 script:
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
-  notifications:
-  email: roberte.flaherty@gmail.com
+notifications:
+- email: roberte.flaherty@gmail.com
