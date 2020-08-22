@@ -25,10 +25,10 @@ public class UserController {
     @RequestMapping(path="/{id}/{password}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<String> login(@PathVariable int id, @PathVariable String password) {
-        System.out.println("\""+id+"\",\""+password+"\"");
         UsersEntity user = dao.logIn(id, password);
         if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            System.out.println("not found");
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             System.out.println("FOUND");
             return new ResponseEntity(user, HttpStatus.OK);
