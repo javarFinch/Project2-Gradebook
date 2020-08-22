@@ -15,12 +15,17 @@ cache:
   directories:
     - ./node_modules
 
+before_install:
+- cd front-end/Project2
+before_script:
+ - cd front-end/Project2
+
 env:
   - TEST_DIR=front-end/Project2
  
 
 script:
-  - cd front-end/Project2 && npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  -  npm install && npm make test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
   notifications:
   email: roberte.flaherty@gmail.com
