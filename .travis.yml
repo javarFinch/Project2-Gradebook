@@ -19,7 +19,7 @@ install:
   - npm install
 
 nv:
-  - TEST_DIR=front-end/Project2
+  - TEST_DIR=/home/travis/build/veitej/Project2-Gradebook/front-end/Project2
  
 
 script:
