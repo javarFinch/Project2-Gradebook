@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
       this.errorMessage=' '
       if(this.user.type=='student'){
         this.router.navigate(['student'],{state:this.user});
+      }else if(this.user.type=='admin'){
+        this.router.navigate(['admin'],{state:this.user});
       }
     }else{
       this.errorMessage='Invalid Username or Password'
