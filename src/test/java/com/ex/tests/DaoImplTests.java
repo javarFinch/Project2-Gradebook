@@ -23,6 +23,9 @@ public class DaoImplTests {
     @Rollback(true)
     public void loginTest() {
         Assert.assertNotNull(dao.logIn(1002, "password"));
+        Assert.assertNull(dao.logIn(99999, "doesnotexist"));
     }
+
+    
 
 }
