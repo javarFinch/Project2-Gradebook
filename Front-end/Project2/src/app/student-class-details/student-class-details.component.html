@@ -1,2 +1,68 @@
-<p>Class name: {{class.name}}</p>
+<div class="center">
+    <h2>{{class.ClassName}}</h2>  
+</div>
+<div class="center">
+    <h5>{{class.TeacherName}}</h5>
+</div>
 
+<br>
+<br>
+<div>
+    <div id="tests-label" (click)="testCollapsed=!testCollapsed">
+        <p>Tests</p>
+    </div>
+    <div [ngbCollapse]="testCollapsed">
+        <div class="offset-1">
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+            <p>This is a test</p>
+        </div>
+    </div>
+    <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
+        <p>Quiz</p>
+    </div>
+    <div [ngbCollapse]="quizCollapsed">
+        <div class="offset-1">
+            <p>This is a quiz</p>
+            <p>This is a quiz</p>
+            <p>This is a quiz</p>
+            <p>This is a quiz</p>
+        </div>
+    </div>
+    <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
+        <p>Homework</p>
+    </div>
+    <div [ngbCollapse]="homeworkCollapsed">
+        <div class="offset-1">
+            <p>This is a homework</p>
+            <p>This is a homework</p>
+            <p>This is a homework</p>
+            <p>This is a homework</p>
+        </div>
+    </div>
+    <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
+        <p>Participation</p>
+    </div>
+    <div [ngbCollapse]="participationCollapsed">
+        <div class="offset-1">
+            <p>This is a participation</p>
+            <p>This is a participation</p>
+            <p>This is a participation</p>
+            <p>This is a participation</p>
+        </div>
+    </div>
+
+</div>

@@ -13,8 +13,8 @@ export class ClassService {
       console.log('Creating Class Service');
    }
 
-   getClassList(): Observable<Class[]> {
-     return this.http.get<Class[]>('http://localhost:3000/classList');
+   getClassList(id:number): Observable<Class[]> {
+     return this.http.get<Class[]>('http://localhost:8080/app/api/student/'+id);
    }
 
    getClassByName(name: string): Observable<Class[]> {
