@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Repository
 @Transactional
@@ -95,6 +96,17 @@ public interface Dao {
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public double overAllGrade(int pairID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public ArrayList<Map<String,Object>> getAssignmentListByClassID(int id);
+
+    /***
+     * This method is used to get the classes for the specified student
+     * @param teacherID
+     * @return List of ClazzEntity objects
+     */
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public ArrayList<ClazzEntity> getClassForTeacher(int teacherID);
 
 }
 
