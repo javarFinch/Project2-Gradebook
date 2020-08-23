@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -335,5 +336,90 @@ public class DaoImpl implements Dao {
         }
 
         return (overAll/weight)*100;
+    }
+
+    @Override
+    public ArrayList<Map<String, Object>> getAssignmentListByClassID(int id) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query1 = session.createSQLQuery("select distinct assignment_name, assignment_type, total_points,due_date from public.assignment join class_student on assignment.pair_id = class_student.pair_id where class_id = ?;");
+        query1.setInteger(0, id);
+        List<Object[]> assignment_info = query1.list();
+        if (assignment_info.isEmpty()) {
+            return null;
+        }
+        ArrayList<Map<String,Object>> assignmentList = new ArrayList<>();
+        for (Object[] assignment : assignment_info) {
+            Map<String,Object> assignment_object = new HashMap<>();
+            //put assignment details into object
+            assignment_object.put("assignmentName",(String)assignment[0]);
+            System.out.println(assignment[0]);
+            assignment_object.put("assignmentType",(String)assignment[1]);
+            assignment_object.put("totalPoints",(int)assignment[2]);
+            assignment_object.put("dueDate",(String)assignment[3]);
+
+
+            //for each assignment create the list of students and their grade
+            SQLQuery query2 = session.createSQLQuery("select users.id, users.first_name, users.last_name, assignment.actual_points from public.assignment join class_student on assignment.pair_id = class_student.pair_id " +
+                                                        "join users on class_student.student_id = users.id where class_id=? and assignment.assignment_name=?");
+            query2.setInteger(0,id);
+            query2.setString(1, (String) assignment[0]);
+            List<Object[]> studentList= query2.list();
+
+            ArrayList<Map<String,Object>> gradeList = new ArrayList<>();
+            for(Object[] student:studentList){
+                System.out.println("\""+student[0]+"\"");
+                Map<String,Object> grade = new HashMap<>();
+                grade.put("studentID",(int)student[0]);
+                grade.put("firstName",(String)student[1]);
+                grade.put("lastName",(String)student[2]);
+                if(student[3]==null){
+                    grade.put("points",-1);
+                }else{
+                    grade.put("points",(int)student[3]);
+                }
+
+                gradeList.add(grade);
+            }
+
+            assignment_object.put("gradeList",gradeList);
+            assignmentList.add(assignment_object);
+
+        }
+        if(assignmentList.isEmpty()){
+            return null;
+        }else{
+            return assignmentList;
+        }
+
+    }
+
+
+    @Override
+    public ArrayList<ClazzEntity> getClassForTeacher(int teacherID) {
+        ArrayList<ClazzEntity> list = new ArrayList<>();
+
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query2 = session.createSQLQuery("select * from class where teacher_id = ?");
+        query2.setInteger(0, teacherID);
+
+        List<Object[]> classData = query2.list();
+        for (Object [] row : classData) {
+            ClazzEntity clazz = new ClazzEntity();
+            clazz.setId(Integer.parseInt(row[0].toString()));
+            clazz.setClassName(row[1].toString());
+            clazz.setClassSubject(row[2].toString());
+            clazz.setTeacherId(Integer.parseInt(row[3].toString()));
+            clazz.setTestWeight(Integer.parseInt(row[4].toString()));
+            clazz.setQuizWeight(Integer.parseInt(row[5].toString()));
+            clazz.setHomeworkWeight(Integer.parseInt(row[6].toString()));
+            clazz.setParticipationWeight(Integer.parseInt(row[7].toString()));
+            list.add(clazz);
+        }
+        if (!list.isEmpty()) {
+            return list;
+        }
+        return null;
     }
 }

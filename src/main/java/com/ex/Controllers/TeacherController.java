@@ -35,7 +35,7 @@ public class TeacherController {
         ArrayList<Map<String, Object>> arraylist1 = new ArrayList<>();
 
         
-        ArrayList<ClazzEntity> classes = dao.getClassForStudent(id);
+        ArrayList<ClazzEntity> classes = dao.getClassForTeacher(id);
 
         for (int i=0; i<classes.size(); i++) {
             //This is all the data about 1 class needed
@@ -47,51 +47,21 @@ public class TeacherController {
             map.put("QuizWeight", classes.get(i).getQuizWeight());
             map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
             map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
-            // This will getAllAssignmentsByClassId
-            //ArrayList<AssignmentEntity> assignments = dao.getAssignmentsForStudentPerClass(classes.get(i).getId(), id);
 
-            /*
-                Here we are going ot generate a arrayList of Maps -> this will be a student list that includes every student and their assignment lists respectivly
-                            
-                get an arraylist of all the pair ids that contain the class id: classes.get(i).getID(); return the pair_id value and the user_id value
-                ArrayList<Map<String,Object>> : arr2
-                for each pair id:
-                    put these into the ArrayList : arr2
-                        ("id",user.id)
-                        user.firstname ... all the values in a user object
 
-                        also into this map:
-                            ("Assignments",ArrayList<Map<String,Object>>)
-                                ArrayList will be all the assignments returned with the pair id : (classes.get(i),user.getID);
-                                
-
-             */
-
-             //^^^^^^Replaces Below
-
-            // ArrayList<Map<String, Object>> arraylist2 = new ArrayList<>();
-            // for (int j=0; j<assignments.size(); j++) {
-            //     Map<String, Object> map1 = new HashMap<>();
-            //     map1.put("AssignmentName", assignments.get(j).getAssignmentName());
-            //     map1.put("AssignmentType", assignments.get(j).getAssignmentType());
-            //     map1.put("ActualPoints", assignments.get(j).getActualPoints());
-            //     map1.put("TotalPoints", assignments.get(j).getTotalPoints());
-            //     map1.put("DueDate", assignments.get(j).getDueDate());
-            //     arraylist2.add(map1);
-            // }
-            map.put("AssignmentList",arraylist2);
+            map.put("AssignmentList",dao.getAssignmentListByClassID(classes.get(i).getId()));
 
             //these should be class averages
-            map.put("TestGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "test"));
-            map.put("QuizGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "quiz"));
-            map.put("HomeworkGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "homework"));
-            map.put("ParticipationGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "participation"));
-            map.put("OverAllGrade", dao.overAllGrade(dao.getPairID(classes.get(i).getId(), id)));
+            map.put("TestAverage", null);
+            map.put("QuizAverage", null);
+            map.put("HomeworkAverage", null);
+            map.put("ParticipationAverage", null);
+            map.put("OverAllAverage",null);
             arraylist1.add(map);
         }
 
         if (arraylist1 == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity(arraylist1, HttpStatus.OK);
         }
