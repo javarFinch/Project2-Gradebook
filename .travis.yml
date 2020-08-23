@@ -5,7 +5,7 @@ addons:
   sources: 
     - google-chrome
 before_script: 
-  - "cd Project2-Gradebook/front-end"
+  - "cd /front-end"
 cache: 
   directories: 
     - ./node_modules
