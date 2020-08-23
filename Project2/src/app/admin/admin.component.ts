@@ -9,12 +9,17 @@ import { User } from '../Models/user';
 export class AdminComponent implements OnInit {
 
   user: string;
+  username:string;
+  currentUser:User;
 
   userArray: string[] = ['student', 'teacher', 'class']
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(history.state)
+    this.currentUser=history.state;
+    this.username=this.currentUser.firstName+" "+this.currentUser.lastName;
   }
 
   selectDisplay(user: string){
