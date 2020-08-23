@@ -11,7 +11,10 @@ import { ClassService } from './services/class-service.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
+import { AdminComponent } from './admin/admin.component';
+import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     StudentComponent,
     StudentClassDetailsComponent,
+    AdminComponent,
+    DisplayComponent,
+    ModalComponent
     
   ],
   imports: [
@@ -32,3 +38,4 @@ import { FormsModule } from '@angular/forms';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 

@@ -1,0 +1,9 @@
+<span><p>The current user is a: </p> {{user}} </span>
+<br/>
+<br/>
+
+<ol>
+    <li *ngFor ="let student of studentList">{{student}}</li>
+</ol>
+
+<app-modal [user] = "user"></app-modal>
