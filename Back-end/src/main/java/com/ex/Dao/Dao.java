@@ -41,13 +41,13 @@ public interface Dao {
 
     /***
      * This method is used to create a new user. Admins will have access to a form to create students, teachers and other admins
-     * @return This will return true if the user was successfully created or false if otherwise
+     * @return This method will return string[ID,PASSWORD]
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public String[] createUser();
 
     /***
-     *
+     * This method will be used to update a users information after it has been created.
      * @param ID
      * @param firstName
      * @param lastName
@@ -58,6 +58,18 @@ public interface Dao {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type);
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public String getTeacherName(int ID);
+
+    /***
+     * This method will be used primarily by students to change their passwords
+     * @param oldPassword
+     * @param newPassword
+     * @return True if the password was successfully updated
+     */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public boolean updatePassword (String oldPassword, String newPassword);
+
     /***
      * This method is delete a user from the system
      * @param ID
@@ -65,6 +77,9 @@ public interface Dao {
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public boolean deleteUser(int ID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int getPairID(int classID, int studentID);
 
     /***
      * This method is used to get the overall average for an assignment category
@@ -79,7 +94,8 @@ public interface Dao {
     public ClazzEntity getClazzById(int ID);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public int overAllGrade(int pairID);
+    public double overAllGrade(int pairID);
+
 }
 
 
