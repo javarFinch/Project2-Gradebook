@@ -321,22 +321,6 @@ public class DaoImpl implements Dao {
             }
         }
         System.out.println(ta+" "+qa+" "+ha+" "+pa);
-//        int tGrade = 100;
-//        int qGrade = 100;
-//        int hGrade = 100;
-//        int pGrade = 100;
-//        if (tt!=0) {
-//            tGrade = ta/tt;
-//        }
-//        if (qt!=0) {
-//            qGrade = qa/qt;
-//        }
-//        if (ht!=0) {
-//            hGrade = ha/ht;
-//        }
-//        if (pt!=0) {
-//            pGrade = pa/pt;
-//        }
 
         double overAll = 0;
         int weight = 0;
