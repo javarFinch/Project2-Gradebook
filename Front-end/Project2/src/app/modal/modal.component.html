@@ -1,0 +1,24 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Please create a new {{user}}.</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <label>Username: <input type = "text" name = "username"/></label>
+        <label>Password: <input type = "password" name = "password"/></label>
+        <label>Type: <input type = "text" name = "type"/></label>
+        <label>First Name: <input type = "text" name = "firstName"/></label>
+        <label>Last Name: <input type = "text" name = "lastName"/></label>
+        <label>ID: <input type = "number" name = "id"/></label>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save new {{user}}</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create new {{user}}</button>
+  
