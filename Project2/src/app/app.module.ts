@@ -15,6 +15,7 @@ import { AdminComponent } from './admin/admin.component';
 import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
+import { AssignmentViewComponent } from './assignment-view/assignment-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ModalComponent } from './modal/modal.component';
     StudentClassDetailsComponent,
     AdminComponent,
     DisplayComponent,
-    ModalComponent
+    ModalComponent,
+    AssignmentViewComponent
     
   ],
   imports: [

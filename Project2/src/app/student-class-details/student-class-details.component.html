@@ -9,26 +9,16 @@
 <br>
 <div>
     <div id="tests-label" (click)="testCollapsed=!testCollapsed">
-        <p>Tests</p>
+        <p>Test List</p>
     </div>
     <div [ngbCollapse]="testCollapsed">
         <div class="offset-1">
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
-            <p>This is a test</p>
+            <div *ngFor = "let assignment of class.AssignmentList">
+                <div *ngIf="assignment.Type=='test'">
+                    <app-assignment-view></app-assignment-view>
+                </div>
+                
+            </div>
         </div>
     </div>
     <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
@@ -36,10 +26,12 @@
     </div>
     <div [ngbCollapse]="quizCollapsed">
         <div class="offset-1">
-            <p>This is a quiz</p>
-            <p>This is a quiz</p>
-            <p>This is a quiz</p>
-            <p>This is a quiz</p>
+            <div *ngFor = "let assignment of class.AssignmentList">
+                <div *ngIf="assignment.Type=='quiz'">
+                    <app-assignment-view></app-assignment-view>
+                </div>
+                
+            </div>
         </div>
     </div>
     <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
@@ -47,10 +39,12 @@
     </div>
     <div [ngbCollapse]="homeworkCollapsed">
         <div class="offset-1">
-            <p>This is a homework</p>
-            <p>This is a homework</p>
-            <p>This is a homework</p>
-            <p>This is a homework</p>
+            <div *ngFor = "let assignment of class.AssignmentList">
+                <div *ngIf="assignment.Type=='homework'">
+                    <app-assignment-view></app-assignment-view>
+                </div>
+                
+            </div>
         </div>
     </div>
     <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
@@ -58,10 +52,12 @@
     </div>
     <div [ngbCollapse]="participationCollapsed">
         <div class="offset-1">
-            <p>This is a participation</p>
-            <p>This is a participation</p>
-            <p>This is a participation</p>
-            <p>This is a participation</p>
+            <div *ngFor = "let assignment of class.AssignmentList">
+                <div *ngIf="assignment.Type=='participation'">
+                    <app-assignment-view></app-assignment-view>
+                </div>
+                
+            </div>
         </div>
     </div>
 
