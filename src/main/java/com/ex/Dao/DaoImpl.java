@@ -26,8 +26,6 @@ public class DaoImpl implements Dao {
 
     public UsersEntity logIn(int ID, String password) {
 
-        System.out.println(sessionFactory.toString());
-
         Session session = sessionFactory.getCurrentSession();
         UsersEntity user = new UsersEntity();
 
@@ -60,9 +58,6 @@ public class DaoImpl implements Dao {
         query1.setInteger(0, studentID);
         List<Integer> classIds = query1.list();
 
-        System.out.println(classIds.get(0));
-        System.out.println(classIds.get(1));
-
         for (int i=0; i<classIds.size(); i++) {
             SQLQuery query2 = session.createSQLQuery("select * from class where id = ?");
             query2.setInteger(0, classIds.get(i));
@@ -79,7 +74,6 @@ public class DaoImpl implements Dao {
                 clazz.setHomeworkWeight(Integer.parseInt(row[6].toString()));
                 clazz.setParticipationWeight(Integer.parseInt(row[7].toString()));
                 list.add(clazz);
-                System.out.println(clazz.getId());
             }
         }
         if (!list.isEmpty()) {
@@ -320,7 +314,6 @@ public class DaoImpl implements Dao {
                 pt = pt + Integer.parseInt(row[1].toString());
             }
         }
-        System.out.println(ta+" "+qa+" "+ha+" "+pa);
 
         double overAll = 0;
         int weight = 0;
@@ -329,11 +322,6 @@ public class DaoImpl implements Dao {
             weight+=testW;
         }
         if (check[1]) {
-            System.out.println("This should fucking work");
-            System.out.println((qa*100)/qt);
-            System.out.println(((double)qa)/qt);
-            System.out.println((qa/qt)*100);
-            System.out.println(qa+" "+qt);
             overAll+=(((double)qa)/qt)*quizW;
             weight+=quizW;
         }
