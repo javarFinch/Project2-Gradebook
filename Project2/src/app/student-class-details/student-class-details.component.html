@@ -1,64 +1,96 @@
 <div class="center">
     <h2>{{class.ClassName}}</h2>  
 </div>
-<div class="center">
-    <h5>{{class.TeacherName}}</h5>
-</div>
+
 
 <br>
 <br>
+<div class="row">
+    <div class="col-2">
+        <p>{{class.TeacherName}}</p>
+    </div>
+    <div class="center col-8">
+        <h5>Overall: {{class.OverAllGrade | number:'1.2-2'}}%</h5>  
+    </div>
+    <div class="col-2">
+        <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
+            <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>Breakdown</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <p ngbDropdownItem>Test - {{class.TestWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Quiz - {{class.QuizWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Homework - {{class.HomeworkWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Participation - {{class.ParticipationWeight | number:'1.2-2'}}%</p>
+              
+            </div>
+          </div>
+    </div>
+</div>
 <div>
-    <div id="tests-label" (click)="testCollapsed=!testCollapsed">
-        <p>Test List</p>
-    </div>
-    <div [ngbCollapse]="testCollapsed">
-        <div class="offset-1">
-            <div *ngFor = "let assignment of class.AssignmentList">
-                <div *ngIf="assignment.Type=='test'">
-                    <app-assignment-view></app-assignment-view>
+    <div class="col-12 odd">
+        <div id="tests-label" (click)="testCollapsed=!testCollapsed">
+            <p>Tests -<span *ngIf="class.TestGrade>=0"> {{class.TestGrade | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="testCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of class.AssignmentList">
+                    <div *ngIf="assignment.AssignmentType=='test'">
+                        <app-assignment-view [assignment]="assignment"></app-assignment-view>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
-    <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
-        <p>Quiz</p>
-    </div>
-    <div [ngbCollapse]="quizCollapsed">
-        <div class="offset-1">
-            <div *ngFor = "let assignment of class.AssignmentList">
-                <div *ngIf="assignment.Type=='quiz'">
-                    <app-assignment-view></app-assignment-view>
+    
+    <div class="col-12">
+        <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
+            <p>Quiz -<span *ngIf="class.QuizGrade>=0"> {{class.QuizGrade | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="quizCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of class.AssignmentList">
+                    <div *ngIf="assignment.AssignmentType=='quiz'">
+                        <app-assignment-view [assignment]="assignment"></app-assignment-view>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
-    <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
-        <p>Homework</p>
-    </div>
-    <div [ngbCollapse]="homeworkCollapsed">
-        <div class="offset-1">
-            <div *ngFor = "let assignment of class.AssignmentList">
-                <div *ngIf="assignment.Type=='homework'">
-                    <app-assignment-view></app-assignment-view>
+    
+    <div class="col-12 odd">
+        <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
+            <p>Homework -<span *ngIf="class.HomeworkGrade>=0"> {{class.HomeworkGrade | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="homeworkCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of class.AssignmentList">
+                    <div *ngIf="assignment.AssignmentType=='homework'">
+                        <app-assignment-view [assignment]="assignment"></app-assignment-view>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
-    <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
-        <p>Participation</p>
-    </div>
-    <div [ngbCollapse]="participationCollapsed">
-        <div class="offset-1">
-            <div *ngFor = "let assignment of class.AssignmentList">
-                <div *ngIf="assignment.Type=='participation'">
-                    <app-assignment-view></app-assignment-view>
+    
+    <div class="col-12">
+        <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
+            <p>Participation -<span *ngIf="class.ParticipationGrade>=0"> {{class.ParticipationGrade | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="participationCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of class.AssignmentList">
+                    <div *ngIf="assignment.AssignmentType=='participation'">
+                        <app-assignment-view [assignment]="assignment"></app-assignment-view>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
+    
 
 </div>
+
+

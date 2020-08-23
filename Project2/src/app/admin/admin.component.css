@@ -10,3 +10,18 @@ button {
     cursor: pointer;
   }
   
+  nav{
+    height:50px;
+    background-color: rgba(83, 140, 245, 0.678);
+}
+.sidebar{
+    background-color:rgba(66, 176, 240, 0.219)
+}
+
+#info{
+    position:absolute;
+    top:50px;
+    bottom: 0;
+    width:100%
+    
+}

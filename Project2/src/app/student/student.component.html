@@ -15,22 +15,17 @@
 </nav>
 
 <div class="row">
-    <div class="col-3" style="background-color:rgba(0, 255, 64, 0.267)">
+    <div class="col-3 sidebar">
         <div>
             <p>Class List:</p>
         </div>
         <div  (click)="setActiveClass(class)" class="classList offset-1" *ngFor = "let class of newClassList">
-            <p >{{ class.ClassName}}<p>
+            <h5 >{{ class.ClassName}}</h5>
         </div>
     </div>    
     <div class ="col-9" >
-        <!-- <app-login></app-login> -->
         <app-student-class-details [class]="activeClass" *ngIf="activeClass"></app-student-class-details>
         
     </div>
-
-    <!-- <div class="newClassList" *ngFor="let class of newClassList">
-        <p>{{class.name}}</p> 
-    </div> -->
     
 </div>
