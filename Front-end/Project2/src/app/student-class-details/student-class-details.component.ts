@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Class } from '../models/class';
+import { Class } from '../Models/class';
 
 
 @Component({
@@ -11,7 +11,18 @@ export class StudentClassDetailsComponent implements OnInit {
 
   @Input() class: Class;
 
-  constructor() { }
+  public testCollapsed:boolean;
+  public quizCollapsed:boolean;
+  public participationCollapsed:boolean;
+  public homeworkCollapsed: boolean;
+
+
+  constructor() { 
+    this.testCollapsed=true;
+    this.quizCollapsed=true;
+    this.participationCollapsed=true;
+    this.homeworkCollapsed=true;
+  }
 
   ngOnInit(): void {
   }
