@@ -1,0 +1,36 @@
+
+<nav ngbNav #nav="ngbNav" class="navbar-light navbar-toggler">
+    <img src="assets/JERC-basic.png" height="40px"/>
+    
+    <div class="ml-auto">
+        <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
+          <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>{{username}}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>Settings</button>
+            <button ngbDropdownItem>Logout</button>
+            
+          </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-3" style="background-color:rgba(0, 255, 64, 0.267)">
+        <div>
+            <p>Class List:</p>
+        </div>
+        <div  (click)="setActiveClass(class)" class="classList offset-1" *ngFor = "let class of newClassList">
+            <p >{{ class.ClassName}}<p>
+        </div>
+    </div>    
+    <div class ="col-9" >
+        <!-- <app-login></app-login> -->
+        <app-student-class-details [class]="activeClass" *ngIf="activeClass"></app-student-class-details>
+        
+    </div>
+
+    <!-- <div class="newClassList" *ngFor="let class of newClassList">
+        <p>{{class.name}}</p> 
+    </div> -->
+    
+</div>
