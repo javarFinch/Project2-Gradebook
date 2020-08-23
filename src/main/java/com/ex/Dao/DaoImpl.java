@@ -329,6 +329,11 @@ public class DaoImpl implements Dao {
             weight+=testW;
         }
         if (check[1]) {
+            System.out.println("This should fucking work");
+            System.out.println((qa*100)/qt);
+            System.out.println(((double)qa)/qt);
+            System.out.println((qa/qt)*100);
+            System.out.println(qa+" "+qt);
             overAll+=(((double)qa)/qt)*quizW;
             weight+=quizW;
         }
