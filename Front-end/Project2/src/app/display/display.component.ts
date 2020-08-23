@@ -10,10 +10,24 @@ import { AdminComponent } from '../admin/admin.component';
 export class DisplayComponent implements OnInit {
 
   @Input() user: String;
+
+  studentList: String[];
   
-  constructor() { }
+  constructor() {
+
+    this.studentList= [
+      'Becky',
+      'Danny',
+      'Tiffany',
+      'Seth',
+      'Sarah'
+    ];
+    
+   }
 
   ngOnInit(): void {
+
+    
   }
 
 }

@@ -14,6 +14,7 @@ import { StudentClassDetailsComponent } from './student-class-details/student-cl
 import { AdminComponent } from './admin/admin.component';
 import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     StudentComponent,
     StudentClassDetailsComponent,
     AdminComponent,
-    DisplayComponent
+    DisplayComponent,
+    ModalComponent
     
   ],
   imports: [
@@ -36,3 +38,4 @@ import { FormsModule } from '@angular/forms';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 
