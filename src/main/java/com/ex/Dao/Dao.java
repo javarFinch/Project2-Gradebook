@@ -108,6 +108,9 @@ public interface Dao {
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public ArrayList<ClazzEntity> getClassForTeacher(int teacherID);
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public boolean updateGrade (String assignmentName, String assignmentType, int userID, int grade);
+
 }
 
 

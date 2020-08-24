@@ -1,3 +1,4 @@
+import { TeacherClass } from './../Models/teacher/teacher-class';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Class } from '../Models/Class';
@@ -14,15 +15,23 @@ export class ClassService {
    }
 
    getClassList(id:number): Observable<Class[]> {
-     return this.http.get<Class[]>('http://localhost:8080/app/api/student/'+id);
+     return this.http.get<Class[]>('http://localhost:8080/api/student/'+id);
    }
+
+   getTeacherClassList(id:number): Observable<TeacherClass[]> {
+    return this.http.get<TeacherClass[]>('http://localhost:8080/api/teacher/'+id);
+  }
 
    getClassByName(name: string): Observable<Class[]> {
     return this.http.get<Class[]>(`http://localhost:3000/classList=${name}`);
    }
 
    getUserByName(name:string,password:string):Observable<User>{
-     return this.http.get<User>('http://localhost:8080/app/api/user/'+name+'/'+password);
+     return this.http.get<User>('http://localhost:8080/api/user/'+name+'/'+password);
+   }
+
+   updateGrades(formData:FormData):Observable<any>{
+     return this.http.post('http://localhost:8080/api/teacher/update',formData);
    }
 }
 

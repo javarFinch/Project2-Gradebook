@@ -16,6 +16,10 @@ import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { AssignmentViewComponent } from './assignment-view/assignment-view.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { TeacherClassDetailsComponent } from './teacher-class-details/teacher-class-details.component';
+import { TeacherAssignmentComponent } from './teacher-assignment/teacher-assignment.component';
+import { GradeModalComponent } from './grade-modal/grade-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { AssignmentViewComponent } from './assignment-view/assignment-view.compo
     AdminComponent,
     DisplayComponent,
     ModalComponent,
-    AssignmentViewComponent
+    AssignmentViewComponent,
+    TeacherComponent,
+    TeacherClassDetailsComponent,
+    TeacherAssignmentComponent,
+    GradeModalComponent
     
   ],
   imports: [

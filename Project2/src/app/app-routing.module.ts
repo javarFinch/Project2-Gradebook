@@ -1,8 +1,10 @@
+import { TeacherComponent } from './teacher/teacher.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StudentComponent } from './student/student.component'
 import { AdminComponent } from './admin/admin.component';
+
 
 
 const routes: Routes = [
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path:'admin',
     component: AdminComponent
+  },
+  {
+    path:'teacher',
+    component: TeacherComponent
   },
   {
     path: '**',
