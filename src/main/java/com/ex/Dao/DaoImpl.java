@@ -361,9 +361,10 @@ public class DaoImpl implements Dao {
 
             //for each assignment create the list of students and their grade
             SQLQuery query2 = session.createSQLQuery("select users.id, users.first_name, users.last_name, assignment.actual_points from public.assignment join class_student on assignment.pair_id = class_student.pair_id " +
-                                                        "join users on class_student.student_id = users.id where class_id=? and assignment.assignment_name=?");
+                                                        "join users on class_student.student_id = users.id where class_id=? and assignment.assignment_name=? and assignment.assignment_type=?");
             query2.setInteger(0,id);
             query2.setString(1, (String) assignment[0]);
+            query2.setString(2,(String)assignment[1]);
             List<Object[]> studentList= query2.list();
 
             ArrayList<Map<String,Object>> gradeList = new ArrayList<>();
@@ -421,5 +422,22 @@ public class DaoImpl implements Dao {
             return list;
         }
         return null;
+    }
+
+    @Override
+    public boolean updateGrade(String assignmentName, String assignmentType, int userID, int grade) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("update assignment set actual_points=? from class_student where assignment.pair_id=class_student.pair_id " +
+                                                    "and class_student.student_id=? and assignment_name=? and assignment_type=?;");
+        query.setInteger(0, grade);
+        query.setInteger(1, userID);
+        query.setString(2,assignmentName);
+        query.setString(3,assignmentType);
+
+        if (query.executeUpdate()!=0) {
+            return true;
+        }
+        return false;
     }
 }
