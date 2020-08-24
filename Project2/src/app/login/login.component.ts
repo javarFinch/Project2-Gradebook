@@ -38,11 +38,16 @@ export class LoginComponent implements OnInit {
 
   changePages():void{
     if(this.user){
+      console.log("looking at: "+this.user.type)
       this.errorMessage=' '
       if(this.user.type=='student'){
         this.router.navigate(['student'],{state:this.user});
       }else if(this.user.type=='admin'){
         this.router.navigate(['admin'],{state:this.user});
+      }
+      else if(this.user.type=='teacher'){
+        console.log("found teacher")
+        this.router.navigate(['teacher'],{state:this.user});
       }
     }else{
       this.errorMessage='Invalid Username or Password'
