@@ -13,7 +13,7 @@ dist: trusty
 env: 
   - TEST_DIR=front-end/Project2
 language: node_js
-node_js: 12.18.2
+node_js: "12.18.2"
 notifications: 
   ? "-email"
   : roberte.flaherty@gmail.com
