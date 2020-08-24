@@ -1,4 +1,2 @@
---- 
-addons: 
-  packages: 
-    - google-chrome-stable
+language:
+ - java
