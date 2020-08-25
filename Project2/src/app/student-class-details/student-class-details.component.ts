@@ -27,4 +27,5 @@ export class StudentClassDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
 }

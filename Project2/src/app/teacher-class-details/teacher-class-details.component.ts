@@ -42,7 +42,7 @@ export class TeacherClassDetailsComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        this.classService.updateClass(this.activeClass.id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
         
       }
     });
@@ -50,11 +50,11 @@ export class TeacherClassDetailsComponent implements OnInit {
 
   newAssignment(){
     const modalRef = this.modalService.open(AssignmentModalComponent, {size:'lg'});
-    modalRef.componentInstance.classId = this.activeClass.Id;
+    modalRef.componentInstance.classId = this.activeClass.id;
     modalRef.result.then((result) => {
  
       if(result=='Update'){
-        this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        this.classService.updateClass(this.activeClass.id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
         
       }
     });

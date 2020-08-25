@@ -1,5 +1,7 @@
 package com.ex.Dao;
 
+import com.ex.Models.APIThrowaways.StudentGrade;
+import com.ex.Models.APIThrowaways.TeacherAssignment;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
@@ -232,12 +234,12 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public boolean updatePassword (int ID, String newPassword) {
+    public boolean updatePassword (int userId, String newPassword) {
         Session session = sessionFactory.getCurrentSession();
 
         SQLQuery query = session.createSQLQuery("update users set password = ? where id = ?");
         query.setString(0, newPassword);
-        query.setInteger(1, ID);
+        query.setInteger(1, userId);
 
         if (query.executeUpdate()!=0) {
             return true;
@@ -394,7 +396,7 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public ArrayList<Map<String, Object>> getAssignmentListByClassID(int id) {
+    public ArrayList<TeacherAssignment> getAssignmentListByClassID(int id) {
         Session session = sessionFactory.getCurrentSession();
 
         SQLQuery query1 = session.createSQLQuery("select distinct assignment_name, assignment_type, total_points,due_date from public.assignment join class_student on assignment.pair_id = class_student.pair_id where class_id = ?;");
@@ -403,14 +405,14 @@ public class DaoImpl implements Dao {
         if (assignment_info.isEmpty()) {
             return null;
         }
-        ArrayList<Map<String,Object>> assignmentList = new ArrayList<>();
+        ArrayList<TeacherAssignment> assignmentList = new ArrayList<>();
         for (Object[] assignment : assignment_info) {
-            Map<String,Object> assignment_object = new HashMap<>();
+            TeacherAssignment assignment_object = new TeacherAssignment();
             //put assignment details into object
-            assignment_object.put("assignmentName",(String)assignment[0]);
-            assignment_object.put("assignmentType",(String)assignment[1]);
-            assignment_object.put("totalPoints",(int)assignment[2]);
-            assignment_object.put("dueDate",(String)assignment[3]);
+            assignment_object.setAssignmentName((String)assignment[0]);
+            assignment_object.setAssignmentType((String)assignment[1]);
+            assignment_object.setTotalPoints((int)assignment[2]);
+            assignment_object.setDueDate((String)assignment[3]);
 
 
             //for each assignment create the list of students and their grade
@@ -421,22 +423,22 @@ public class DaoImpl implements Dao {
             query2.setString(2,(String)assignment[1]);
             List<Object[]> studentList= query2.list();
 
-            ArrayList<Map<String,Object>> gradeList = new ArrayList<>();
+            ArrayList<StudentGrade> gradeList = new ArrayList<>();
             for(Object[] student:studentList){
-                Map<String,Object> grade = new HashMap<>();
-                grade.put("studentID",(int)student[0]);
-                grade.put("firstName",(String)student[1]);
-                grade.put("lastName",(String)student[2]);
+                StudentGrade grade = new StudentGrade();
+                grade.setStudentID((int)student[0]);
+                grade.setFirstName((String)student[1]);
+                grade.setLastName((String)student[2]);
                 if(student[3]==null){
-                    grade.put("points",-1);
+                    grade.setPoints(-1);
                 }else{
-                    grade.put("points",(int)student[3]);
+                    grade.setPoints((int)student[3]);
                 }
 
                 gradeList.add(grade);
             }
 
-            assignment_object.put("gradeList",gradeList);
+            assignment_object.setGradeList(gradeList);
             assignmentList.add(assignment_object);
 
         }
