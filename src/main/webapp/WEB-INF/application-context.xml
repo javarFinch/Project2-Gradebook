@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
     <!--  load the values in this file into the environment-->
     <context:property-placeholder location="WEB-INF/application.properties"/>
     <!-- enable annotation configuration -->
@@ -18,4 +20,32 @@
     <mvc:annotation-driven/>
     <!--  turn on transactional-->
     <tx:annotation-driven/>
+
+    <!--  aspect bean-->
+    <bean id="daoAspectBean" class="com.ex.Aspects.DaoAspect"/>
+
+    <aop:aspectj-autoproxy/>
+    <!--aop config-->
+    <aop:config>
+
+        <aop:pointcut id="pointcutBeforeAnyMethod" expression="execution(* com.ex.Dao.DaoImpl+.*(..))"/>
+
+        <aop:pointcut id="pointcutAfterAnyMethod" expression="execution(* com.ex.Dao.DaoImpl+.*(..))"/>
+
+        <aop:pointcut id="pointcutBeforeAnyControllerMethod" expression="execution(* com.ex..Controllers..*(..))"/>
+
+        <aop:pointcut id="pointcutAfterAnyControllerMethod" expression="execution(* com.ex..Controllers..*(..))"/>
+
+        <aop:pointcut id="pointcutAfterReturningNull" expression="execution(* com.ex..Controllers..*(..))"/>
+
+
+        <!--create the aspect from our aspect bean-->
+        <aop:aspect id="daoAspect" ref="daoAspectBean">
+            <aop:before method="beforeAnyMethod" pointcut-ref="pointcutBeforeAnyMethod"/>
+            <aop:after method="afterAnyMethod" pointcut-ref="pointcutAfterAnyMethod"/>
+            <aop:before method="beforeAnyControllerMethod" pointcut-ref="pointcutBeforeAnyControllerMethod"/>
+            <aop:after method="afterAnyControllerMethod" pointcut-ref="pointcutAfterAnyControllerMethod"/>
+            <aop:after-returning method="afterReturningNull" pointcut-ref="pointcutAfterReturningNull" returning="ret"/>
+        </aop:aspect>
+    </aop:config>
 </beans>

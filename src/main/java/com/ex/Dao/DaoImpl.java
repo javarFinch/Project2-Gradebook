@@ -25,6 +25,7 @@ public class DaoImpl implements Dao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public UsersEntity logIn(int ID, String password) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -48,6 +49,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public ArrayList<ClazzEntity> getClassForStudent(int studentID) {
 
         ArrayList<ClazzEntity> list = new ArrayList<>();
@@ -83,6 +85,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public ArrayList<AssignmentEntity> getAssignmentsForStudentPerClass(int clazzID, int studentID) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -119,6 +122,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public String[] createUser() {
         Session session = sessionFactory.getCurrentSession();
 
@@ -141,6 +145,39 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
+    public ClazzEntity createClass(String name, String subject, int teacherID) {
+        Session session = sessionFactory.getCurrentSession();
+        ClazzEntity clazz = new ClazzEntity();
+
+        SQLQuery query = session.createSQLQuery("insert into class (class_name, class_subject, teacher_id, " +
+                "test_weight, quiz_weight, homework_weight, participation_weight) values (?, " +
+                "?, ?, 40, 20, 30, 10)");
+        query.setString(0, name);
+        query.setString(1, subject);
+        query.setInteger(2, teacherID);
+
+        if (query.executeUpdate()!=0) {
+            SQLQuery query1 = session.createSQLQuery("select * from class where class_name = ?");
+            query1.setString(0, name);
+
+            List<Object[]> classInfo = query1.list();
+            for (Object[] row : classInfo) {
+                clazz.setId(Integer.parseInt(row[0].toString()));
+                clazz.setClassName(row[1].toString());
+                clazz.setClassSubject(row[2].toString());
+                clazz.setTeacherId(Integer.parseInt(row[3].toString()));
+                clazz.setTestWeight(40);
+                clazz.setQuizWeight(20);
+                clazz.setHomeworkWeight(30);
+                clazz.setParticipationWeight(10);
+                return clazz;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -164,6 +201,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public String getTeacherName(int ID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -184,6 +222,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public boolean updatePassword (String oldPassword, String newPassword) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -197,6 +236,7 @@ public class DaoImpl implements Dao {
         return false;
     }
 
+    @Override
     public boolean deleteUser(int ID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -209,6 +249,7 @@ public class DaoImpl implements Dao {
         return false;
     }
 
+    @Override
     public int getPairID(int classID, int studentID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -224,6 +265,7 @@ public class DaoImpl implements Dao {
         return pairID.get(0);
     }
 
+    @Override
     public int assignmentTypeGrade(int pairID, String type) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -241,6 +283,7 @@ public class DaoImpl implements Dao {
         return (sum)/(grades.size());
     }
 
+    @Override
     public ClazzEntity getClazzById(int ID) {
         Session session = sessionFactory.getCurrentSession();
         ClazzEntity clazz = new ClazzEntity();
@@ -265,6 +308,7 @@ public class DaoImpl implements Dao {
         return clazz;
     }
 
+    @Override
     public double overAllGrade(int pairID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -395,7 +439,6 @@ public class DaoImpl implements Dao {
 
     }
 
-
     @Override
     public ArrayList<ClazzEntity> getClassForTeacher(int teacherID) {
         ArrayList<ClazzEntity> list = new ArrayList<>();
@@ -406,7 +449,7 @@ public class DaoImpl implements Dao {
         query2.setInteger(0, teacherID);
 
         List<Object[]> classData = query2.list();
-        for (Object [] row : classData) {
+        for (Object[] row : classData) {
             ClazzEntity clazz = new ClazzEntity();
             clazz.setId(Integer.parseInt(row[0].toString()));
             clazz.setClassName(row[1].toString());
@@ -434,6 +477,51 @@ public class DaoImpl implements Dao {
         query.setInteger(1, userID);
         query.setString(2,assignmentName);
         query.setString(3,assignmentType);
+
+        if (query.executeUpdate()!=0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        boolean ret = true;
+
+        SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query1.setInteger(0, classID);
+
+        List<Integer> pairID = query1.list();
+        if (pairID.isEmpty()) {
+            return false;
+        }
+        for (int i=0; i<pairID.size(); i++) {
+            // Use the class id instead of pair id. Use all the pair id that come from that and use a for loop for each pair id
+            SQLQuery query = session.createSQLQuery("insert into assignment (assignment_name, assignment_type, " +
+                    "total_points, due_date, pair_id) values (?, ?, ?, ?, ?)");
+            query.setString(0, name);
+            query.setString(1, type);
+            query.setInteger(2, total);
+            query.setString(3, dueDate);
+            query.setInteger(4, pairID.get(i));
+
+            if (query.executeUpdate()==0) {
+                ret = false;
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public boolean assignStudent(int classID, int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("insert into class_student (class_id, student_id) values " +
+                "(?, ?)");
+        query.setInteger(0, classID);
+        query.setInteger(1, studentID);
 
         if (query.executeUpdate()!=0) {
             return true;
