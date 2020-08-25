@@ -3,10 +3,12 @@ package com.ex.Controllers;
 import com.ex.Dao.Dao;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
+import com.ex.Models.Student.StudentClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,40 +28,29 @@ public class StudentController {
         this.dao = dao;
     }
 
-    @RequestMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<String> classList(@PathVariable int id) {
+    public ResponseEntity<ArrayList<StudentClass>> classList(@PathVariable int id) {
 
-        ArrayList<Map<String, Object>> arraylist1 = new ArrayList<>();
+        ArrayList<StudentClass> arraylist1 = new ArrayList<>();
 
         ArrayList<ClazzEntity> classes = dao.getClassForStudent(id);
 
         for (int i=0; i<classes.size(); i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("ClassName", classes.get(i).getClassName());
-            map.put("ClassSubject", classes.get(i).getClassSubject());
-            map.put("TeacherName", dao.getTeacherName(classes.get(i).getTeacherId()));
-            map.put("TestWeight", classes.get(i).getTestWeight());
-            map.put("QuizWeight", classes.get(i).getQuizWeight());
-            map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
-            map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
-            ArrayList<AssignmentEntity> assignments = dao.getAssignmentsForStudentPerClass(classes.get(i).getId(), id);
-            ArrayList<Map<String, Object>> arraylist2 = new ArrayList<>();
-            for (int j=0; j<assignments.size(); j++) {
-                Map<String, Object> map1 = new HashMap<>();
-                map1.put("AssignmentName", assignments.get(j).getAssignmentName());
-                map1.put("AssignmentType", assignments.get(j).getAssignmentType());
-                map1.put("ActualPoints", assignments.get(j).getActualPoints());
-                map1.put("TotalPoints", assignments.get(j).getTotalPoints());
-                map1.put("DueDate", assignments.get(j).getDueDate());
-                arraylist2.add(map1);
-            }
-            map.put("AssignmentList",arraylist2);
-            map.put("TestGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "test"));
-            map.put("QuizGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "quiz"));
-            map.put("HomeworkGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "homework"));
-            map.put("ParticipationGrade", dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "participation"));
-            map.put("OverAllGrade", dao.overAllGrade(dao.getPairID(classes.get(i).getId(), id)));
+            StudentClass map = new StudentClass();
+            map.setClassName(classes.get(i).getClassName());
+            map.setClassSubject(classes.get(i).getClassSubject());
+            map.setTeacherName(dao.getTeacherName(classes.get(i).getTeacherId()));
+            map.setTestWeight(classes.get(i).getTestWeight());
+            map.setQuizWeight(classes.get(i).getQuizWeight());
+            map.setHomeworkWeight(classes.get(i).getHomeworkWeight());
+            map.setParticipationWeight(classes.get(i).getParticipationWeight());
+            map.setAssignmentList(dao.getAssignmentsForStudentPerClass(classes.get(i).getId(), id));
+            map.setTestGrade(dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "test"));
+            map.setQuizGrade(dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "quiz"));
+            map.setHomeworkGrade(dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "homework"));
+            map.setParticipationGrade(dao.assignmentTypeGrade(dao.getPairID(classes.get(i).getId(), id), "participation"));
+            map.setOverAllGrade(dao.overAllGrade(dao.getPairID(classes.get(i).getId(), id)));
             arraylist1.add(map);
         }
 

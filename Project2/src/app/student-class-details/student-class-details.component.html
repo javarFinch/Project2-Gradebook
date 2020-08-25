@@ -1,5 +1,5 @@
 <div class="center">
-    <h2>{{class.ClassName}}</h2>  
+    <h2>{{class.className}}</h2>  
 </div>
 
 
@@ -7,19 +7,19 @@
 <br>
 <div class="row">
     <div class="col-2">
-        <p>{{class.TeacherName}}</p>
+        <p>{{class.teacherName}}</p>
     </div>
     <div class="center col-8">
-        <h5>Overall: {{class.OverAllGrade | number:'1.2-2'}}%</h5>  
+        <h5>Overall: {{class.overAllGrade | number:'1.2-2'}}%</h5>  
     </div>
     <div class="col-2">
         <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
             <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>Breakdown</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <p ngbDropdownItem>Test - {{class.TestWeight | number:'1.2-2'}}%</p>
-              <p ngbDropdownItem>Quiz - {{class.QuizWeight | number:'1.2-2'}}%</p>
-              <p ngbDropdownItem>Homework - {{class.HomeworkWeight | number:'1.2-2'}}%</p>
-              <p ngbDropdownItem>Participation - {{class.ParticipationWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Test - {{class.testWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Quiz - {{class.quizWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Homework - {{class.homeworkWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Participation - {{class.participationWeight | number:'1.2-2'}}%</p>
               
             </div>
           </div>
@@ -28,12 +28,12 @@
 <div>
     <div class="col-12 odd">
         <div id="tests-label" (click)="testCollapsed=!testCollapsed">
-            <p>Tests -<span *ngIf="class.TestGrade>=0"> {{class.TestGrade | number:'1.2-2'}}%</span></p>
+            <p>Tests -<span *ngIf="class.testGrade>=0"> {{class.testGrade | number:'1.2-2'}}%</span></p>
         </div>
         <div [ngbCollapse]="testCollapsed">
             <div class="offset-1">
-                <div *ngFor = "let assignment of class.AssignmentList">
-                    <div *ngIf="assignment.AssignmentType=='test'">
+                <div *ngFor = "let assignment of class.assignmentList">
+                    <div *ngIf="assignment.assignmentType=='test'">
                         <app-assignment-view [assignment]="assignment"></app-assignment-view>
                     </div>
                     
@@ -44,12 +44,12 @@
     
     <div class="col-12">
         <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
-            <p>Quiz -<span *ngIf="class.QuizGrade>=0"> {{class.QuizGrade | number:'1.2-2'}}%</span></p>
+            <p>Quiz -<span *ngIf="class.quizGrade>=0"> {{class.quizGrade | number:'1.2-2'}}%</span></p>
         </div>
         <div [ngbCollapse]="quizCollapsed">
             <div class="offset-1">
-                <div *ngFor = "let assignment of class.AssignmentList">
-                    <div *ngIf="assignment.AssignmentType=='quiz'">
+                <div *ngFor = "let assignment of class.assignmentList">
+                    <div *ngIf="assignment.assignmentType=='quiz'">
                         <app-assignment-view [assignment]="assignment"></app-assignment-view>
                     </div>
                     
@@ -60,12 +60,12 @@
     
     <div class="col-12 odd">
         <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
-            <p>Homework -<span *ngIf="class.HomeworkGrade>=0"> {{class.HomeworkGrade | number:'1.2-2'}}%</span></p>
+            <p>Homework -<span *ngIf="class.homeworkGrade>=0"> {{class.homeworkGrade | number:'1.2-2'}}%</span></p>
         </div>
         <div [ngbCollapse]="homeworkCollapsed">
             <div class="offset-1">
-                <div *ngFor = "let assignment of class.AssignmentList">
-                    <div *ngIf="assignment.AssignmentType=='homework'">
+                <div *ngFor = "let assignment of class.assignmentList">
+                    <div *ngIf="assignment.assignmentType=='homework'">
                         <app-assignment-view [assignment]="assignment"></app-assignment-view>
                     </div>
                     
@@ -76,12 +76,12 @@
     
     <div class="col-12">
         <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
-            <p>Participation -<span *ngIf="class.ParticipationGrade>=0"> {{class.ParticipationGrade | number:'1.2-2'}}%</span></p>
+            <p>Participation -<span *ngIf="class.participationGrade>=0"> {{class.participationGrade | number:'1.2-2'}}%</span></p>
         </div>
         <div [ngbCollapse]="participationCollapsed">
             <div class="offset-1">
-                <div *ngFor = "let assignment of class.AssignmentList">
-                    <div *ngIf="assignment.AssignmentType=='participation'">
+                <div *ngFor = "let assignment of class.assignmentList">
+                    <div *ngIf="assignment.assignmentType=='participation'">
                         <app-assignment-view [assignment]="assignment"></app-assignment-view>
                     </div>
                     

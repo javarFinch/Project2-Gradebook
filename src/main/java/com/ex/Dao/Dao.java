@@ -72,7 +72,7 @@ public interface Dao {
      * @return True if the password was successfully updated
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean updatePassword (String oldPassword, String newPassword);
+    public boolean updatePassword (int userId, String newPassword);
 
     /***
      * This method is delete a user from the system

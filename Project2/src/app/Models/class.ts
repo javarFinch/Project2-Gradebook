@@ -3,18 +3,18 @@ import { Assignment } from './assignment';
 export class Class {
 
     constructor(
-      public QuizWeight: number,
-      public HomeworkGrade: number,
-      public ClassSubject: string,
-      public TestGrade: number,
-      public TestWeight: number,
-      public AssignmentList: Assignment[],
-      public QuizGrade: number,
-      public OverAllGrade: number,
-      public ParticipationGrade: number,
-      public ClassName: string,
-      public ParticipationWeight: number,
-      public HomeworkWeight: number,
-      public TeacherName: string
+      public quizWeight: number,
+      public homeworkGrade: number,
+      public classSubject: string,
+      public testGrade: number,
+      public testWeight: number,
+      public assignmentList: Assignment[],
+      public quizGrade: number,
+      public overAllGrade: number,
+      public participationGrade: number,
+      public className: string,
+      public participationWeight: number,
+      public homeworkWeight: number,
+      public teacherName: string
       ) {}
 }

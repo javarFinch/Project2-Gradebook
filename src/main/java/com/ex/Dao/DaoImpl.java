@@ -223,12 +223,12 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public boolean updatePassword (String oldPassword, String newPassword) {
+    public boolean updatePassword (int userId, String newPassword) {
         Session session = sessionFactory.getCurrentSession();
 
-        SQLQuery query = session.createSQLQuery("update users set password = ? where password = ?");
+        SQLQuery query = session.createSQLQuery("update users set password = ? where id = ?");
         query.setString(0, newPassword);
-        query.setString(1, oldPassword);
+        query.setInteger(1, userId);
 
         if (query.executeUpdate()!=0) {
             return true;

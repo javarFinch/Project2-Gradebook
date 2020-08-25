@@ -21,6 +21,7 @@ import { TeacherClassDetailsComponent } from './teacher-class-details/teacher-cl
 import { TeacherAssignmentComponent } from './teacher-assignment/teacher-assignment.component';
 import { GradeModalComponent } from './grade-modal/grade-modal.component';
 import { AssignmentModalComponent } from './assignment-modal/assignment-modal.component';
+import { PasswordModalComponent } from './password-modal/password-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AssignmentModalComponent } from './assignment-modal/assignment-modal.co
     TeacherClassDetailsComponent,
     TeacherAssignmentComponent,
     GradeModalComponent,
-    AssignmentModalComponent
+    AssignmentModalComponent,
+    PasswordModalComponent
     
   ],
   imports: [

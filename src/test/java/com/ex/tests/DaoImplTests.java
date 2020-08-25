@@ -84,14 +84,14 @@ public class DaoImplTests {
         Assert.assertEquals("test test", actual);
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void updatePasswordTest() {
-        String[] usernamePassword = dao.createUser();
-        Assert.assertNotNull(dao.updateUser(Integer.parseInt(usernamePassword[0]), "test", "test", usernamePassword[1], "teacher"));
-        Assert.assertTrue(dao.updatePassword(usernamePassword[1], "newpassword"));
-    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void updatePasswordTest() {
+//        String[] usernamePassword = dao.createUser();
+//        Assert.assertNotNull(dao.updateUser(Integer.parseInt(usernamePassword[0]), "test", "test", usernamePassword[1], "teacher"));
+//        Assert.assertTrue(dao.updatePassword(usernamePassword[1], "newpassword"));
+//    }
 
     @Test
     @Transactional

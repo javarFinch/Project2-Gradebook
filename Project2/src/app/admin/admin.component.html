@@ -5,8 +5,8 @@
       <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
         <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>{{username}}</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem>Settings</button>
-          <button ngbDropdownItem>Logout</button>
+          <button ngbDropdownItem>Change Password</button>
+          <button ngbDropdownItem (click)="logout()">Logout</button>
           
         </div>
       </div>
