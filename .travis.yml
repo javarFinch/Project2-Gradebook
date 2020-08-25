@@ -17,6 +17,6 @@ language: node_js
 node_js: node 
     
 before_install: 
-    - docker build -t flaherty12/Project2-Gradebook .
+    - docker build -t veitej/gradebook .
 script: 
-  - npm install npm run test --watch=false --no-progress  - docker run -e CI=true wilpat/sample-app npm run test -- --coverage
+  - npm install npm run test --watch=false --no-progress  - docker run -e CI=true veitej/gradebook npm run test -- --coverage
