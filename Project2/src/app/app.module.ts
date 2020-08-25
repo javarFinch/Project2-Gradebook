@@ -20,6 +20,7 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { TeacherClassDetailsComponent } from './teacher-class-details/teacher-class-details.component';
 import { TeacherAssignmentComponent } from './teacher-assignment/teacher-assignment.component';
 import { GradeModalComponent } from './grade-modal/grade-modal.component';
+import { AssignmentModalComponent } from './assignment-modal/assignment-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { GradeModalComponent } from './grade-modal/grade-modal.component';
     TeacherComponent,
     TeacherClassDetailsComponent,
     TeacherAssignmentComponent,
-    GradeModalComponent
+    GradeModalComponent,
+    AssignmentModalComponent
     
   ],
   imports: [

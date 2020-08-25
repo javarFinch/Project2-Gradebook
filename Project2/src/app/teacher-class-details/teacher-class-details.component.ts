@@ -1,3 +1,4 @@
+import { AssignmentModalComponent } from './../assignment-modal/assignment-modal.component';
 import { GradeModalComponent } from './../grade-modal/grade-modal.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TeacherClass } from '../Models/teacher/teacher-class';
@@ -51,8 +52,19 @@ export class TeacherClassDetailsComponent implements OnInit {
     });
   }
 
-  open(content) {
-   
+  newAssignment(){
+    const modalRef = this.modalService.open(AssignmentModalComponent, {size:'lg'});
+    modalRef.componentInstance.classId = this.activeClass.Id;
+    modalRef.result.then((result) => {
+      console.log(`Closed with: ${result}`);
+      if(result=='Update'){
+        console.log('should update the page')
+        this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        
+      }
+    }, (reason) => {
+      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+    });
   }
 
   private getDismissReason(reason: any): string {
