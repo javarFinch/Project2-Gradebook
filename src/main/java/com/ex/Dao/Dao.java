@@ -47,6 +47,9 @@ public interface Dao {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public String[] createUser();
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public ClazzEntity createClass(String name, String subject, int teacherID);
+
     /***
      * This method will be used to update a users information after it has been created.
      * @param ID
@@ -111,6 +114,11 @@ public interface Dao {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public boolean updateGrade (String assignmentName, String assignmentType, int userID, int grade);
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int pairID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public boolean assignStudent(int classID, int studentID);
 }
 
 

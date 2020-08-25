@@ -34,7 +34,6 @@ public class TeacherController {
 
         //This is an ArrayList of Maps -> this will be our class list where each item in the list corresponds to all the data needed about a class
         ArrayList<Map<String, Object>> arraylist1 = new ArrayList<>();
-
         
         ArrayList<ClazzEntity> classes = dao.getClassForTeacher(id);
 
@@ -49,10 +48,7 @@ public class TeacherController {
                 map.put("QuizWeight", classes.get(i).getQuizWeight());
                 map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
                 map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
-
-
                 map.put("AssignmentList",dao.getAssignmentListByClassID(classes.get(i).getId()));
-
                 //these should be class averages
                 map.put("TestAverage", null);
                 map.put("QuizAverage", null);
@@ -62,7 +58,6 @@ public class TeacherController {
                 arraylist1.add(map);
             }
         }
-
 
         if (arraylist1.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -92,12 +87,9 @@ public class TeacherController {
                     String[]a = pair.split("=");
                     dao.updateGrade(check.get("name").toString(),check.get("type").toString(),Integer.parseInt(a[0]),Integer.parseInt(a[1]));
                 }
-
-
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-
             return new ResponseEntity<>(null,HttpStatus.OK);
         }
     }
