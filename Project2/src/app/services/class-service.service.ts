@@ -33,5 +33,9 @@ export class ClassService {
    updateGrades(formData:FormData):Observable<any>{
      return this.http.post('http://localhost:8080/api/teacher/update',formData);
    }
+
+   updateClass(id:number): Observable<TeacherClass>{
+     return this.http.get<TeacherClass>('http://localhost:8080/api/teacher/updateClass/'+id);
+   }
 }
 
