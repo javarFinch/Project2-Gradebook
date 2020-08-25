@@ -147,7 +147,7 @@
             <failOnMissingWebXml>false</failOnMissingWebXml>
             <webResources>
               <resource>
-                <directory>Project2/dist</directory>
+                <directory>Project2/dist/Project2</directory>
               </resource>
             </webResources>
           </configuration>

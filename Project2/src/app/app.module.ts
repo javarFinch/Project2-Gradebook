@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { StudentComponent } from './student/student.component';
 import { ClassService } from './services/class-service.service';
@@ -16,6 +16,8 @@ import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { AssignmentViewComponent } from './assignment-view/assignment-view.component';
+import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-bootstrap";
+
 
 @NgModule({
   declarations: [
@@ -26,17 +28,17 @@ import { AssignmentViewComponent } from './assignment-view/assignment-view.compo
     AdminComponent,
     DisplayComponent,
     ModalComponent,
-    AssignmentViewComponent
-    
+    AssignmentViewComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbNavModule
   ],
-  providers: [ClassService, HttpClientModule],
+  providers: [ClassService, HttpClientModule,NgbNavModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
