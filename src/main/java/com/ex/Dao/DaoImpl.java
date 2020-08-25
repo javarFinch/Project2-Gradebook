@@ -488,12 +488,15 @@ public class DaoImpl implements Dao {
     public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID) {
         Session session = sessionFactory.getCurrentSession();
 
-        boolean ret = false;
+        boolean ret = true;
 
         SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ?");
         query1.setInteger(0, classID);
 
         List<Integer> pairID = query1.list();
+        if (pairID.isEmpty()) {
+            return false;
+        }
         for (int i=0; i<pairID.size(); i++) {
             // Use the class id instead of pair id. Use all the pair id that come from that and use a for loop for each pair id
             SQLQuery query = session.createSQLQuery("insert into assignment (assignment_name, assignment_type, " +
@@ -504,8 +507,8 @@ public class DaoImpl implements Dao {
             query.setString(3, dueDate);
             query.setInteger(4, pairID.get(i));
 
-            if (query.executeUpdate()!=0) {
-                ret = true;
+            if (query.executeUpdate()==0) {
+                ret = false;
             }
         }
         return ret;

@@ -39,24 +39,6 @@ public class TeacherController {
 
         if(classes!=null){
             for (int i=0; i<classes.size(); i++) {
-
-//                //This is all the data about 1 class needed
-//                Map<String, Object> map = new HashMap<>();
-//                map.put("ClassName", classes.get(i).getClassName());
-//                map.put("ClassSubject", classes.get(i).getClassSubject());
-//                map.put("TeacherName", dao.getTeacherName(classes.get(i).getTeacherId()));
-//                map.put("TestWeight", classes.get(i).getTestWeight());
-//                map.put("QuizWeight", classes.get(i).getQuizWeight());
-//                map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
-//                map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
-//                map.put("AssignmentList",dao.getAssignmentListByClassID(classes.get(i).getId()));
-//                //these should be class averages
-//                map.put("TestAverage", null);
-//                map.put("QuizAverage", null);
-//                map.put("HomeworkAverage", null);
-//                map.put("ParticipationAverage", null);
-//                map.put("OverAllAverage",null);
-//                arraylist1.add(map);
                 arraylist1.add(generateClassObject(classes.get(i)));
             }
         }
