@@ -1,0 +1,9 @@
+.center {
+    display: flex;
+    justify-content: center;
+
+  }
+
+.odd{
+  background-color:rgb(216, 216, 216);
+}

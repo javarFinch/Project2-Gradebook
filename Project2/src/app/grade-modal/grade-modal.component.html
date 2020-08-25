@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{assignment.assignmentName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form #updateGradesForm="ngForm" (ngSubmit)="updateGrades(updateGradesForm)">
+          <div class=row>
+              <div class="col-4">
+                  <p>Student Id</p>
+              </div>
+              <div class="col-4">
+                  <p> Student Name</p>
+              </div>
+              <div>
+                  <p>Grade</p>
+              </div>
+          </div>
+          <div *ngFor = "let grade of assignment.gradeList">
+              <div class="form-group row">
+                <div class="col-4">
+                    <p>{{grade.studentID}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{grade.firstName}} {{grade.lastName}}</p>
+                </div>
+                <div class="row col-3">
+                    
+                    <input type="number" class="form-control" [(ngModel)]="grade.points" name="{{grade.studentID}}"value="{{grade.points}}"/>
+                    
+                    <p>/{{assignment.totalPoints}}</p>
+                </div>
+              </div>
+          </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="updateGrades(updateGradesForm)">Update</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>

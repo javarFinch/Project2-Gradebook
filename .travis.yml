@@ -1,22 +1,2 @@
---- 
-addons: 
-  packages: 
-    - google-chrome-stable
-  sources: 
-    - google-chrome
-before_script: 
-  - "cd Project2-Gradebook/front-end"
-cache: 
-  directories: 
-    - ./node_modules
-dist: trusty
-env: 
-  - TEST_DIR=front-end/Project2
-language: node_js
-node_js: 
-notifications: 
-  ? "-email"
-  : roberte.flaherty@gmail.com
-script: 
-  - "npm install && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox"
-sudo: false
+language:
+ - java
