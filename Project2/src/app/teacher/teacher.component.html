@@ -24,7 +24,7 @@
         </div>
     </div>    
     <div class ="col-9" >
-        <app-teacher-class-details [class]="activeClass" *ngIf="activeClass"></app-teacher-class-details>
+        <app-teacher-class-details [activeClass]="activeClass" (activeClassChange)="updateActiveClass($event)" *ngIf="activeClass"></app-teacher-class-details>
         
     </div>
     

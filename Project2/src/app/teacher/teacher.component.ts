@@ -15,6 +15,7 @@ export class TeacherComponent implements OnInit {
   user:User;
   classList: TeacherClass[];
   activeClass:TeacherClass;
+  activeIndex:number;
 
 
   newClassList: TeacherClass[];
@@ -22,10 +23,13 @@ export class TeacherComponent implements OnInit {
   constructor(private classService: ClassService) {
    
     this.activeClass=null;
+    this.activeIndex=null;
   }
 
   setActiveClass(state){
+    this.activeIndex=this.newClassList.findIndex(x=>x.Id===state.Id);
     this.activeClass=state;
+    console.log("Active class index: ",this.activeIndex);
   }
 
   ngOnInit(): void {
@@ -37,6 +41,11 @@ export class TeacherComponent implements OnInit {
     // It will continuously change as long as there is data coming in.
     this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);console.log(this.newClassList);console.log('done')});
     
+  }
+
+  updateActiveClass($event){
+    console.log('event: ',$event);
+    this.newClassList[this.activeIndex]=$event
   }
 
 }

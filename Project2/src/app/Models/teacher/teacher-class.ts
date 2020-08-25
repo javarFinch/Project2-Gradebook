@@ -13,7 +13,8 @@ export class TeacherClass {
         public HomeworkAverage: number,
         public ParticipationWeight: number,
         public HomeworkWeight: number,
-        public TeacherName: string
+        public TeacherName: string,
+        public Id: number
 
         ) {}
 }

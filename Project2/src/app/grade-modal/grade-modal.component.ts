@@ -28,6 +28,9 @@ export class GradeModalComponent implements OnInit {
       data:formData.value
     }
     console.log("Form Value",formData.value);
-    this.classService.updateGrades(this.output).subscribe();
+    this.classService.updateGrades(this.output).subscribe(
+      
+    );
+    this.activeModal.close('Update')
   }
 }

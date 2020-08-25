@@ -39,23 +39,25 @@ public class TeacherController {
 
         if(classes!=null){
             for (int i=0; i<classes.size(); i++) {
-                //This is all the data about 1 class needed
-                Map<String, Object> map = new HashMap<>();
-                map.put("ClassName", classes.get(i).getClassName());
-                map.put("ClassSubject", classes.get(i).getClassSubject());
-                map.put("TeacherName", dao.getTeacherName(classes.get(i).getTeacherId()));
-                map.put("TestWeight", classes.get(i).getTestWeight());
-                map.put("QuizWeight", classes.get(i).getQuizWeight());
-                map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
-                map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
-                map.put("AssignmentList",dao.getAssignmentListByClassID(classes.get(i).getId()));
-                //these should be class averages
-                map.put("TestAverage", null);
-                map.put("QuizAverage", null);
-                map.put("HomeworkAverage", null);
-                map.put("ParticipationAverage", null);
-                map.put("OverAllAverage",null);
-                arraylist1.add(map);
+
+//                //This is all the data about 1 class needed
+//                Map<String, Object> map = new HashMap<>();
+//                map.put("ClassName", classes.get(i).getClassName());
+//                map.put("ClassSubject", classes.get(i).getClassSubject());
+//                map.put("TeacherName", dao.getTeacherName(classes.get(i).getTeacherId()));
+//                map.put("TestWeight", classes.get(i).getTestWeight());
+//                map.put("QuizWeight", classes.get(i).getQuizWeight());
+//                map.put("HomeworkWeight", classes.get(i).getHomeworkWeight());
+//                map.put("ParticipationWeight", classes.get(i).getParticipationWeight());
+//                map.put("AssignmentList",dao.getAssignmentListByClassID(classes.get(i).getId()));
+//                //these should be class averages
+//                map.put("TestAverage", null);
+//                map.put("QuizAverage", null);
+//                map.put("HomeworkAverage", null);
+//                map.put("ParticipationAverage", null);
+//                map.put("OverAllAverage",null);
+//                arraylist1.add(map);
+                arraylist1.add(generateClassObject(classes.get(i)));
             }
         }
 
@@ -92,6 +94,44 @@ public class TeacherController {
             }
             return new ResponseEntity<>(null,HttpStatus.OK);
         }
+    }
+
+
+    @RequestMapping(path = "/updateClass/{id}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<String> updateClassObject(@PathVariable int id){
+        ClazzEntity holder = dao.getClazzById(id);
+        Map<String,Object> output= generateClassObject(holder);
+        if(output.isEmpty()){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }else{
+            return new ResponseEntity(output,HttpStatus.OK);
+        }
+
+    }
+
+    private Map<String,Object> generateClassObject(ClazzEntity clazz){
+        //This is all the data about 1 class needed
+        Map<String, Object> map = new HashMap<>();
+        map.put("Id",clazz.getId());
+        map.put("ClassName", clazz.getClassName());
+        map.put("ClassSubject", clazz.getClassSubject());
+        map.put("TeacherName", dao.getTeacherName(clazz.getTeacherId()));
+        map.put("TestWeight", clazz.getTestWeight());
+        map.put("QuizWeight", clazz.getQuizWeight());
+        map.put("HomeworkWeight", clazz.getHomeworkWeight());
+        map.put("ParticipationWeight", clazz.getParticipationWeight());
+
+
+        map.put("AssignmentList",dao.getAssignmentListByClassID(clazz.getId()));
+
+        //these should be class averages
+        map.put("TestAverage", null);
+        map.put("QuizAverage", null);
+        map.put("HomeworkAverage", null);
+        map.put("ParticipationAverage", null);
+        map.put("OverAllAverage",null);
+        return map;
     }
 
 }
