@@ -104,14 +104,13 @@ public class TeacherController {
         map.put("HomeworkWeight", clazz.getHomeworkWeight());
         map.put("ParticipationWeight", clazz.getParticipationWeight());
 
-
         map.put("AssignmentList",dao.getAssignmentListByClassID(clazz.getId()));
 
         //these should be class averages
-        map.put("TestAverage", null);
-        map.put("QuizAverage", null);
-        map.put("HomeworkAverage", null);
-        map.put("ParticipationAverage", null);
+        map.put("TestAverage", dao.classAveragePerType(clazz.getId()).get("test"));
+        map.put("QuizAverage", dao.classAveragePerType(clazz.getId()).get("quiz"));
+        map.put("HomeworkAverage", dao.classAveragePerType(clazz.getId()).get("homework"));
+        map.put("ParticipationAverage", dao.classAveragePerType(clazz.getId()).get("participation"));
         map.put("OverAllAverage",null);
         return map;
     }

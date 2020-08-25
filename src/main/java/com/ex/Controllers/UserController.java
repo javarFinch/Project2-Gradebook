@@ -58,8 +58,8 @@ public class UserController {
     //@RequestParam String oldPassword,@RequestParam String newPassword
     @RequestMapping(path = "/newpassword/{oldPassword}/{newPassword}")
     @ResponseBody
-    public ResponseEntity<String> changePassword (@PathVariable String oldPassword, @PathVariable String newPassword) {
-        boolean check = dao.updatePassword(oldPassword, newPassword);
+    public ResponseEntity<String> changePassword (@PathVariable int ID, @PathVariable String newPassword) {
+        boolean check = dao.updatePassword(ID, newPassword);
         if (!check) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
