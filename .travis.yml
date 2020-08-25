@@ -14,6 +14,6 @@ dist: trusty
 language: node_js
 node_js: node
 
-before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi  
+before_install: npm i -g npm@latest; fi  
 script: 
   - npm install npm run test -- --watch=false --no-progress
