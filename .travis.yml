@@ -17,6 +17,6 @@ language: node_js
 node_js: node 
     
 before_install: 
-    - docker build -t wilpat/sample-app -f Dockerfile.dev .
+    - docker build -t flaherty12/Project2-Gradebook .
 script: 
   - npm install npm run test --watch=false --no-progress  - docker run -e CI=true wilpat/sample-app npm run test -- --coverage
