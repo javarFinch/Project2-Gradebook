@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeacherClass } from '../Models/teacher/teacher-class';
 import { ClassService } from '../services/class-service.service';
 import { User } from '../Models/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,14 +21,14 @@ export class TeacherComponent implements OnInit {
 
   newClassList: TeacherClass[];
 
-  constructor(private classService: ClassService) {
+  constructor(public router:Router,private classService: ClassService) {
    
     this.activeClass=null;
     this.activeIndex=null;
   }
 
   setActiveClass(state){
-    this.activeIndex=this.newClassList.findIndex(x=>x.Id===state.Id);
+    this.activeIndex=this.newClassList.findIndex(x=>x.id===state.Id);
     this.activeClass=state;
   }
 
@@ -45,4 +46,7 @@ export class TeacherComponent implements OnInit {
     this.newClassList[this.activeIndex]=$event
   }
 
+  logout(){
+    this.router.navigate(['login']);
+  }
 }

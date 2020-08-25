@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Models/user';
 import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-bootstrap";
@@ -15,7 +16,7 @@ export class AdminComponent implements OnInit {
 
   userArray: string[] = ['student', 'teacher', 'class']
 
-  constructor() { }
+  constructor(public router:Router) { }
 
   ngOnInit(): void {
     console.log(history.state)
@@ -25,6 +26,10 @@ export class AdminComponent implements OnInit {
 
   selectDisplay(user: string){
     this.user = user;
+  }
+
+  logout(){
+    this.router.navigate(['login']);
   }
 
 }

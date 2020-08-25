@@ -1,11 +1,9 @@
 package com.ex.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 @Table(name = "class_student", schema = "public", catalog = "postgres")
 public class ClassStudentEntity {
     private int pairId;
