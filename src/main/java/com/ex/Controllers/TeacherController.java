@@ -116,4 +116,38 @@ public class TeacherController {
         return map;
     }
 
+    @PostMapping(path = "/newAssignment", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<String> newAssignment(@RequestBody String data) {
+        System.out.println(data);
+        if(data==null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }else{
+            ObjectMapper om = new ObjectMapper();
+            try {
+                Map<String,Object> check = om.readValue(data,Map.class);
+                String hold = check.get("date").toString();
+                hold=hold.substring(1,hold.length()-1);
+                String[] date=hold.split(", ");
+                String dueDate="";
+                if(date[2].split("=")[1].length()!=2){
+                    dueDate+="0";
+
+                }
+                dueDate+=date[2].split("=")[1]+"-";
+                if(date[1].split("=")[1].length()!=2){
+                    dueDate+="0";
+
+                }
+                dueDate+=date[1].split("=")[1]+"-";
+                dueDate+=date[0].split("=")[1];
+                dao.createAssignmentAndAssign(check.get("name").toString(), check.get("type").toString().toLowerCase(), Integer.parseInt(check.get("points").toString()), dueDate, Integer.parseInt(check.get("classId").toString()));
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }
+    }
+
 }

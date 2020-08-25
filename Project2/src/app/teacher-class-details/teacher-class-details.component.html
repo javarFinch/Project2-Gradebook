@@ -7,7 +7,7 @@
 <br>
 <div class="row">
     <div class="col-2">
-        <p>{{activeClass.TeacherName}}</p>
+        <button type="button" class="btn btn-outline-primary" (click)="newAssignment()">New Assignment</button>
     </div>
     <div class="center col-8">
         <h5>Overall: {{activeClass.OverAllAverage | number:'1.2-2'}}%</h5>  

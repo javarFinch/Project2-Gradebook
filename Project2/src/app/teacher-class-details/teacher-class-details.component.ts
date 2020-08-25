@@ -1,3 +1,4 @@
+import { AssignmentModalComponent } from './../assignment-modal/assignment-modal.component';
 import { GradeModalComponent } from './../grade-modal/grade-modal.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TeacherClass } from '../Models/teacher/teacher-class';
@@ -32,36 +33,31 @@ export class TeacherClassDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('assignments:')
-    console.log(this.activeClass.AssignmentList)
+    
   }
 
   openModal(state){
     const modalRef = this.modalService.open(GradeModalComponent, {size:'lg'});
     modalRef.componentInstance.assignment = state;
     modalRef.result.then((result) => {
-      console.log(`Closed with: ${result}`);
+
       if(result=='Update'){
-        console.log('should update the page')
         this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
         
       }
-    }, (reason) => {
-      console.log(`Dismissed ${this.getDismissReason(reason)}`);
     });
   }
 
-  open(content) {
-   
+  newAssignment(){
+    const modalRef = this.modalService.open(AssignmentModalComponent, {size:'lg'});
+    modalRef.componentInstance.classId = this.activeClass.Id;
+    modalRef.result.then((result) => {
+ 
+      if(result=='Update'){
+        this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        
+      }
+    });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
 }
