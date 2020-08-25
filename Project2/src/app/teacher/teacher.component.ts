@@ -28,7 +28,7 @@ export class TeacherComponent implements OnInit {
   }
 
   setActiveClass(state){
-    this.activeIndex=this.newClassList.findIndex(x=>x.Id===state.Id);
+    this.activeIndex=this.newClassList.findIndex(x=>x.id===state.Id);
     this.activeClass=state;
   }
 

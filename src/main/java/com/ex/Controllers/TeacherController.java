@@ -2,6 +2,8 @@ package com.ex.Controllers;
 
 
 import com.ex.Dao.Dao;
+import com.ex.Models.APIThrowaways.TeacherAssignment;
+import com.ex.Models.APIThrowaways.TeacherClass;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,12 +30,12 @@ public class TeacherController {
         this.dao = dao;
     }
 
-    @RequestMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<String> classList(@PathVariable int id) {
+    public ResponseEntity<ArrayList<TeacherClass>> classList(@PathVariable int id) {
 
         //This is an ArrayList of Maps -> this will be our class list where each item in the list corresponds to all the data needed about a class
-        ArrayList<Map<String, Object>> arraylist1 = new ArrayList<>();
+        ArrayList<TeacherClass> arraylist1 = new ArrayList<>();
         
         ArrayList<ClazzEntity> classes = dao.getClassForTeacher(id);
 
@@ -50,7 +52,7 @@ public class TeacherController {
         }
     }
 
-    @PostMapping(path = "/update", consumes = "application/json")
+    @GetMapping(path = "/update", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<String> classList(@RequestBody String data) {
         if(data==null){
@@ -60,12 +62,8 @@ public class TeacherController {
             ObjectMapper om = new ObjectMapper();
             try {
                 Map<String,Object> check = om.readValue(data,Map.class);
-                System.out.println(check.get("name"));
-                System.out.println(check.get("type"));
-                System.out.println(check.get("data"));
                 String hold = check.get("data").toString();
                 hold=hold.substring(1,hold.length()-1);
-                System.out.println(hold);
                 String[] list = hold.split(", ");
                 for(String pair : list){
                     String[]a = pair.split("=");
@@ -79,40 +77,41 @@ public class TeacherController {
     }
 
 
-    @RequestMapping(path = "/updateClass/{id}", produces = "application/json")
+    @GetMapping(path = "/updateClass/{id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<String> updateClassObject(@PathVariable int id){
+    public ResponseEntity<TeacherClass> updateClassObject(@PathVariable int id){
         ClazzEntity holder = dao.getClazzById(id);
-        Map<String,Object> output= generateClassObject(holder);
-        if(output.isEmpty()){
+
+        if(holder==null){
             return new ResponseEntity<>(null,HttpStatus.OK);
         }else{
+            TeacherClass output= generateClassObject(holder);
             return new ResponseEntity(output,HttpStatus.OK);
         }
 
     }
 
-    private Map<String,Object> generateClassObject(ClazzEntity clazz){
+    private TeacherClass generateClassObject(ClazzEntity clazz){
         //This is all the data about 1 class needed
-        Map<String, Object> map = new HashMap<>();
-        map.put("Id",clazz.getId());
-        map.put("ClassName", clazz.getClassName());
-        map.put("ClassSubject", clazz.getClassSubject());
-        map.put("TeacherName", dao.getTeacherName(clazz.getTeacherId()));
-        map.put("TestWeight", clazz.getTestWeight());
-        map.put("QuizWeight", clazz.getQuizWeight());
-        map.put("HomeworkWeight", clazz.getHomeworkWeight());
-        map.put("ParticipationWeight", clazz.getParticipationWeight());
+        TeacherClass map = new TeacherClass();
+        map.setId(clazz.getId());
+        map.setClassName(clazz.getClassName());
+        map.setClassSubject(clazz.getClassSubject());
+        map.setTeacherName(dao.getTeacherName(clazz.getTeacherId()));
+        map.setTestWeight(clazz.getTestWeight());
+        map.setQuizWeight(clazz.getQuizWeight());
+        map.setHomeworkWeight(clazz.getHomeworkWeight());
+        map.setParticipationWeight(clazz.getParticipationWeight());
 
 
-        map.put("AssignmentList",dao.getAssignmentListByClassID(clazz.getId()));
+        map.setAssignmentList(dao.getAssignmentListByClassID(clazz.getId()));
 
         //these should be class averages
-        map.put("TestAverage", null);
-        map.put("QuizAverage", null);
-        map.put("HomeworkAverage", null);
-        map.put("ParticipationAverage", null);
-        map.put("OverAllAverage",null);
+        map.setTestAverage(-1);
+        map.setQuizAverage(-1);
+        map.setHomeworkAverage(-1);
+        map.setParticipationAverage(-1);
+        map.setOverAllAverage(-1);
         return map;
     }
 

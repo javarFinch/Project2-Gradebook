@@ -1,5 +1,6 @@
 package com.ex.Dao;
 
+import com.ex.Models.APIThrowaways.TeacherAssignment;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
@@ -101,7 +102,7 @@ public interface Dao {
     public double overAllGrade(int pairID);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public ArrayList<Map<String,Object>> getAssignmentListByClassID(int id);
+    public ArrayList<TeacherAssignment> getAssignmentListByClassID(int id);
 
     /***
      * This method is used to get the classes for the specified student

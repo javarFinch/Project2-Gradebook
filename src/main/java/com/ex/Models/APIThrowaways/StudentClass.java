@@ -1,4 +1,4 @@
-package com.ex.Models.Student;
+package com.ex.Models.APIThrowaways;
 
 import com.ex.Models.AssignmentEntity;
 
