@@ -27,8 +27,6 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Initiating Class List');
-    console.log(history.state)
     this.user=history.state;
     this.username=this.user.firstName+" "+this.user.lastName;
 

@@ -34,6 +34,10 @@ export class ClassService {
      return this.http.post('http://localhost:8080/api/teacher/update',formData);
    }
 
+   newAssignment(formData:FormData):Observable<any>{
+    return this.http.post('http://localhost:8080/api/teacher/newAssignment',formData);
+  }
+
    updateClass(id:number): Observable<TeacherClass>{
      return this.http.get<TeacherClass>('http://localhost:8080/api/teacher/updateClass/'+id);
    }

@@ -29,22 +29,19 @@ export class TeacherComponent implements OnInit {
   setActiveClass(state){
     this.activeIndex=this.newClassList.findIndex(x=>x.Id===state.Id);
     this.activeClass=state;
-    console.log("Active class index: ",this.activeIndex);
   }
 
   ngOnInit(): void {
-    console.log(history.state)
     this.user=history.state;
     this.username=this.user.firstName+" "+this.user.lastName;
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);console.log(this.newClassList);console.log('done')});
+    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);});
     
   }
 
   updateActiveClass($event){
-    console.log('event: ',$event);
     this.newClassList[this.activeIndex]=$event
   }
 

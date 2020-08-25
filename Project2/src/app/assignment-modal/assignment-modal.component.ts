@@ -23,26 +23,68 @@ export class AssignmentModalComponent implements OnInit {
   public name:string;
   public points:number;
   public date:NgbDateStruct;
-  public date2:string;
   public nameError:string;
   public typeError:string;
   public pointsError:string;
   public dateError:string;
 
-  constructor(public activeModal: NgbActiveModal,private classService: ClassService) { }
+  constructor(public activeModal: NgbActiveModal,private classService: ClassService) {
+    this.nameError="";
+    this.typeError="";
+    this.pointsError="";
+    this.dateError="";
+   }
 
   ngOnInit(): void {
   }
 
-  sendAssignment(formData){
-    this.output={
-      classId:this.classId,
+  checkAssignment():boolean{
+    let confirm=true;
+    //check and show error for no input
+    if(!this.type){
+      this.typeError="Invalid Input"
+      confirm=false;
+    }else{
+      if(types.includes(this.type)){
+        this.typeError=""
+      }else{
+        this.typeError="Invalid Input"
+        confirm=false;
+      }
       
-      data:formData.value
     }
-    console.log("Form Value",formData.value);
-    //this.classService.updateGrades(this.output).subscribe();
-    this.activeModal.close('Update')
+    if(!this.name){
+      this.nameError="Invalid Input"
+      confirm=false;
+    }else{
+      this.nameError="";
+    }
+    if(!this.points){
+      this.pointsError="Invalid Input"
+      confirm=false;
+    }
+    else{
+      this.pointsError="";
+    }
+    if(!this.date){
+      this.dateError="Invalid Input"
+      confirm=false;
+    }
+    else{
+      this.dateError="";
+    }
+    console.log(confirm)
+    return confirm;
+  }
+
+  sendAssignment(formData){
+    console.log("Form Validation: ",formData.value)
+    if(this.checkAssignment()){
+      console.log("Form Sent:",formData.value);
+      this.classService.newAssignment(formData.value).subscribe();
+      this.activeModal.close('Update')
+    }
+    
   }
 
   @ViewChild('instance', {static: true}) instance: NgbTypeahead;

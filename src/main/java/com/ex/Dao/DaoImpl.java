@@ -487,7 +487,7 @@ public class DaoImpl implements Dao {
     @Override
     public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID) {
         Session session = sessionFactory.getCurrentSession();
-
+        System.out.println(name+","+type+","+total+","+dueDate+","+classID);
         boolean ret = true;
 
         SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ?");
