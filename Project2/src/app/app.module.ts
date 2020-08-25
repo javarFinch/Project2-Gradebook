@@ -18,6 +18,11 @@ import { ModalComponent } from './modal/modal.component';
 import { AssignmentViewComponent } from './assignment-view/assignment-view.component';
 import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-bootstrap";
 
+import { TeacherComponent } from './teacher/teacher.component';
+import { TeacherClassDetailsComponent } from './teacher-class-details/teacher-class-details.component';
+import { TeacherAssignmentComponent } from './teacher-assignment/teacher-assignment.component';
+import { GradeModalComponent } from './grade-modal/grade-modal.component';
+import { AssignmentModalComponent } from './assignment-modal/assignment-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,12 @@ import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-b
     DisplayComponent,
     ModalComponent,
     AssignmentViewComponent,
+    TeacherComponent,
+    TeacherClassDetailsComponent,
+    TeacherAssignmentComponent,
+    GradeModalComponent,
+    AssignmentModalComponent
+    
   ],
   imports: [
     BrowserModule,

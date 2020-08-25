@@ -1,0 +1,97 @@
+<div class="center">
+    <h2>{{activeClass.ClassName}}</h2>  
+</div>
+
+
+<br>
+<br>
+<div class="row">
+    <div class="col-2">
+        <button type="button" class="btn btn-outline-primary" (click)="newAssignment()">New Assignment</button>
+    </div>
+    <div class="center col-8">
+        <h5>Overall: {{activeClass.OverAllAverage | number:'1.2-2'}}%</h5>  
+    </div>
+    <div class="col-2">
+        <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
+            <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>Breakdown</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <p ngbDropdownItem>Test - {{activeClass.TestWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Quiz - {{activeClass.QuizWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Homework - {{activeClass.HomeworkWeight | number:'1.2-2'}}%</p>
+              <p ngbDropdownItem>Participation - {{activeClass.ParticipationWeight | number:'1.2-2'}}%</p>
+              
+            </div>
+          </div>
+    </div>
+</div>
+<div>
+    <div class="col-12 odd">
+        <div id="tests-label" (click)="testCollapsed=!testCollapsed">
+            <p>Tests -<span *ngIf="activeClass.TestAverage"> {{activeClass.TestAverage | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="testCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of activeClass.AssignmentList">
+                    <div *ngIf="assignment.assignmentType=='test'" (click)="openModal(assignment)">
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
+            <p>Quiz -<span *ngIf="activeClass.QuizAverage"> {{activeClass.QuizAverage | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="quizCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of activeClass.AssignmentList">
+                    <div *ngIf="assignment.assignmentType=='quiz'" (click)="openModal(assignment)">
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 odd">
+        <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
+            <p>Homework -<span *ngIf="activeClass.HomeworkAverage"> {{activeClass.HomeworkAverage | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="homeworkCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of activeClass.AssignmentList">
+                    <div *ngIf="assignment.assignmentType=='homework'" (click)="openModal(assignment)">
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
+            <p>Participation -<span *ngIf="activeClass.ParticipationAverage"> {{activeClass.ParticipationAverage | number:'1.2-2'}}%</span></p>
+        </div>
+        <div [ngbCollapse]="participationCollapsed">
+            <div class="offset-1">
+                <div *ngFor = "let assignment of activeClass.AssignmentList">
+                    <div *ngIf="assignment.assignmentType=='participation'" (click)="openModal(assignment)">
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+

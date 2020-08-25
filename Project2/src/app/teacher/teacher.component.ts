@@ -1,28 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { Class } from '../Models/class';
+import { TeacherClass } from '../Models/teacher/teacher-class';
 import { ClassService } from '../services/class-service.service';
 import { User } from '../Models/user';
 
+
 @Component({
-  selector: 'app-student',
-  templateUrl: './student.component.html',
-  styleUrls: ['./student.component.css']
+  selector: 'app-teacher',
+  templateUrl: './teacher.component.html',
+  styleUrls: ['./teacher.component.css']
 })
-export class StudentComponent implements OnInit {
+export class TeacherComponent implements OnInit {
+
   username:String;
   user:User;
-  classList: Class[];
-  activeClass:Class;
+  classList: TeacherClass[];
+  activeClass:TeacherClass;
+  activeIndex:number;
 
 
-  newClassList: Class[];
+  newClassList: TeacherClass[];
 
   constructor(private classService: ClassService) {
    
     this.activeClass=null;
+    this.activeIndex=null;
   }
 
   setActiveClass(state){
+    this.activeIndex=this.newClassList.findIndex(x=>x.Id===state.Id);
     this.activeClass=state;
   }
 
@@ -32,8 +37,12 @@ export class StudentComponent implements OnInit {
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getClassList(this.user.id).subscribe((c: Class[]) => {(this.newClassList = c);console.log(this.newClassList);});
+    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);});
     
+  }
+
+  updateActiveClass($event){
+    this.newClassList[this.activeIndex]=$event
   }
 
 }
