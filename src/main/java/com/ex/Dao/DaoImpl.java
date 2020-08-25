@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,14 @@ import java.util.Map;
 public class DaoImpl implements Dao {
 
     SessionFactory sessionFactory;
+
+    @Override
+    public double format(double input) {
+        System.out.println("intput to format: "+input);
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println(df.format(input));
+        return Double.parseDouble(df.format(input));
+    }
 
     @Autowired
     public DaoImpl(SessionFactory sessionFactory) {
@@ -268,21 +277,23 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public int assignmentTypeGrade(int pairID, String type) {
+    public double assignmentTypeGrade(int pairID, String type) {
         Session session = sessionFactory.getCurrentSession();
 
-        SQLQuery query = session.createSQLQuery("select actual_points from assignment where pair_id = ? and assignment_type = ? and actual_points is not null");
+        SQLQuery query = session.createSQLQuery("select actual_points, total_points from assignment where pair_id = ? and assignment_type = ? and actual_points is not null");
         query.setInteger(0, pairID);
         query.setString(1, type);
-        List<Integer> grades = query.list();
-        int sum = 0;
-        for (int i : grades) {
-            sum += i;
+        List<Object[]> grades = query.list();
+        double sum = 0;
+        double den = 0;
+        for (Object[] i : grades) {
+            sum += Double.parseDouble(i[0].toString());
+            den += Double.parseDouble(i[1].toString());
         }
         if(grades.isEmpty()) {
             return -1;
         }
-        return (sum)/(grades.size());
+        return format((sum*100)/(den));
     }
 
     @Override
@@ -381,7 +392,7 @@ public class DaoImpl implements Dao {
             weight+=participationW;
         }
 
-        return (overAll/weight)*100;
+        return format((overAll/weight)*100);
     }
 
     @Override
@@ -487,7 +498,6 @@ public class DaoImpl implements Dao {
     @Override
     public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID) {
         Session session = sessionFactory.getCurrentSession();
-        System.out.println(name+","+type+","+total+","+dueDate+","+classID);
         boolean ret = true;
 
         SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ?");
@@ -527,5 +537,147 @@ public class DaoImpl implements Dao {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int numberOfClassesForStudent(int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select class_id from class_student where student_id = ?");
+        query.setInteger(0, studentID);
+
+        return query.list().size();
+    }
+
+    @Override
+    public int numberOfClassesForTeacher(int teacherID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select id from class where teacher_id = ?");
+        query.setInteger(0, teacherID);
+
+        return query.list().size();
+    }
+
+    @Override
+    public int numberOfStudentsInClass(int class_id) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select student_id from class_student where class_id = ?");
+        query.setInteger(0, class_id);
+
+        return query.list().size();
+    }
+
+    @Override
+    public Map<String, Double> classAveragePerType(int classID) {
+        Session session = sessionFactory.getCurrentSession();
+        Map<String, Double> map = new HashMap<>();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query.setInteger(0, classID);
+
+        double test = 0.0;
+        double quiz = 0.0;
+        double homework = 0.0;
+        double participation = 0.0;
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return null;
+        }
+        int g=0, j=0, k=0, l=0;
+        for (int i=0; i<pairID.size(); i++) {
+            if (assignmentTypeGrade(pairID.get(i), "test") != -1) {
+                test += assignmentTypeGrade(pairID.get(i), "test");
+            } else {
+                g++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "quiz") != -1) {
+                quiz += assignmentTypeGrade(pairID.get(i), "quiz");
+            } else {
+                j++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "homework") != -1) {
+                homework += assignmentTypeGrade(pairID.get(i), "homework");
+            } else {
+                k++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "participation") != -1) {
+                participation += assignmentTypeGrade(pairID.get(i), "participation");
+            } else {
+                l++;
+            }
+        }
+        if (g!=pairID.size()) {
+            test = test/(pairID.size()-g);
+        }
+        if (j!=pairID.size()) {
+            quiz = quiz/(pairID.size()-j);
+        }
+        if (k!=pairID.size()) {
+            homework = homework/(pairID.size()-k);
+        }
+        if (l!=pairID.size()) {
+            participation = participation/(pairID.size()-l);
+        }
+
+        map.put("test", format(test));
+        map.put("quiz", format(quiz));
+        map.put("homework", format(homework));
+        map.put("participation", format(participation));
+        return map;
+    }
+
+    @Override
+    public double classAverage(int classID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query.setInteger(0, classID);
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return -1;
+        }
+        double sum = 0;
+        double den = 0;
+        for (int i : pairID) {
+            sum += overAllGrade(i);
+            den += 1;
+        }
+        return format(sum/den);
+    }
+
+    @Override
+    public double studentGPA(int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where student_id = ?");
+        query.setInteger(0, studentID);
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return -1;
+        }
+        ArrayList<Double> array = new ArrayList<>();
+        for (Integer i : pairID) {
+            array.add(overAllGrade(i));
+        }
+        double gpa = 0;
+        for (int i=0;i<pairID.size();i++) {
+            if (array.get(i) >= 90) {
+                gpa += 4;
+            } else if (array.get(i) >= 80) {
+                gpa += 3;
+            } else if (array.get(i) >= 70) {
+                gpa += 2;
+            } else if (array.get(i) >= 60) {
+                gpa += 1;
+            } else if (array.get(i) < 60) {
+                gpa += 0;
+            }
+        }
+        return format(gpa/pairID.size());
     }
 }

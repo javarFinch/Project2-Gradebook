@@ -15,6 +15,8 @@ import java.util.Map;
 @Transactional
 public interface Dao {
 
+    public double format(double input);
+
     /***
      * This method is used to log in a user
      * @param ID
@@ -93,7 +95,7 @@ public interface Dao {
      * @return
      */
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public int assignmentTypeGrade(int pairID, String type);
+    public double assignmentTypeGrade(int pairID, String type);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public ClazzEntity getClazzById(int ID);
@@ -120,6 +122,24 @@ public interface Dao {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public boolean assignStudent(int classID, int studentID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfClassesForStudent(int studentID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfClassesForTeacher(int teacherID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfStudentsInClass(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public Map<String, Double> classAveragePerType(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public double classAverage(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public double studentGPA(int studentID);
 }
 
 
