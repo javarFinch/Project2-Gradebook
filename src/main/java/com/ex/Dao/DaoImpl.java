@@ -26,14 +26,11 @@ public class DaoImpl implements Dao {
 
     @Override
     public double format(double input) {
-<<<<<<< HEAD
-=======
         System.out.println("intput to format: "+input);
         if(Double.isNaN(input)){
             input=0;
 
         }
->>>>>>> b06503062e506ee9174aceeb50c0cc754438d461
         DecimalFormat df = new DecimalFormat("0.00");
         return Double.parseDouble(df.format(input));
 
