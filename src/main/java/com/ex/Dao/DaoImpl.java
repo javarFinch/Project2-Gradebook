@@ -29,10 +29,8 @@ public class DaoImpl implements Dao {
         System.out.println("intput to format: "+input);
         if(Double.isNaN(input)){
             input=0;
-
         }
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println(df.format(input));
         return Double.parseDouble(df.format(input));
 
     }

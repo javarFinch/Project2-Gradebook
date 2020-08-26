@@ -22,7 +22,7 @@
     <tx:annotation-driven/>
 
     <!--  aspect bean-->
-    <bean id="daoAspectBean" class="com.ex.Aspects.DaoAspect"/>
+    <bean id="daoAspectBean" class="com.ex.Aspects.DaoControllerAspect"/>
 
     <aop:aspectj-autoproxy/>
     <!--aop config-->
@@ -32,11 +32,15 @@
 
         <aop:pointcut id="pointcutAfterAnyMethod" expression="execution(* com.ex.Dao.DaoImpl+.*(..))"/>
 
+        <aop:pointcut id="pointcutAfterThrowingExceptionDao" expression="execution(* com.ex.Dao.DaoImpl+.*(..))"/>
+
         <aop:pointcut id="pointcutBeforeAnyControllerMethod" expression="execution(* com.ex..Controllers..*(..))"/>
 
         <aop:pointcut id="pointcutAfterAnyControllerMethod" expression="execution(* com.ex..Controllers..*(..))"/>
 
         <aop:pointcut id="pointcutAfterReturningNull" expression="execution(* com.ex..Controllers..*(..))"/>
+
+        <aop:pointcut id="pointcutAfterThrowingExceptionController" expression="execution(* com.ex..Controllers..*(..))"/>
 
 
         <!--create the aspect from our aspect bean-->
@@ -46,6 +50,8 @@
             <aop:before method="beforeAnyControllerMethod" pointcut-ref="pointcutBeforeAnyControllerMethod"/>
             <aop:after method="afterAnyControllerMethod" pointcut-ref="pointcutAfterAnyControllerMethod"/>
             <aop:after-returning method="afterReturningNull" pointcut-ref="pointcutAfterReturningNull" returning="ret"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcutAfterThrowingExceptionDao" throwing="e"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcutAfterThrowingExceptionController" throwing="e"/>
         </aop:aspect>
     </aop:config>
 </beans>

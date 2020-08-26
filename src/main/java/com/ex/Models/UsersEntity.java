@@ -11,6 +11,16 @@ public class UsersEntity {
     private String password;
     private String type;
 
+    public UsersEntity(){}
+
+    public UsersEntity(int id, String firstName, String lastName, String password, String type) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.type = type;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {
