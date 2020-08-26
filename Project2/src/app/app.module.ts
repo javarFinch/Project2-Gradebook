@@ -47,9 +47,10 @@ import { AssignmentModalComponent } from './assignment-modal/assignment-modal.co
     NgbModule,
     HttpClientModule,
     FormsModule,
-    NgbNavModule
+    NgbNavModule,
+    NgbNav
   ],
-  providers: [ClassService, HttpClientModule,NgbNavModule],
+  providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
