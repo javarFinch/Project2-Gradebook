@@ -38,9 +38,10 @@ export class AdminClassComponent implements OnInit {
   }
 
   openModal(){
-    const modalRef = this.modalService.open(NewClassComponent, {size:'md'});
+    const modalRef = this.modalService.open(NewClassComponent, {size:'lg'});
     modalRef.componentInstance.type = 'student';
     modalRef.componentInstance.teachers=this.teachers;
+    modalRef.componentInstance.studentList=this.studentList;
     modalRef.result.then((result) => {
 
       if(result=='Update'){

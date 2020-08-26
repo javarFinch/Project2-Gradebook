@@ -52,7 +52,7 @@ public class TeacherController {
         }
     }
 
-    @GetMapping(path = "/update", consumes = "application/json")
+    @PostMapping(path = "/update", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<String> classList(@RequestBody String data) {
         if(data==null){
