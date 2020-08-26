@@ -5,16 +5,20 @@ import com.ex.Models.APIThrowaways.AllClasses;
 import com.ex.Models.APIThrowaways.StudentClass;
 import com.ex.Models.APIThrowaways.StudentList;
 import com.ex.Models.APIThrowaways.TeacherList;
+import com.ex.Models.ClazzEntity;
+import com.ex.Models.UsersEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -57,6 +61,69 @@ public class AdminController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity(arraylist1, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(path = "/newUser", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<UsersEntity> newUser(@RequestBody String data) {
+        System.out.println(data);
+        UsersEntity user = new UsersEntity();
+        if(data==null){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }else{
+            ObjectMapper om = new ObjectMapper();
+            try {
+                Map<String,Object> check = om.readValue(data,Map.class);
+                String[] idPass = dao.createUser();
+                user = dao.updateUser(Integer.parseInt(idPass[0]), check.get("firstName").toString(), check.get("lastName").toString(), idPass[1], check.get("type").toString().toLowerCase());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(path = "/newClass", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<ClazzEntity> newClass(@RequestBody String data) {
+        System.out.println(data);
+//        ClazzEntity clazz = new ClazzEntity();
+        if (data == null) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            ObjectMapper om = new ObjectMapper();
+            try {
+                Map<String, Object> check = om.readValue(data,Map.class);
+                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(check.get("teacherId").toString()));
+                String studentIds = check.get("studentList").toString();
+                String str[] = studentIds.split(", ");
+                List<String> list = Arrays.asList(str);
+                for (String s: list) {
+                    dao.assignStudent(clazz.getId(), Integer.parseInt(s));
+                }
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(path = "/assignStudent", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<String> assignStudent(@RequestBody String data) {
+        System.out.println(data);
+        if (data == null) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            ObjectMapper om = new ObjectMapper();
+            try {
+                Map<String,Object> check = om.readValue(data,Map.class);
+                dao.assignStudent(Integer.parseInt(check.get("studentId").toString()), Integer.parseInt(check.get("classId").toString()));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
 }

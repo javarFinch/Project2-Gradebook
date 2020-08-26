@@ -36,20 +36,20 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/new", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<UsersEntity> newUser() {
-        String[] user = dao.createUser();
-        UsersEntity output=new UsersEntity();
-        output.setId(Integer.parseInt(user[0]));
-        output.setPassword(user[1]);
-
-        if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            return new ResponseEntity(output, HttpStatus.OK);
-        }
-    }
+//    @GetMapping(path = "/new", produces = "application/json")
+//    @ResponseBody
+//    public ResponseEntity<UsersEntity> newUser() {
+//        String[] user = dao.createUser();
+//        UsersEntity output=new UsersEntity();
+//        output.setId(Integer.parseInt(user[0]));
+//        output.setPassword(user[1]);
+//
+//        if (user == null) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            return new ResponseEntity(output, HttpStatus.OK);
+//        }
+//    }
 
     //@RequestParam int id,@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String type
     @PutMapping(path = "/update", produces = "application/json")
