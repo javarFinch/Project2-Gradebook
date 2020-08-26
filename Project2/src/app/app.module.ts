@@ -12,17 +12,20 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { StudentClassDetailsComponent } from './student-class-details/student-class-details.component';
 import { AdminComponent } from './admin/admin.component';
-import { DisplayComponent } from './display/display.component';
 import { FormsModule } from '@angular/forms';
-import { ModalComponent } from './modal/modal.component';
 import { AssignmentViewComponent } from './assignment-view/assignment-view.component';
-import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-bootstrap";
 
 import { TeacherComponent } from './teacher/teacher.component';
 import { TeacherClassDetailsComponent } from './teacher-class-details/teacher-class-details.component';
 import { TeacherAssignmentComponent } from './teacher-assignment/teacher-assignment.component';
 import { GradeModalComponent } from './grade-modal/grade-modal.component';
 import { AssignmentModalComponent } from './assignment-modal/assignment-modal.component';
+import { PasswordModalComponent } from './password-modal/password-modal.component';
+import { AdminStudentComponent } from './admin-student/admin-student.component';
+import { AdminClassComponent } from './admin-class/admin-class.component';
+import { AdminTeacherComponent } from './admin-teacher/admin-teacher.component';
+import { NewUserComponent } from './new-user/new-user.component';
+
 
 @NgModule({
   declarations: [
@@ -31,14 +34,18 @@ import { AssignmentModalComponent } from './assignment-modal/assignment-modal.co
     StudentComponent,
     StudentClassDetailsComponent,
     AdminComponent,
-    DisplayComponent,
-    ModalComponent,
     AssignmentViewComponent,
     TeacherComponent,
     TeacherClassDetailsComponent,
     TeacherAssignmentComponent,
     GradeModalComponent,
-    AssignmentModalComponent
+    AssignmentModalComponent,
+    PasswordModalComponent,
+    AdminStudentComponent,
+    AdminClassComponent,
+    AdminTeacherComponent,
+    NewUserComponent,
+
     
   ],
   imports: [

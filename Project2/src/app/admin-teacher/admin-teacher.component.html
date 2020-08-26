@@ -1,0 +1,38 @@
+<div class="col-12 center">
+    <button class="btn btn-outline-primary">New Teacher</button>
+</div>
+<div class="col-8 offset-2">
+        <div class=row>
+            <label for="searchInput">Search:</label>
+            <input type="text" name="searchInput" [(ngModel)]="input" value="{{input}}" (keyup)="searchTable()"/>
+        </div>
+        
+      
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col" (click)="sortTeachers(0)">Id</th>
+          <th scope="col" (click)="sortTeachers(1)" >First</th>
+          <th scope="col" (click)="sortTeachers(2)" >Last</th>
+          <th scope="col" (click)="sortTeachers(3)">Number of Classes</th>
+        </tr>
+        </thead>
+        <tbody id="teacher-body">
+        <tr *ngFor="let teacher of teacherList">
+            <td>
+                <p>{{teacher.id}}</p>
+            </td>
+          <td>
+            <p>{{teacher.fName}}</p>
+          </td>
+          <td>
+            <p>{{teacher.lName}}</p>
+          </td>
+          <td>
+            <p>{{teacher.numberClasses}}</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+</div>

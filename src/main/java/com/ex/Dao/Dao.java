@@ -1,5 +1,9 @@
 package com.ex.Dao;
 
+import com.ex.Models.APIThrowaways.AllClasses;
+import com.ex.Models.APIThrowaways.StudentList;
+import com.ex.Models.APIThrowaways.TeacherAssignment;
+import com.ex.Models.APIThrowaways.TeacherList;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
@@ -13,6 +17,8 @@ import java.util.Map;
 @Repository
 @Transactional
 public interface Dao {
+
+    public double format(double input);
 
     /***
      * This method is used to log in a user
@@ -67,12 +73,12 @@ public interface Dao {
 
     /***
      * This method will be used primarily by students to change their passwords
-     * @param oldPassword
+     * @param userId
      * @param newPassword
      * @return True if the password was successfully updated
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean updatePassword (String oldPassword, String newPassword);
+    public boolean updatePassword (int userId, String newPassword);
 
     /***
      * This method is delete a user from the system
@@ -92,7 +98,7 @@ public interface Dao {
      * @return
      */
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public int assignmentTypeGrade(int pairID, String type);
+    public double assignmentTypeGrade(int pairID, String type);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public ClazzEntity getClazzById(int ID);
@@ -101,7 +107,7 @@ public interface Dao {
     public double overAllGrade(int pairID);
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public ArrayList<Map<String,Object>> getAssignmentListByClassID(int id);
+    public ArrayList<TeacherAssignment> getAssignmentListByClassID(int id);
 
     /***
      * This method is used to get the classes for the specified student
@@ -119,6 +125,33 @@ public interface Dao {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public boolean assignStudent(int classID, int studentID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfClassesForStudent(int studentID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfClassesForTeacher(int teacherID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public int numberOfStudentsInClass(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public Map<String, Double> classAveragePerType(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public double classAverage(int classID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public double studentGPA(int studentID);
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public ArrayList<StudentList> getStudentList();
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public ArrayList<TeacherList> getTeacherList();
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public ArrayList<AllClasses> getClassList();
 }
 
 
