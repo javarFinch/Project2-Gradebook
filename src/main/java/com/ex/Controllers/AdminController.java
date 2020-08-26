@@ -94,15 +94,18 @@ public class AdminController {
             ObjectMapper om = new ObjectMapper();
             try {
                 Map<String, Object> check = om.readValue(data,Map.class);
-                String[] teacherId=check.get("teacherId").toString().split("-");
-                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(teacherId[0]));
-                String studentIds = check.get("studentIds").toString();
-                System.out.println(studentIds);
-                studentIds=studentIds.substring(1,studentIds.length()-1);
-                String str[] = studentIds.split(", ");
-                List<String> list = Arrays.asList(str);
-                for (String s: list) {
-                    dao.assignStudent(clazz.getId(), Integer.parseInt(s));
+                String id = check.get("teacherId").toString();
+                int i = id.indexOf('-');
+                id = id.substring(0, i);
+                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(id));
+                String studentIds = check.get("studentList").toString();
+                String[] str = studentIds.split(", ");
+                for (int j=0; j<str.length; j++) {
+                    if (str[j].contains("[")||str[j].contains("]")) {
+                        str[j] = str[j].replace("[", "");
+                        str[j] = str[j].replace("]", "");
+                    }
+                    dao.assignStudent(clazz.getId(), Integer.parseInt(str[j]));
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
