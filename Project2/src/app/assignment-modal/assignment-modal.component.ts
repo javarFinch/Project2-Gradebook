@@ -81,8 +81,8 @@ export class AssignmentModalComponent implements OnInit {
     console.log("Form Validation: ",formData.value)
     if(this.checkAssignment()){
       console.log("Form Sent:",formData.value);
-      this.classService.newAssignment(formData.value).subscribe();
-      this.activeModal.close('Update')
+      this.classService.newAssignment(formData.value).subscribe(c=>this.activeModal.close('Update'));
+      
     }
     
   }
