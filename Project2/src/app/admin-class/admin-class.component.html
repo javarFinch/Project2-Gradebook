@@ -1,8 +1,38 @@
-<p class="center">admin-class works!</p>
 <div class="col-12 center">
     <button class="btn btn-outline-primary">New Class</button>
 </div>
 <div class="col-8 offset-2">
-    
+        <div class=row>
+            <label for="searchInput">Search:</label>
+            <input type="text" name="searchInput" [(ngModel)]="input" value="{{input}}" (keyup)="searchTable()"/>
+        </div>
+        
+      
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col" (click)="sortClass(0)">Name</th>
+          <th scope="col" (click)="sortClass(1)" >Subject</th>
+          <th scope="col" (click)="sortClass(2)" >Teacher</th>
+          <th scope="col" (click)="sortClass(3)">Number of Students</th>
+        </tr>
+        </thead>
+        <tbody id="class-body">
+        <tr *ngFor="let class of classList">
+            <td>
+                <p>{{class.name}}</p>
+            </td>
+          <td>
+            <p>{{class.subject}}</p>
+          </td>
+          <td>
+            <p>{{class.teacherName}}</p>
+          </td>
+          <td>
+            <p>{{class.numberStudents}}</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 </div>
-

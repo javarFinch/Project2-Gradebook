@@ -36,13 +36,13 @@
 </div>
 <br>
 <div class="col-8 offset-2">
-  <div *ngIf="active==='Student'">
+  <div *ngIf="active=='Student'">
     <app-admin-student [studentList]="studentList"></app-admin-student>
   </div>
-  <div *ngIf="active==='Teacher'">
+  <div *ngIf="active=='Teacher'">
     <app-admin-teacher [teacherList]="teacherList"></app-admin-teacher>
   </div>
-  <div *ngIf="active==='Class'">
+  <div *ngIf="active=='Class'">
     <app-admin-class [classList]="classList"></app-admin-class>
   </div>
 

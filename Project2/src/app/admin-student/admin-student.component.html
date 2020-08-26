@@ -2,23 +2,24 @@
     <button class="btn btn-outline-primary">New Student</button>
 </div>
 <div class="col-8 offset-2">
-    <!-- <form>
-        <div class="form-group form-inline">
-            Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+        <div class=row>
+            <label for="searchInput">Search:</label>
+            <input type="text" name="searchInput" [(ngModel)]="input" value="{{input}}" (keyup)="searchTable()"/>
         </div>
-      </form> -->
+        
+      
       
       <table class="table table-striped">
         <thead>
         <tr>
-          <th scope="col">Id</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Number of Classes</th>
-          <th scope="col">GPA</th>
+          <th scope="col" (click)="sortStudents(0)">Id</th>
+          <th scope="col" (click)="sortStudents(1)" >First</th>
+          <th scope="col" (click)="sortStudents(2)" >Last</th>
+          <th scope="col" (click)="sortStudents(3)">Number of Classes</th>
+          <th scope="col" (click)="sortStudents(4)">GPA</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="student-body">
         <tr *ngFor="let student of studentList">
             <td>
                 <p>{{student.id}}</p>
@@ -33,7 +34,7 @@
             <p>{{student.numberClasses}}</p>
           </td>
           <td>
-            <p>{{student.gpa}}</p>
+            <p>{{student.gpa | number:'1.2-2'}}</p>
           </td>
         </tr>
         </tbody>
