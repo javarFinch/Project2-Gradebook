@@ -64,7 +64,7 @@ public class UserController {
         String type = info.get("type").toString();
         UsersEntity user = dao.updateUser(id, firstName, lastName, password, type);
         if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity(user, HttpStatus.OK);
         }

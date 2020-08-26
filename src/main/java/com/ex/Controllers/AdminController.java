@@ -88,7 +88,6 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<ClazzEntity> newClass(@RequestBody String data) {
         System.out.println(data);
-//        ClazzEntity clazz = new ClazzEntity();
         if (data == null) {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {

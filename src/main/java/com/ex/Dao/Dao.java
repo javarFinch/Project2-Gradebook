@@ -121,7 +121,7 @@ public interface Dao {
     public boolean updateGrade (String assignmentName, String assignmentType, int userID, int grade);
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int pairID);
+    public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID);
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public boolean assignStudent(int classID, int studentID);

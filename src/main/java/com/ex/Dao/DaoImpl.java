@@ -26,9 +26,7 @@ public class DaoImpl implements Dao {
 
     @Override
     public double format(double input) {
-        System.out.println("intput to format: "+input);
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println(df.format(input));
         return Double.parseDouble(df.format(input));
     }
 
