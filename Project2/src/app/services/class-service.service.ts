@@ -4,7 +4,7 @@ import { AdminClass } from './../Models/admin/admin-class';
 import { TeacherClass } from './../Models/teacher/teacher-class';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Class } from '../Models/Class';
+import { Class } from '../Models/class';
 import { User } from '../Models/user';
 import { Observable } from 'rxjs';
 
@@ -56,6 +56,10 @@ export class ClassService {
   }
   getAdminTeacher(): Observable<AdminTeacher[]> {
     return this.http.get<AdminTeacher[]>('http://localhost:8080/api/admin/teacher');
+  }
+
+  newUser(formData:FormData):Observable<User>{
+    return this.http.post<User>('http://localhost:8080/api/admin/newUser',formData);
   }
 }
 

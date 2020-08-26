@@ -25,6 +25,7 @@ import { AdminStudentComponent } from './admin-student/admin-student.component';
 import { AdminClassComponent } from './admin-class/admin-class.component';
 import { AdminTeacherComponent } from './admin-teacher/admin-teacher.component';
 import { NewUserComponent } from './new-user/new-user.component';
+import { DisplayUserComponent } from './display-user/display-user.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { NewUserComponent } from './new-user/new-user.component';
     AdminClassComponent,
     AdminTeacherComponent,
     NewUserComponent,
+    DisplayUserComponent,
 
     
   ],

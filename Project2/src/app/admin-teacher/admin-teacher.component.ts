@@ -1,5 +1,8 @@
 import { AdminTeacher } from './../Models/admin/admin-teacher';
 import { Component, OnInit, Input } from '@angular/core';
+import { ClassService } from '../services/class-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewUserComponent } from '../new-user/new-user.component';
 
 @Component({
   selector: 'app-admin-teacher',
@@ -12,11 +15,21 @@ export class AdminTeacherComponent implements OnInit {
 
   public input:string;
 
-  constructor() { }
+  constructor(private classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
+  openModal(){
+    const modalRef = this.modalService.open(NewUserComponent, {size:'md'});
+    modalRef.componentInstance.type = 'teacher';
+    modalRef.result.then((result) => {
 
+      if(result=='Update'){
+        //this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        
+      }
+    });
+}
 
   sortTeachers(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
