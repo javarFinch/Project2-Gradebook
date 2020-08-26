@@ -31,6 +31,10 @@ export class AdminComponent implements OnInit {
     console.log(history.state)
     this.currentUser=history.state;
     this.username=this.currentUser.firstName+" "+this.currentUser.lastName;
+
+    this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);});
+    this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);console.log('students: ',this.studentList);});
+    this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);});
   }
 
   logout(){

@@ -1,7 +1,7 @@
 export class AdminStudent {
   id: number;
-  firstName: string;
-  lastName: string;
-  numClasses: number;
+  fName: string;
+  lName: string;
+  numberClasses: number;
   gpa: number;
 }

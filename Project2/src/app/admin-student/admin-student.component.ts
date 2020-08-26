@@ -20,33 +20,12 @@ let studentList: AdminStudent[] = [
 })
 export class AdminStudentComponent implements OnInit {
 
- // @Input()  ;
+ @Input()  studentList: AdminStudent[];;
 
-  studentList: AdminStudent[];
+  
   
 
   constructor() {
-    this.studentList=[{
-      id:1,
-      firstName:'James',
-      lastName:'Veitengruber',
-      numClasses: 6,
-      gpa:4.0
-    },
-    {
-      id:2,
-      firstName:'Rachel',
-      lastName:'Veitengruber',
-      numClasses: 5,
-      gpa:3.0
-    },
-    {
-      id:3,
-      firstName:'Kurt',
-      lastName:'Veitengruber',
-      numClasses: 4,
-      gpa:2.0
-    }]
    }
 
   ngOnInit(): void {
