@@ -28,11 +28,14 @@ public class DaoImpl implements Dao {
     public double format(double input) {
         System.out.println("intput to format: "+input);
         if(Double.isNaN(input)){
+<<<<<<< HEAD
             input=-1;
 
+=======
+            input=0;
+>>>>>>> 357e32d332cfa357823828e9049ee622262360dc
         }
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println(df.format(input));
         return Double.parseDouble(df.format(input));
 
     }

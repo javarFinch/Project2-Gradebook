@@ -15,6 +15,21 @@ public class ClazzEntity {
     private int homeworkWeight;
     private int participationWeight;
 
+    public ClazzEntity() {
+
+    }
+
+    public ClazzEntity(int id, String className, String classSubject, int teacherId, int testWeight, int quizWeight, int homeworkWeight, int participationWeight) {
+        this.id = id;
+        this.className = className;
+        this.classSubject = classSubject;
+        this.teacherId = teacherId;
+        this.testWeight = testWeight;
+        this.quizWeight = quizWeight;
+        this.homeworkWeight = homeworkWeight;
+        this.participationWeight = participationWeight;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {

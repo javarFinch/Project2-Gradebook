@@ -50,7 +50,7 @@ import { NewClassComponent } from './new-class/new-class.component';
     DisplayUserComponent,
     NewClassComponent,
 
-    
+
   ],
   imports: [
     BrowserModule,
@@ -59,10 +59,9 @@ import { NewClassComponent } from './new-class/new-class.component';
     HttpClientModule,
     FormsModule,
     NgbNavModule
-    
   ],
   providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
+
