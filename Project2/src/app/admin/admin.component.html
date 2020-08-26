@@ -37,13 +37,13 @@
 <br>
 <div class="col-8 offset-2">
   <div *ngIf="active=='Student'">
-    <app-admin-student [studentList]="studentList"></app-admin-student>
+    <app-admin-student [studentList]="studentList" (studentListChange)="updateStudentList($event)"></app-admin-student>
   </div>
   <div *ngIf="active=='Teacher'">
-    <app-admin-teacher [teacherList]="teacherList"></app-admin-teacher>
+    <app-admin-teacher [teacherList]="teacherList" (teacherListChange)="updateClassList($event)"></app-admin-teacher>
   </div>
   <div *ngIf="active=='Class'">
-    <app-admin-class [classList]="classList"></app-admin-class>
+    <app-admin-class [classList]="classList" [teacherList]="teacherList" [studentList]="studentList" (classListChange)="updateClassList($event)"></app-admin-class>
   </div>
 
 </div>

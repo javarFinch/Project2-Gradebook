@@ -1,5 +1,8 @@
+import { NewClassComponent } from './../new-class/new-class.component';
 import { AdminTeacher } from './../Models/admin/admin-teacher';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ClassService } from '../services/class-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin-teacher',
@@ -9,14 +12,25 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AdminTeacherComponent implements OnInit {
 
   @Input()  teacherList: AdminTeacher[];
+  @Output() teacherListChange= new EventEmitter<AdminTeacher[]>();
 
   public input:string;
 
-  constructor() { }
+  constructor(private classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
+  openModal(){
+    const modalRef = this.modalService.open(NewClassComponent, {size:'md'});
+    modalRef.componentInstance.type = 'class';
+    modalRef.result.then((result) => {
 
+      if(result=='Update'){
+        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
+        
+      }
+    });
+}
 
   sortTeachers(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
