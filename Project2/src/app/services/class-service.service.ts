@@ -41,9 +41,9 @@ export class ClassService {
    updateClass(id:number): Observable<TeacherClass>{
      return this.http.get<TeacherClass>('http://localhost:8080/api/teacher/updateClass/'+id);
    }
-
-   updatePassword(formData:FormData):Observable<any>{
-     return this.http.post('http://localhost:8080/api/user/updatePassword',formData)
-   }
+   
+   updateUser(formData:FormData): Observable<User>{
+    return this.http.put<User>('http://localhost:8080/api/user/update/',formData);
+  }
 }
 

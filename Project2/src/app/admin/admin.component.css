@@ -1,16 +1,4 @@
-/* button {
-    border: black;
-    color: grey;
-    padding: 25px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  } */
-  
-  nav{
+nav{
     height:50px;
     background-color: rgba(83, 140, 245, 0.678);
 }
@@ -24,4 +12,8 @@
     bottom: 0;
     width:100%
     
+}
+.title{
+    /* background-color:white; */
+    border-bottom:double;
 }

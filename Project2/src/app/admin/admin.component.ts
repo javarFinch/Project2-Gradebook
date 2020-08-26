@@ -1,7 +1,13 @@
+import { AdminTeacher } from '../Models/admin/admin-teacher';
+import { AdminStudent } from '../Models/admin/admin-student';
+import { ClassService } from '../services/class-service.service';
+import { AdminClass } from '../Models/admin/admin-class';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Models/user';
-import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { PasswordModalComponent } from '../password-modal/password-modal.component';
+
 
 @Component({
   selector: 'app-admin',
@@ -10,13 +16,16 @@ import {NgbActiveModal, NgbModal, NgbNav, NgbNavConfig} from "@ng-bootstrap/ng-b
 })
 export class AdminComponent implements OnInit {
 
-  user: string;
+  
+  active = 'Student';
   username:string;
   currentUser:User;
+  studentList:AdminStudent[];
+  classList: AdminClass[];
+  teacherList: AdminTeacher[];
 
-  userArray: string[] = ['student', 'teacher', 'class']
 
-  constructor(public router:Router) { }
+  constructor(public router:Router,private classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     console.log(history.state)
@@ -24,12 +33,20 @@ export class AdminComponent implements OnInit {
     this.username=this.currentUser.firstName+" "+this.currentUser.lastName;
   }
 
-  selectDisplay(user: string){
-    this.user = user;
-  }
-
   logout(){
     this.router.navigate(['login']);
+  }
+
+  openModal(){
+    const modalRef = this.modalService.open(PasswordModalComponent, {size:'lg'});
+    modalRef.componentInstance.user = this.currentUser;
+    modalRef.result.then((result) => {
+
+      if(result=='Update'){
+        //this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        
+      }
+    });
   }
 
 }

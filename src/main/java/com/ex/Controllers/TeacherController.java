@@ -112,7 +112,7 @@ public class TeacherController {
         map.setHomeworkAverage(dao.classAveragePerType(clazz.getId()).get("homework"));
         map.setParticipationAverage(dao.classAveragePerType(clazz.getId()).get("participation"));
         map.setOverAllAverage(dao.classAverage(clazz.getId()));
-        
+
         return map;
     }
 

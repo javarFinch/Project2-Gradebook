@@ -194,12 +194,12 @@ public class DaoImpl implements Dao {
 
         UsersEntity user = new UsersEntity();
 
-        SQLQuery query = session.createSQLQuery("update users set first_name = ?, last_name = ?, type = ? where id = ? and password = ?");
+        SQLQuery query = session.createSQLQuery("update users set first_name = ?, last_name = ?, type = ? ,password = ? where id = ?");
         query.setString(0, firstName);
         query.setString(1, lastName);
         query.setString(2, type);
-        query.setInteger(3, ID);
-        query.setString(4, password);
+        query.setInteger(4, ID);
+        query.setString(3, password);
 
         if (query.executeUpdate()!=0) {
             user.setId(ID);
