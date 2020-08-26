@@ -52,5 +52,14 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+  updateStudentList($event){
+    this.studentList=$event
+  }
+  updateClassList($event){
+    this.classList=$event
+  }
+  updateTeacherList($event){
+    this.teacherList=$event
+  }
 
 }

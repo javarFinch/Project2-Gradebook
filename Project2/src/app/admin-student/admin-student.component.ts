@@ -1,6 +1,6 @@
 import { NewUserComponent } from './../new-user/new-user.component';
 import { AdminStudent } from './../Models/admin/admin-student';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ClassService } from '../services/class-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AdminStudentComponent implements OnInit {
 
  @Input()  studentList: AdminStudent[];
+ @Output() studentListChange= new EventEmitter<AdminStudent[]>();
 
  public input:string;
 
@@ -29,12 +30,19 @@ export class AdminStudentComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        //this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
         
       }
     });
   }
 
+  gpa(check):string{
+      if(check>0){    
+          return (Math.round(check * 100) / 100).toFixed(2).toString();
+      }else{
+          return '0.00';
+      }
+  }
 
 
   sortStudents(n) {
@@ -61,7 +69,7 @@ export class AdminStudentComponent implements OnInit {
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
             if (dir == "asc") {
-                if(n==0 || n==3||n==4){
+                if(n==0 || n==3){
                     //check numbers
                     console.log(x.lastChild.innerHTML,">",y.lastChild.innerHTML)
                     if (parseFloat(x.lastChild.innerHTML) > parseFloat(y.lastChild.innerHTML)) {
@@ -80,7 +88,7 @@ export class AdminStudentComponent implements OnInit {
                 }
 
             } else if (dir == "desc") {
-                if(n==0 || n==3||n==4){
+                if(n==0 || n==3){
                     if (parseFloat(x.lastChild.innerHTML) < parseFloat(y.lastChild.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
