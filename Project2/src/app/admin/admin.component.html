@@ -43,10 +43,11 @@
     <app-admin-teacher [teacherList]="teacherList" (teacherListChange)="updateClassList($event)"></app-admin-teacher>
   </div>
   <div *ngIf="active=='Class'">
-    <app-admin-class [classList]="classList" [teacherList]="teacherList" [studentList]="studentList" 
-    (studentListChange)="updateStudentList($event)"
-    (teacherListChange)="updateClassList($event)"
-    (classListChange)="updateClassList($event)"></app-admin-class>
+    <app-admin-class [classList]="classList" (classListChange)="updateClassList($event)"
+    [teacherList]="teacherList" (teacherListChange)="updateTeacherList($event)"
+    [studentList]="studentList" (studentListChange)="updateStudentList($event)"
+    
+    ></app-admin-class>
   </div>
 
 </div>

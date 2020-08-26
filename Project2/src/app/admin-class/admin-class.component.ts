@@ -41,13 +41,13 @@ export class AdminClassComponent implements OnInit {
 
   openModal(){
     const modalRef = this.modalService.open(NewClassComponent, {size:'lg'});
-    modalRef.componentInstance.type = 'student';
+    modalRef.componentInstance.type = 'class';
     modalRef.componentInstance.teachers=this.teachers;
     modalRef.componentInstance.studentList=this.studentList;
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);this.classListChange.emit(this.classList)});
+        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);console.log(this.classList);this.classListChange.emit(this.classList)});
         this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
         this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
         
