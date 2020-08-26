@@ -1,6 +1,8 @@
 package com.ex.tests;
 
 import com.ex.Dao.Dao;
+import com.ex.Models.APIThrowaways.*;
+import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Assert;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -23,6 +27,7 @@ import java.util.Map;
 
 @ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 public class DaoImplTests {
 
     @Autowired
@@ -57,7 +62,6 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void loginTest() {
-        //String[] user = dao.createUser();
         Assert.assertNotNull(dao.logIn(Integer.parseInt(student1[0]), student1[1]));
         Assert.assertNull(dao.logIn(0000, "doesnotexist"));
     }
@@ -97,7 +101,6 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void updateUserTest() {
-//        String[] usernamePassword = dao.createUser();
         Assert.assertNotNull(dao.updateUser(Integer.parseInt(student1[0]), "test", "test", student1[1], "student"));
         Assert.assertNull(dao.updateUser(0000, "test", "test", "doesnotexist", "student"));
     }
@@ -106,8 +109,6 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void getTeacherNameTest() {
-//        String[] usernamePassword = dao.createUser();
-//        Assert.assertNotNull(dao.updateUser(Integer.parseInt(usernamePassword[0]), "test", "test", usernamePassword[1], "teacher"));
         String actual = dao.getTeacherName(Integer.parseInt(teacher[0]));
         Assert.assertEquals("test test", actual);
     }
@@ -116,8 +117,6 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void updatePasswordTest() {
-//        String[] usernamePassword = dao.createUser();
-//        Assert.assertNotNull(dao.updateUser(Integer.parseInt(usernamePassword[0]), "test", "test", usernamePassword[1], "teacher"));
         Assert.assertTrue(dao.updatePassword(Integer.parseInt(student1[0]), "newpassword"));
         Assert.assertFalse(dao.updatePassword(0000, "doesnotexist"));
     }
@@ -126,24 +125,10 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void deleteUserTest() {
-//        String[] username = dao.createUser();
         Assert.assertTrue(dao.deleteUser(Integer.parseInt(student1[0])));
     }
 
-//    @Test
-//    @Transactional
-//    @Rollback
-//    public void getPairIDTest() {
-//        Assert.assertNotNull(dao.getPairID(2, 1002));
-//    }
-//
-//    @Test
-//    @Transactional
-//    @Rollback
-//    public void assignmentTypeGradeTest() {
-//
-//    }
-//
+
     @Test
     @Transactional
     @Rollback
@@ -152,36 +137,68 @@ public class DaoImplTests {
         Assert.assertNull(dao.getClazzById(0000));
     }
 
-//    @Test
-//    @Transactional
-//    @Rollback
-//    public void overAllGradeTest() {
-//
-//    }
+    @Test
+    @Transactional
+    @Rollback
+    public void overAllGradeTest() {
+        Assert.assertEquals(75.56, dao.overAllGrade(dao.getPairID(clazz.getId(), Integer.parseInt(student1[0]))), 0);
+    }
 
     @Test
     @Transactional
     @Rollback
     public void getAssignmentListByClassIDTest() {
-        Map<String, Object> map1 = new HashMap<>();
-        Map<String, Object> map2 = new HashMap<>();
+        ArrayList<StudentGrade> gradeList1 = new ArrayList<>();
+        ArrayList<StudentGrade> gradeList2 = new ArrayList<>();
+        TeacherAssignment ts1 = new TeacherAssignment();
+        TeacherAssignment ts2 = new TeacherAssignment();
+        StudentGrade sg1 = new StudentGrade();
+        StudentGrade sg2 = new StudentGrade();
+        StudentGrade sg3 = new StudentGrade();
+        StudentGrade sg4 = new StudentGrade();
 
-        map1.put("assignmentName", "test");
-        map1.put("assignmentType", "test");
-        map1.put("totalPoints", 100);
-        map1.put("dueDate", "28-08-2020");
+        ts1.setAssignmentName("test");
+        ts1.setAssignmentType("test");
+        ts1.setTotalPoints(100);
+        ts1.setDueDate("28-08-2020");
+        sg1.setStudentID(Integer.parseInt(student1[0]));
+        sg1.setFirstName("test");
+        sg1.setLastName("test");
+        sg1.setPoints(80);
+        sg2.setStudentID(Integer.parseInt(student1[0]));
+        sg2.setFirstName("test");
+        sg2.setLastName("test");
+        sg2.setPoints(50);
 
-        map2.put("assignmentName", "quiz");
-        map2.put("assignmentType", "quiz");
-        map2.put("totalPoints", 75);
-        map2.put("dueDate", "28-08-2020");
+        ts2.setAssignmentName("quiz");
+        ts2.setAssignmentType("quiz");
+        ts2.setTotalPoints(75);
+        ts2.setDueDate("28-08-2020");
+        sg3.setStudentID(Integer.parseInt(student2[0]));
+        sg3.setFirstName("test");
+        sg3.setLastName("test");
+        sg3.setPoints(70);
+        sg4.setStudentID(Integer.parseInt(student2[0]));
+        sg4.setFirstName("test");
+        sg4.setLastName("test");
+        sg4.setPoints(60);
+        gradeList1.add(sg1);
+        gradeList1.add(sg3);
+        gradeList2.add(sg2);
+        gradeList2.add(sg4);
 
-        ArrayList<Map<String, Object>> actual = new ArrayList<>();
+        ArrayList<TeacherAssignment> assignmentList = new ArrayList<>();
 
-        actual.add(map1);
-        actual.add(map2);
+        ts1.setGradeList(gradeList1);
+        ts2.setGradeList(gradeList2);
 
-        Assert.assertEquals(actual, dao.getAssignmentListByClassID(clazz.getId()));
+        assignmentList.add(ts1);
+        assignmentList.add(ts2);
+
+        Assert.assertEquals(assignmentList.get(0).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(0).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(1).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(0).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(0).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(1).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(1).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(1).getPoints(), 0);
     }
 
     @Test
@@ -259,4 +276,44 @@ public class DaoImplTests {
         Assert.assertEquals(2, dao.studentGPA(Integer.parseInt(student1[0])), 0);
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void getStudentListTest() {
+//        ArrayList<StudentList> list = dao.getStudentList();
+//        for (int i=0; i<list.size(); i++) {
+//            System.out.println("StudentList: "+list.get(i).getId());
+//            System.out.println("StudentList: "+list.get(i).getGpa());
+//            System.out.println("StudentList: "+list.get(i).getNumberClasses());
+//            System.out.println("StudentList: "+list.get(i).getfName());
+//        }
+        Assert.assertNotNull(dao.getStudentList());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void getTeacherListTest() {
+//        ArrayList<TeacherList> list = dao.getTeacherList();
+//        for (int i=0; i<list.size(); i++) {
+//            System.out.println("TeacherList: "+list.get(i).getId());
+//            System.out.println("TeacherList: "+list.get(i).getfName());
+//            System.out.println("TeacherList: "+list.get(i).getNumberClasses());
+//        }
+        Assert.assertNotNull(dao.getTeacherList());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void getClassListTest() {
+//        ArrayList<AllClasses> list = dao.getClassList();
+//        for (int i=0; i<list.size(); i++) {
+//            System.out.println("ClassList: "+list.get(i).getName());
+//            System.out.println("ClassList: "+list.get(i).getSubject());
+//            System.out.println("ClassList: "+list.get(i).getTeacherName());
+//            System.out.println("ClassList: "+list.get(i).getNumberStudents());
+//        }
+        Assert.assertNotNull(dao.getClassList());
+    }
 }

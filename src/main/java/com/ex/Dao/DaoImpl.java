@@ -1,7 +1,6 @@
 package com.ex.Dao;
 
-import com.ex.Models.APIThrowaways.StudentGrade;
-import com.ex.Models.APIThrowaways.TeacherAssignment;
+import com.ex.Models.APIThrowaways.*;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
@@ -11,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -679,5 +680,72 @@ public class DaoImpl implements Dao {
             }
         }
         return format(gpa/pairID.size());
+    }
+
+    @Override
+    public ArrayList<StudentList> getStudentList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<StudentList> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("Select id, first_name, last_name from users where type = 'student'");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row : results) {
+            StudentList sList = new StudentList();
+            sList.setId(Integer.parseInt(row[0].toString()));
+            sList.setfName(row[1].toString());
+            sList.setlName(row[2].toString());
+            sList.setNumberClasses(numberOfClassesForStudent(Integer.parseInt(row[0].toString())));
+            sList.setGpa(studentGPA(Integer.parseInt(row[0].toString())));
+            list.add(sList);
+        }
+        return list;
+    }
+
+    @Override
+    public ArrayList<TeacherList> getTeacherList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<TeacherList> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("Select id, first_name, last_name from users where type = 'teacher'");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row : results) {
+            TeacherList tList = new TeacherList();
+            tList.setId(Integer.parseInt(row[0].toString()));
+            tList.setfName(row[1].toString());
+            tList.setlName(row[2].toString());
+            tList.setNumberClasses(numberOfClassesForTeacher(Integer.parseInt(row[0].toString())));
+            list.add(tList);
+        }
+        return list;
+    }
+
+    @Override
+    public ArrayList<AllClasses> getClassList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<AllClasses> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("select id, class_name, class_subject, teacher_id from class");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row: results) {
+            AllClasses cList = new AllClasses();
+            cList.setName(row[1].toString());
+            cList.setSubject(row[2].toString());
+            cList.setTeacherName(getTeacherName(Integer.parseInt(row[3].toString())));
+            cList.setNumberStudents(numberOfStudentsInClass(Integer.parseInt(row[0].toString())));
+            list.add(cList);
+        }
+        return list;
     }
 }
