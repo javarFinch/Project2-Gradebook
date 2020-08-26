@@ -1,5 +1,10 @@
+import { AdminStudent } from './../Models/admin/admin-student';
+import { AdminTeacher } from './../Models/admin/admin-teacher';
+import { NewClassComponent } from './../new-class/new-class.component';
 import { AdminClass } from './../Models/admin/admin-class';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ClassService } from '../services/class-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin-class',
@@ -9,14 +14,41 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AdminClassComponent implements OnInit {
 
   @Input()  classList: AdminClass[];
+  @Input()  teacherList: AdminTeacher[];
+  @Input()  studentList:AdminStudent[];
+  @Output() classListChange= new EventEmitter<AdminClass[]>();
 
  public input:string;
+ public teachers:string[];
+ public students:string[];
 
-  constructor() { }
+  constructor(private classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+      this.teachers=this.generateTeachers();
   }
 
+  generateTeachers():string[]{
+      let output=[];
+      for(let teacher of this.teacherList){
+          let hold=teacher.id+'-('+teacher.fName+' '+teacher.lName+')';
+        output.push(hold)
+      }
+      return output;
+  }
+
+  openModal(){
+    const modalRef = this.modalService.open(NewClassComponent, {size:'md'});
+    modalRef.componentInstance.type = 'student';
+    modalRef.componentInstance.teachers=this.teachers;
+    modalRef.result.then((result) => {
+
+      if(result=='Update'){
+        //this.classService.getClassList().subscribe((c: AdminClass[]) => {(this.classList = c);this.classListChange.emit(this.classList)});
+        
+      }
+    });
+  }
 
   sortClass(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

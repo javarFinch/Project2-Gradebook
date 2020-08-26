@@ -25,6 +25,8 @@ import { AdminStudentComponent } from './admin-student/admin-student.component';
 import { AdminClassComponent } from './admin-class/admin-class.component';
 import { AdminTeacherComponent } from './admin-teacher/admin-teacher.component';
 import { NewUserComponent } from './new-user/new-user.component';
+import { DisplayUserComponent } from './display-user/display-user.component';
+import { NewClassComponent } from './new-class/new-class.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { NewUserComponent } from './new-user/new-user.component';
     AdminClassComponent,
     AdminTeacherComponent,
     NewUserComponent,
+    DisplayUserComponent,
+    NewClassComponent,
 
     
   ],
@@ -54,8 +58,8 @@ import { NewUserComponent } from './new-user/new-user.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    NgbNavModule,
-    NgbNav
+    NgbNavModule
+    
   ],
   providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
