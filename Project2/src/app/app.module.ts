@@ -46,7 +46,7 @@ import { NewUserComponent } from './new-user/new-user.component';
     AdminTeacherComponent,
     NewUserComponent,
 
-    
+
   ],
   imports: [
     BrowserModule,
@@ -54,11 +54,10 @@ import { NewUserComponent } from './new-user/new-user.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    NgbNavModule,
-    NgbNav
+    NgbNavModule
   ],
   providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
+

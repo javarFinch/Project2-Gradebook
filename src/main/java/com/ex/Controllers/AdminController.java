@@ -94,12 +94,18 @@ public class AdminController {
             ObjectMapper om = new ObjectMapper();
             try {
                 Map<String, Object> check = om.readValue(data,Map.class);
-                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(check.get("teacherId").toString()));
+                String id = check.get("teacherId").toString();
+                int i = id.indexOf('-');
+                id = id.substring(0, i);
+                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(id));
                 String studentIds = check.get("studentList").toString();
-                String str[] = studentIds.split(", ");
-                List<String> list = Arrays.asList(str);
-                for (String s: list) {
-                    dao.assignStudent(clazz.getId(), Integer.parseInt(s));
+                String[] str = studentIds.split(", ");
+                for (int j=0; j<str.length; j++) {
+                    if (str[j].contains("[")||str[j].contains("]")) {
+                        str[j] = str[j].replace("[", "");
+                        str[j] = str[j].replace("]", "");
+                    }
+                    dao.assignStudent(clazz.getId(), Integer.parseInt(str[j]));
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

@@ -53,7 +53,7 @@ public class TeacherController {
         }
     }
 
-    @GetMapping(path = "/update", consumes = "application/json")
+    @PostMapping(path = "/update", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<String> updateGrade(@RequestBody String data) {
         if(data==null){
@@ -68,7 +68,8 @@ public class TeacherController {
                 hold=hold.substring(1,hold.length()-1);
                 String[] list = hold.split(", ");
                 for(String pair : list){
-                    String[]a = pair.split("=");
+                    String[] a = pair.split("=");
+                    System.out.println(a[0]);
                     dao.updateGrade(check.get("name").toString(),check.get("type").toString(),Integer.parseInt(a[0]),Integer.parseInt(a[1]));
                 }
             } catch (JsonProcessingException e) {
