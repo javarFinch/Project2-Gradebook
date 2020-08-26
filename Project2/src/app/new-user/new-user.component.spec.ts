@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ModalComponent } from './modal.component';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewUserComponent } from './new-user.component';
 
 describe('NewUserComponent', () => {
@@ -8,6 +10,8 @@ describe('NewUserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ ModalComponent ],
+      providers: [NgbNavModule]
       declarations: [ NewUserComponent ]
     })
     .compileComponents();
