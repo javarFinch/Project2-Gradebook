@@ -1,0 +1,41 @@
+<div class="col-12 center">
+    <button class="btn btn-outline-primary">New Student</button>
+</div>
+<div class="col-8 offset-2">
+    <!-- <form>
+        <div class="form-group form-inline">
+            Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+        </div>
+      </form> -->
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Number of Classes</th>
+          <th scope="col">GPA</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let student of studentList">
+            <td>
+                <p>{{student.id}}</p>
+            </td>
+          <td>
+            <p>{{student.fName}}</p>
+          </td>
+          <td>
+            <p>{{student.lName}}</p>
+          </td>
+          <td>
+            <p>{{student.numberClasses}}</p>
+          </td>
+          <td>
+            <p>{{student.gpa}}</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+</div>

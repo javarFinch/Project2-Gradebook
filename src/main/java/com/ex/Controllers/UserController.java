@@ -57,10 +57,10 @@ public class UserController {
     public ResponseEntity<UsersEntity> update(@RequestBody String data) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         Map<String,Object> info = om.readValue(data,Map.class);
-        int id = Integer.parseInt(info.get("id").toString());
+        int id = Integer.parseInt(info.get("userId").toString());
         String firstName=info.get("firstName").toString();
         String lastName=info.get("lastName").toString();
-        String password=info.get("password").toString();
+        String password=info.get("new1").toString();
         String type = info.get("type").toString();
         UsersEntity user = dao.updateUser(id, firstName, lastName, password, type);
         if (user == null) {
