@@ -17,6 +17,8 @@ export class AdminClassComponent implements OnInit {
   @Input()  teacherList: AdminTeacher[];
   @Input()  studentList:AdminStudent[];
   @Output() classListChange= new EventEmitter<AdminClass[]>();
+  @Output() studentListChange= new EventEmitter<AdminStudent[]>();
+  @Output() teacherListChange= new EventEmitter<AdminTeacher[]>();
 
  public input:string;
  public teachers:string[];
@@ -45,7 +47,9 @@ export class AdminClassComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        //this.classService.getClassList().subscribe((c: AdminClass[]) => {(this.classList = c);this.classListChange.emit(this.classList)});
+        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);this.classListChange.emit(this.classList)});
+        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
+        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
         
       }
     });

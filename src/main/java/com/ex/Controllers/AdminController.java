@@ -95,8 +95,11 @@ public class AdminController {
             ObjectMapper om = new ObjectMapper();
             try {
                 Map<String, Object> check = om.readValue(data,Map.class);
-                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(check.get("teacherId").toString()));
-                String studentIds = check.get("studentList").toString();
+                String[] teacherId=check.get("teacherId").toString().split("-");
+                ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(teacherId[0]));
+                String studentIds = check.get("studentIds").toString();
+                System.out.println(studentIds);
+                studentIds=studentIds.substring(1,studentIds.length()-1);
                 String str[] = studentIds.split(", ");
                 List<String> list = Arrays.asList(str);
                 for (String s: list) {

@@ -45,7 +45,7 @@ export class NewClassComponent implements OnInit {
     console.log("Form Validation: ",formData.value)
     if(this.formValidation()){
       console.log("Form Sent:",formData.value);
-      //this.classService.newClass(formData.value).subscribe();
+      this.classService.newClass(formData.value).subscribe();
       this.activeModal.close('Update')
     }
     
