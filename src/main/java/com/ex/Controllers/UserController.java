@@ -68,16 +68,16 @@ public class UserController {
         }
     }
 
-    //@RequestParam String oldPassword,@RequestParam String newPassword
-    @PutMapping(path = "/newpassword/{userId}/{newPassword}")
-    @ResponseBody
-    public ResponseEntity<String> changePassword (@PathVariable int userId, @PathVariable String newPassword) {
-        boolean check = dao.updatePassword(userId, newPassword);
-        if (!check) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            return new ResponseEntity(HttpStatus.OK);
-        }
-    }
+//    //@RequestParam String oldPassword,@RequestParam String newPassword
+//    @PutMapping(path = "/newpassword/{userId}/{newPassword}")
+//    @ResponseBody
+//    public ResponseEntity<String> changePassword (@PathVariable int userId, @PathVariable String newPassword) {
+//        boolean check = dao.updatePassword(userId, newPassword);
+//        if (!check) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            return new ResponseEntity(HttpStatus.OK);
+//        }
+//    }
 
 }
