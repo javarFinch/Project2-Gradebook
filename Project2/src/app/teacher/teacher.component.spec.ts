@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TeacherComponent } from './teacher.component';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { NgbNavModule, NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { Grade } from '../Models/teacher/grade';
+import { AppComponent } from '../app.component';
 
 describe('TeacherComponent', () => {
   let component: TeacherComponent;
@@ -8,7 +12,9 @@ describe('TeacherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeacherComponent ]
+      declarations: [ TeacherComponent],
+      imports: [NgbNav],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
   }));

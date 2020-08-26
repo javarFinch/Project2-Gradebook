@@ -54,9 +54,10 @@ import { NewUserComponent } from './new-user/new-user.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    NgbNavModule
+    NgbNavModule,
+    NgbNav
   ],
-  providers: [ClassService, HttpClientModule,NgbNavModule],
+  providers: [ClassService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
