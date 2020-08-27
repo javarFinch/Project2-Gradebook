@@ -35,3 +35,4 @@ after_success:
   - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
 
   - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/travis:latest
+
