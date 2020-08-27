@@ -28,6 +28,20 @@ describe('PasswordModalComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should confirm', () => {
+    const user = new User()
+    user.id= 1;
+    user.firstName='fName';
+    user.lastName='lName';
+    user.type='student'
+    user.password= 'password'
+    component.current = 'yes'
+    
+    const result = component.formValidation();
+    expect(result).toBe(false);
+  
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

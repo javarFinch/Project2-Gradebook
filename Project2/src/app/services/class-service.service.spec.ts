@@ -9,6 +9,8 @@ import {
 } from '@angular/common/http/testing';
 import { User } from '../Models/user';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { Class } from '../Models/class';
+import { TeacherAssignment } from '../Models/teacher/teacher-assignment';
 
 describe('ClassServiceService', () => {
   let service: ClassService;
@@ -89,13 +91,15 @@ describe('ClassServiceService', () => {
     httpMock.verify();
   }));
 
-    // it('should retrieve a class list', async(()) => {
-    //   const classList = [
-    //     {
+  // it('should update a class ', async(()) => {
+  //   const grade = new Grade(1001, 'testFirst', 'testLast', 100);
+  //   const assignment= new TeacherAssignment ([grade], '07/25/2020', 100, 'Assignment1', 'Assignment'); 
+  //   const class = new Class(0, 0, 'Subject', 0, 0, [(TeacherAssignment)], 0, 0, 0, 'Class', 0, 0, 'Teacher');
+  //       {
           
-    //     }
-    //   ]
-    // }
+  //        }
+  //      ]
+  //    }
 
   afterEach(() => {
     TestBed.resetTestingModule();

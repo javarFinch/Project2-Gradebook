@@ -36,6 +36,13 @@ describe('NewUserComponent', () => {
     expect(compiled.querySelector('h4').textContent).toBe('New ');
   });
 
+  it('should confirm', () => {
+    component.firstName = '';
+    const result = component.formValidation();
+    expect(result).toBe(false);
+  
+  });
+
 
   afterEach(() => {
     TestBed.resetTestingModule();
