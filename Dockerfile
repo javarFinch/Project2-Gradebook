@@ -1,11 +1,19 @@
-FROM node:alpine as builder
-WORKDIR '/app'
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+# start with the tomcat parent image
+FROM tomcat:8.5-jdk8-openjdk
 
-FROM nginx
+#switch to the tomcat base dir
+WORKDIR $CATALINA_HOME
 
-COPY --from=builder /app/dist/* /usr/share/nginx/html
-EXPOSE 3000
+# create an env variable that points to our war on the local machine
+ARG WAR_FILE=./target/*.war
+
+#copy the war file to the webapps directory of tomcat
+COPY $WAR_FILE ./webapps/ROOT.war
+
+# expose port 8080
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+
+#image definition complete
+
