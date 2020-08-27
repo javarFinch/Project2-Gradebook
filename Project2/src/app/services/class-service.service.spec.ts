@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { ClassService } from './class-service.service';
 
@@ -8,8 +8,8 @@ describe('ClassServiceService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClient],
-      providers: [ClassService]
+      imports: [HttpClientModule],
+      providers: [ClassService, HttpClient]
     });
     service = TestBed.inject(ClassService);
   });

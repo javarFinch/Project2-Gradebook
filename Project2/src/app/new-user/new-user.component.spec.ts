@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgbNavModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewUserComponent } from './new-user.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 describe('NewUserComponent', () => {
   let component: NewUserComponent;
@@ -11,7 +12,8 @@ describe('NewUserComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NewUserComponent ],
-      providers: [NgbNavModule, NgbActiveModal]
+      imports: [HttpClientModule],
+      providers: [HttpClient, NgbNavModule, NgbActiveModal]
     })
     .compileComponents();
   }));

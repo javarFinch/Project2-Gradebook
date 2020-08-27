@@ -5,6 +5,7 @@ import { StudentComponent } from './student.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { NgbNavModule, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from '../app.component';
+import { Router, RouterModule } from '@angular/router';
 
 describe('StudentComponent', () => {
   let component: StudentComponent;
@@ -13,8 +14,8 @@ describe('StudentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StudentComponent],
-      imports: [NgbNavModule],
-      providers: [ClassService, HttpClient, HttpHandler ]
+      imports: [NgbNavModule, RouterModule],
+      providers: [ClassService, HttpClient, HttpHandler, Router ]
     })
     .compileComponents();
   }));
