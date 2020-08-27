@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
     this.username=this.currentUser.firstName+" "+this.currentUser.lastName;
 
     this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);});
-    this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);console.log('students: ',this.studentList);});
+    this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);});
     this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);});
   }
 
@@ -51,6 +51,18 @@ export class AdminComponent implements OnInit {
         
       }
     });
+  }
+  updateStudentList($event){
+    this.studentList=$event
+    console.log("student list updated")
+  }
+  updateClassList($event){
+    this.classList=$event
+    console.log("class list updated")
+  }
+  updateTeacherList($event){
+    this.teacherList=$event
+    console.log("teacher list updated")
   }
 
 }

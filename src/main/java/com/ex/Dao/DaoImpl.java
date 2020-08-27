@@ -27,9 +27,13 @@ public class DaoImpl implements Dao {
     @Override
     public double format(double input) {
         System.out.println("intput to format: "+input);
+        if(Double.isNaN(input)){
+            input=-1;
+
+        }
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println(df.format(input));
         return Double.parseDouble(df.format(input));
+
     }
 
     @Autowired
@@ -665,21 +669,31 @@ public class DaoImpl implements Dao {
         for (Integer i : pairID) {
             array.add(overAllGrade(i));
         }
-        double gpa = 0;
+        //double gpa = 0;
+        double sum=0;
+        int count = 0;
         for (int i=0;i<pairID.size();i++) {
-            if (array.get(i) >= 90) {
-                gpa += 4;
-            } else if (array.get(i) >= 80) {
-                gpa += 3;
-            } else if (array.get(i) >= 70) {
-                gpa += 2;
-            } else if (array.get(i) >= 60) {
-                gpa += 1;
-            } else if (array.get(i) < 60) {
-                gpa += 0;
+//            if (array.get(i) >= 90) {
+//                gpa += 4;
+//            } else if (array.get(i) >= 80) {
+//                gpa += 3;
+//            } else if (array.get(i) >= 70) {
+//                gpa += 2;
+//            } else if (array.get(i) >= 60) {
+//                gpa += 1;
+//            } else if (array.get(i) < 60) {
+//                gpa += 0;
+//            }
+            if(array.get(i)<0){
+                //do nothing, no overall grade
+            }else{
+                sum+=array.get(i);
+                count++;
             }
         }
-        return format(gpa/pairID.size());
+        double avg=(sum/count)/100;
+        //return format(gpa/pairID.size());
+        return format(4*avg);
     }
 
     @Override

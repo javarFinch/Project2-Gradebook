@@ -32,8 +32,8 @@ export class PasswordModalComponent implements OnInit {
   updatePassword(formData){
     console.log("updating: ",this.user)
     if(this.formValidation()){
-      this.classService.updateUser(formData.value).subscribe((c:User)=>this.user=c);
-      this.activeModal.close('Update')
+      this.classService.updateUser(formData.value).subscribe((c:User)=>{this.user=c;this.activeModal.close('Update')});
+      
     }
     
   }

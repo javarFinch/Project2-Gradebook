@@ -8,6 +8,7 @@ import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,21 +53,23 @@ public class TeacherController {
         }
     }
 
-    @GetMapping(path = "/update", consumes = "application/json")
+    @PostMapping(path = "/update", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<String> classList(@RequestBody String data) {
+    public ResponseEntity<String> updateGrade(@RequestBody String data) {
         if(data==null){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }else{
             System.out.println(data);
             ObjectMapper om = new ObjectMapper();
             try {
                 Map<String,Object> check = om.readValue(data,Map.class);
                 String hold = check.get("data").toString();
+                System.out.println("I'm here: "+hold);
                 hold=hold.substring(1,hold.length()-1);
                 String[] list = hold.split(", ");
                 for(String pair : list){
-                    String[]a = pair.split("=");
+                    String[] a = pair.split("=");
+                    System.out.println(a[0]);
                     dao.updateGrade(check.get("name").toString(),check.get("type").toString(),Integer.parseInt(a[0]),Integer.parseInt(a[1]));
                 }
             } catch (JsonProcessingException e) {
@@ -88,7 +91,6 @@ public class TeacherController {
             TeacherClass output= generateClassObject(holder);
             return new ResponseEntity(output,HttpStatus.OK);
         }
-
     }
 
     private TeacherClass generateClassObject(ClazzEntity clazz){
@@ -103,16 +105,18 @@ public class TeacherController {
         map.setHomeworkWeight(clazz.getHomeworkWeight());
         map.setParticipationWeight(clazz.getParticipationWeight());
 
-
         map.setAssignmentList(dao.getAssignmentListByClassID(clazz.getId()));
 
-        //these should be class averages
-        map.setTestAverage(dao.classAveragePerType(clazz.getId()).get("test"));
-        map.setQuizAverage(dao.classAveragePerType(clazz.getId()).get("quiz"));
-        map.setHomeworkAverage(dao.classAveragePerType(clazz.getId()).get("homework"));
-        map.setParticipationAverage(dao.classAveragePerType(clazz.getId()).get("participation"));
-        map.setOverAllAverage(dao.classAverage(clazz.getId()));
-
+        try {
+            //these should be class averages
+            map.setTestAverage(dao.classAveragePerType(clazz.getId()).get("test"));
+            map.setQuizAverage(dao.classAveragePerType(clazz.getId()).get("quiz"));
+            map.setHomeworkAverage(dao.classAveragePerType(clazz.getId()).get("homework"));
+            map.setParticipationAverage(dao.classAveragePerType(clazz.getId()).get("participation"));
+            map.setOverAllAverage(dao.classAverage(clazz.getId()));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return map;
     }
 
@@ -121,7 +125,7 @@ public class TeacherController {
     public ResponseEntity<String> newAssignment(@RequestBody String data) {
         System.out.println(data);
         if(data==null){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }else{
             ObjectMapper om = new ObjectMapper();
             try {
@@ -132,12 +136,10 @@ public class TeacherController {
                 String dueDate="";
                 if(date[2].split("=")[1].length()!=2){
                     dueDate+="0";
-
                 }
                 dueDate+=date[2].split("=")[1]+"-";
                 if(date[1].split("=")[1].length()!=2){
                     dueDate+="0";
-
                 }
                 dueDate+=date[1].split("=")[1]+"-";
                 dueDate+=date[0].split("=")[1];

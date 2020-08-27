@@ -28,11 +28,8 @@ public class StudentController {
     @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<ArrayList<StudentClass>> classList(@PathVariable int id) {
-
         ArrayList<StudentClass> arraylist1 = new ArrayList<>();
-
         ArrayList<ClazzEntity> classes = dao.getClassForStudent(id);
-
         for (int i=0; i<classes.size(); i++) {
             StudentClass map = new StudentClass();
             map.setClassName(classes.get(i).getClassName());
@@ -50,9 +47,8 @@ public class StudentController {
             map.setOverAllGrade(dao.overAllGrade(dao.getPairID(classes.get(i).getId(), id)));
             arraylist1.add(map);
         }
-
         if (arraylist1 == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity(arraylist1, HttpStatus.OK);
         }

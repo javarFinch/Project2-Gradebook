@@ -1,0 +1,102 @@
+<div class="modal-header">
+    <h4 class="modal-title">New {{type}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form #newClassForm="ngForm" (ngSubmit)="newClass(newClassForm)">
+        <input type="hidden" class="form-control" [(ngModel)]="studentIds" name="studentIds"value="{{studentIds}}"/>
+          <div class=row>
+            <label class="col-2 offset-2"for="name">Title:</label>
+            <input type="text" class="form-control col-5" [(ngModel)]="name" name="name"value="{{name}}"/>
+            <label class="col-3 ml-auto error" for="name">{{nameError}}</label>   
+          </div>
+          <br>
+          <div class="row">
+            <label class="col-2 offset-2" for="subject">Subject:</label>
+            <input
+              id="subject"
+              type="text"
+              class="form-control col-5"
+              [(ngModel)]="subject"
+              name="subject"
+              [ngbTypeahead]="search"
+              (focus)="focus$.next($any($event).target.value)"
+              (click)="click$.next($any($event).target.value)"
+              #instance="ngbTypeahead"
+            />
+            <label class="col-3 ml-auto error"for="subject">{{subjectError}}</label>
+          </div>
+          <br>
+          <div class="row">
+            <label class="col-2 offset-2" for="teacherId">Teacher:</label>
+            <input
+              id="subject"
+              type="text"
+              class="form-control col-5"
+              [(ngModel)]="teacherId"
+              name="teacherId"
+              [ngbTypeahead]="search2"
+              (focus)="focus2$.next($any($event).target.value)"
+              (click)="click2$.next($any($event).target.value)"
+              #instance2="ngbTypeahead"
+            />
+            <label class="col-3 ml-auto error"for="teacherId">{{teacherError}}</label>
+          </div>
+          <br>
+          <div class="col-10 offset-1">
+            <div class=row>
+                <div class="col-6">
+                    <label for="searchInput">Search:</label>
+                <input type="text" name="searchInput" [(ngModel)]="input" value="{{input}}" (keyup)="searchTable()" />
+                </div>
+                <div class="col-2">
+                    <label>Selected: {{count}}</label>
+                </div>
+                <div class="col-4">
+                    <p class="error">{{studentError}}</p>
+                </div>
+                
+            </div>
+          </div>
+          <div class="scrollable col-10 offset-1">
+            <table class="table table-striped scrollable">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+              <th scope="col" (click)="sortStudents(1)">Id</th>
+              <th scope="col" (click)="sortStudents(2)" >First</th>
+              <th scope="col" (click)="sortStudents(3)" >Last</th>
+              <th scope="col" (click)="sortStudents(4)">Number of Classes</th>
+             
+            </tr>
+            </thead>
+            <tbody id="student-body">
+            <tr *ngFor="let student of studentList">
+                <td>
+                    <input type="checkbox" (change)="changed()"/>
+                </td>
+                <td>
+                    <p>{{student.id}}</p>
+                </td>
+              <td>
+                <p>{{student.fName}}</p>
+              </td>
+              <td>
+                <p>{{student.lName}}</p>
+              </td>
+              <td>
+                <p>{{student.numberClasses}}</p>
+              </td>
+              
+            </tr>
+            </tbody>
+          </table>
+          </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="newClass(newClassForm)">Create</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>

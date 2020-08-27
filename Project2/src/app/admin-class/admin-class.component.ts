@@ -1,5 +1,10 @@
+import { AdminStudent } from './../Models/admin/admin-student';
+import { AdminTeacher } from './../Models/admin/admin-teacher';
+import { NewClassComponent } from './../new-class/new-class.component';
 import { AdminClass } from './../Models/admin/admin-class';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ClassService } from '../services/class-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin-class',
@@ -9,14 +14,46 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AdminClassComponent implements OnInit {
 
   @Input()  classList: AdminClass[];
+  @Input()  teacherList: AdminTeacher[];
+  @Input()  studentList:AdminStudent[];
+  @Output() classListChange= new EventEmitter<AdminClass[]>();
+  @Output() studentListChange= new EventEmitter<AdminStudent[]>();
+  @Output() teacherListChange= new EventEmitter<AdminTeacher[]>();
 
  public input:string;
+ public teachers:string[];
+ public students:string[];
 
-  constructor() { }
+  constructor(private classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+      this.teachers=this.generateTeachers();
   }
 
+  generateTeachers():string[]{
+      let output=[];
+      for(let teacher of this.teacherList){
+          let hold=teacher.id+'-('+teacher.fName+' '+teacher.lName+')';
+        output.push(hold)
+      }
+      return output;
+  }
+
+  openModal(){
+    const modalRef = this.modalService.open(NewClassComponent, {size:'lg'});
+    modalRef.componentInstance.type = 'class';
+    modalRef.componentInstance.teachers=this.teachers;
+    modalRef.componentInstance.studentList=this.studentList;
+    modalRef.result.then((result) => {
+
+      if(result=='Update'){
+        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);console.log(this.classList);this.classListChange.emit(this.classList)});
+        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
+        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
+        
+      }
+    });
+  }
 
   sortClass(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

@@ -1,49 +1,129 @@
-import { NewUserComponent } from './../new-user/new-user.component';
 import { AdminStudent } from './../Models/admin/admin-student';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgbTypeahead, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, Observable, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ClassService } from '../services/class-service.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+const subjects=['Math','English','History','Science','Other'];
 
 
 @Component({
-  selector: 'app-admin-student',
-  templateUrl: './admin-student.component.html',
-  styleUrls: ['./admin-student.component.css']
+  selector: 'app-new-class',
+  templateUrl: './new-class.component.html',
+  styleUrls: ['./new-class.component.css']
 })
-export class AdminStudentComponent implements OnInit {
+export class NewClassComponent implements OnInit {
 
- @Input()  studentList: AdminStudent[];
- @Output() studentListChange= new EventEmitter<AdminStudent[]>();
+  @Input() type:string;
+  @Input() teachers:string[];
+  @Input() studentList:AdminStudent[];
 
- public input:string;
+  name:string;
+  subject:string;
+  teacherId:string;
+  studentIds:number[];
+  input:string;
 
-  constructor(private classService: ClassService,private modalService: NgbModal) {
-    
+  nameError:string;
+  subjectError:string;
+  teacherError:string;
+  studentError:string;
+
+  count:number;
+
+  constructor(public activeModal: NgbActiveModal,private classService: ClassService) {
+    console.log('students: ',this.studentList)
+    this.count=0;
    }
 
   ngOnInit(): void {
+    
   }
 
-  openModal(){
-    const modalRef = this.modalService.open(NewUserComponent, {size:'md'});
-    modalRef.componentInstance.type = 'student';
-    modalRef.result.then((result) => {
+  newClass(formData){
+    console.log("Form Validation: ",formData.value)
+    if(this.formValidation()){
+      console.log("Form Sent:",formData.value);
+      this.classService.newClass(formData.value).subscribe( c=>this.activeModal.close('Update'));
+      
+    }
+    
+  }
 
-      if(result=='Update'){
-        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
-        
+  formValidation():boolean{
+    let confirm=true;
+    this.subjectError='';
+    this.teacherError='';
+    this.studentError='';
+
+    if(this.name){
+      this.nameError='';
+    }else{
+      this.nameError="Invalid input";
+      confirm=false
+    }
+    if(!this.teachers.includes(this.teacherId)){
+      this.teacherError="invalid input";
+      confirm=false;
+    }
+    if(!subjects.includes(this.subject)){
+      this.subjectError='Invalid input'
+      confirm=false;
+    }
+    if(this.count===0){
+      this.studentError='Pick a student'
+      confirm=false;
+    }
+
+    return confirm;
+  }
+
+  
+  
+
+  @ViewChild('instance', {static: true}) instance: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  search = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => (term === '' ? subjects
+        : subjects.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
+
+  @ViewChild('instance2', {static: true}) instance2: NgbTypeahead;
+  focus2$ = new Subject<string>();
+  click2$ = new Subject<string>();
+  search2 = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup2$ = this.click2$.pipe(filter(() => !this.instance2.isPopupOpen()));
+    const inputFocus2$ = this.focus2$;
+
+    return merge(debouncedText$, inputFocus2$, clicksWithClosedPopup2$).pipe(
+      map(term => (term === '' ? this.teachers
+        : this.teachers.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
+
+  changed(){
+    this.count=0;
+    this.studentIds=[];
+    var rows;
+    var table = document.querySelector("#student-body");
+    rows = table.querySelectorAll('tr');
+    for(var i=0;i<rows.length;i++){
+      if(rows[i].getElementsByTagName("TD")[0].lastChild.checked){
+        this.count++;
+        this.studentIds.push(rows[i].getElementsByTagName("TD")[1].lastChild.innerHTML)
       }
-    });
+    }
   }
-
-  gpa(check):string{
-      if(check>0){    
-          return (Math.round(check * 100) / 100).toFixed(2).toString();
-      }else{
-          return '0.00';
-      }
-  }
-
 
   sortStudents(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -69,7 +149,7 @@ export class AdminStudentComponent implements OnInit {
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
             if (dir == "asc") {
-                if(n==0 || n==3){
+                if(n==1 || n==4){
                     //check numbers
                     console.log(x.lastChild.innerHTML,">",y.lastChild.innerHTML)
                     if (parseFloat(x.lastChild.innerHTML) > parseFloat(y.lastChild.innerHTML)) {
@@ -88,7 +168,7 @@ export class AdminStudentComponent implements OnInit {
                 }
 
             } else if (dir == "desc") {
-                if(n==0 || n==3){
+                if(n==1 || n==4){
                     if (parseFloat(x.lastChild.innerHTML) < parseFloat(y.lastChild.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
@@ -153,7 +233,4 @@ searchTable() {
       }
     
   }
-   
-
-
 }

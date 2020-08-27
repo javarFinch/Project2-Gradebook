@@ -28,28 +28,26 @@ public class UserController {
     public ResponseEntity<UsersEntity> login(@PathVariable int id, @PathVariable String password) {
         UsersEntity user = dao.logIn(id, password);
         if (user == null) {
-            System.out.println("not found");
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
-            System.out.println("FOUND");
             return new ResponseEntity(user, HttpStatus.OK);
         }
     }
 
-    @GetMapping(path = "/new", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<UsersEntity> newUser() {
-        String[] user = dao.createUser();
-        UsersEntity output=new UsersEntity();
-        output.setId(Integer.parseInt(user[0]));
-        output.setPassword(user[1]);
-
-        if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            return new ResponseEntity(output, HttpStatus.OK);
-        }
-    }
+//    @GetMapping(path = "/new", produces = "application/json")
+//    @ResponseBody
+//    public ResponseEntity<UsersEntity> newUser() {
+//        String[] user = dao.createUser();
+//        UsersEntity output=new UsersEntity();
+//        output.setId(Integer.parseInt(user[0]));
+//        output.setPassword(user[1]);
+//
+//        if (user == null) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            return new ResponseEntity(output, HttpStatus.OK);
+//        }
+//    }
 
     //@RequestParam int id,@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String type
     @PutMapping(path = "/update", produces = "application/json")
@@ -64,22 +62,22 @@ public class UserController {
         String type = info.get("type").toString();
         UsersEntity user = dao.updateUser(id, firstName, lastName, password, type);
         if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity(user, HttpStatus.OK);
         }
     }
 
-    //@RequestParam String oldPassword,@RequestParam String newPassword
-    @PutMapping(path = "/newpassword/{userId}/{newPassword}")
-    @ResponseBody
-    public ResponseEntity<String> changePassword (@PathVariable int userId, @PathVariable String newPassword) {
-        boolean check = dao.updatePassword(userId, newPassword);
-        if (!check) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            return new ResponseEntity(HttpStatus.OK);
-        }
-    }
+//    //@RequestParam String oldPassword,@RequestParam String newPassword
+//    @PutMapping(path = "/newpassword/{userId}/{newPassword}")
+//    @ResponseBody
+//    public ResponseEntity<String> changePassword (@PathVariable int userId, @PathVariable String newPassword) {
+//        boolean check = dao.updatePassword(userId, newPassword);
+//        if (!check) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            return new ResponseEntity(HttpStatus.OK);
+//        }
+//    }
 
 }

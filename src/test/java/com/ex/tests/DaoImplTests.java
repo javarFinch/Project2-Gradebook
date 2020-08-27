@@ -273,7 +273,7 @@ public class DaoImplTests {
     @Transactional
     @Rollback
     public void studentGPATest() {
-        Assert.assertEquals(2, dao.studentGPA(Integer.parseInt(student1[0])), 0);
+        Assert.assertEquals(3.02, dao.studentGPA(Integer.parseInt(student1[0])), 0);
     }
 
     @Test
