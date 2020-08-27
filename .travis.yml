@@ -20,3 +20,19 @@ before_install: npm i -g npm@6;
  
 script: 
   - npm install npm run test --watch=false --no-progress -docker build
+after_success:
+
+  - docker --version  # document the version travis is using
+
+  - pip install --user awscli # install aws cli w/o sudo
+
+  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+
+  - $(aws ecr get-login --no-include-email --region us-east-2) #need AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+
+  - docker build -t project2 .
+
+  - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+
+  - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+
