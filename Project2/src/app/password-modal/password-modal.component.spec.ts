@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordModalComponent } from './password-modal.component';
+import { NgbAlertConfig, NgbAlertModule, NgbHighlight, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('PasswordModalComponent', () => {
   let component: PasswordModalComponent;
@@ -8,7 +9,9 @@ describe('PasswordModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PasswordModalComponent ]
+      declarations: [ PasswordModalComponent ],
+      imports: [NgbAlertModule],
+      providers: [ NgbActiveModal ]
     })
     .compileComponents();
   }));
