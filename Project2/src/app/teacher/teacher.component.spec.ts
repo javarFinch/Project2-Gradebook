@@ -6,6 +6,7 @@ import { NgbNavModule, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { Grade } from '../Models/teacher/grade';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TeacherComponent', () => {
   let component: TeacherComponent;
@@ -14,8 +15,8 @@ describe('TeacherComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TeacherComponent],
-      imports: [NgbNavModule],
-      providers: [HttpClient, HttpHandler, Router]
+      imports: [NgbNavModule, RouterTestingModule.withRoutes([])],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
