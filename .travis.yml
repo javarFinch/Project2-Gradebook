@@ -35,4 +35,18 @@ after_success:
   - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
 
   - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+  
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:
+    secure: "AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "AWS_SECRET_ACCESS_KEY"
+  region: "us-west-2"
+  app: "JERC - Gradebook"
+  env: "JercGradebook-env.eba-jizsyuvy.us-west-2.elasticbeanstalk.com"
+  bucket_name: "elasticbeanstalk-us-west-2-129309335899"
+  on:
+    branch: master
+  
 
