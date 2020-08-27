@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewClassComponent } from './new-class.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('NewClassComponent', () => {
   let component: NewClassComponent;
@@ -10,7 +11,8 @@ describe('NewClassComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NewClassComponent ],
-      providers: [ NgbActiveModal]
+      providers: [ NgbActiveModal, HttpClient],
+      imports: [HttpClientModule]
     })
     .compileComponents();
   }));
