@@ -23,6 +23,7 @@ export class AdminClassComponent implements OnInit {
  public input:string;
  public teachers:string[];
  public students:string[];
+  component: AdminClass;
 
   constructor(private classService: ClassService,private modalService: NgbModal) { }
 
@@ -47,9 +48,9 @@ export class AdminClassComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);console.log(this.classList);this.classListChange.emit(this.classList)});
-        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
-        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
+        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);console.log(this.classList);this.classListChange.emit(this.classList)},(error)=>console.log(error));
+        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)},(error)=>console.log(error));
+        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)},(error)=>console.log(error));
         
       }
     });

@@ -19,10 +19,20 @@ describe('AssignmentViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AssignmentViewComponent);
     component = fixture.componentInstance;
+    component.assignment = new Assignment();
+    component.assignment.assignmentName = 'Test';
+    component.assignment.assignmentType = 'Type';
+    component.assignment.dueDate = '28-08-2020';
+    component.assignment.totalPoints = 100;
+    component.assignment.actualPoints = 80;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

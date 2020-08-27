@@ -13,8 +13,11 @@ import { Observable } from 'rxjs';
 })
 export class ClassService {
 
+  public user:User;
+
+
   constructor(private http: HttpClient) {
-      console.log('Creating Class Service');
+      
    }
 
    getClassList(id:number): Observable<Class[]> {
@@ -25,11 +28,7 @@ export class ClassService {
     return this.http.get<TeacherClass[]>('http://localhost:8080/api/teacher/'+id);
   }
 
-   getClassByName(name: string): Observable<Class[]> {
-    return this.http.get<Class[]>(`http://localhost:3000/classList=${name}`);
-   }
-
-   getUserByName(name:string,password:string):Observable<User>{
+   getUserByName(name:number,password:string):Observable<User>{
      return this.http.get<User>('http://localhost:8080/api/user/'+name+'/'+password);
    }
 

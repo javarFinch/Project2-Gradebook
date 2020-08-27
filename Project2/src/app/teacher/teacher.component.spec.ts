@@ -7,6 +7,7 @@ import { Grade } from '../Models/teacher/grade';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { User } from '../Models/user';
 
 describe('TeacherComponent', () => {
   let component: TeacherComponent;
@@ -24,10 +25,20 @@ describe('TeacherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TeacherComponent);
     component = fixture.componentInstance;
+    component.activeClass
+    component.classService.user=new User();
+    component.classService.user.password = 'testPassword';
+    component.classService.user.type = 'student';
+    component.classService.user.firstName = 'first';
+    component.classService.user.lastName = 'last';
+    component.classService.user.id = 1002;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

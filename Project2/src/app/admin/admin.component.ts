@@ -25,16 +25,16 @@ export class AdminComponent implements OnInit {
   teacherList: AdminTeacher[];
 
 
-  constructor(public router:Router,private classService: ClassService,private modalService: NgbModal) { }
+  constructor(public router:Router,public classService: ClassService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    console.log(history.state)
-    this.currentUser=history.state;
+    
+    this.currentUser=this.classService.user;
     this.username=this.currentUser.firstName+" "+this.currentUser.lastName;
 
-    this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);});
-    this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);});
-    this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);});
+    this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);},(error)=>console.log(error));
+    this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);},(error)=>console.log(error));
+    this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);},(error)=>console.log(error));
   }
 
   logout(){
