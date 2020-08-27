@@ -4,7 +4,7 @@ import { AdminClass } from './../Models/admin/admin-class';
 import { TeacherClass } from './../Models/teacher/teacher-class';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Class } from '../Models/Class';
+import { Class } from '../Models/class';
 import { User } from '../Models/user';
 import { Observable } from 'rxjs';
 
