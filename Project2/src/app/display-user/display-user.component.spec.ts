@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisplayUserComponent } from './display-user.component';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('DisplayUserComponent', () => {
   let component: DisplayUserComponent;
@@ -8,7 +9,9 @@ describe('DisplayUserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisplayUserComponent ]
+      declarations: [ DisplayUserComponent ],
+      imports: [NgbModule],
+      providers: [NgbActiveModal]
     })
     .compileComponents();
   }));

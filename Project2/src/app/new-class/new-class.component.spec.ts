@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewClassComponent } from './new-class.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 describe('NewClassComponent', () => {
   let component: NewClassComponent;
@@ -12,7 +13,7 @@ describe('NewClassComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NewClassComponent ],
       providers: [ NgbActiveModal, HttpClient],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, FormsModule]
     })
     .compileComponents();
   }));
