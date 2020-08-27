@@ -6,8 +6,8 @@
         <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
           <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>{{username}}</button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Settings</button>
-            <button ngbDropdownItem>Logout</button>
+            <button ngbDropdownItem (click)="openModal()">Change Password</button>
+            <button ngbDropdownItem (click)="logout()">Logout</button>
             
           </div>
         </div>
@@ -20,11 +20,11 @@
             <p>Class List:</p>
         </div>
         <div  (click)="setActiveClass(class)" class="classList offset-1" *ngFor = "let class of newClassList">
-            <h5 >{{ class.ClassName}}</h5>
+            <h5 >{{ class.className}}</h5>
         </div>
     </div>    
     <div class ="col-9" >
-        <app-teacher-class-details [class]="activeClass" *ngIf="activeClass"></app-teacher-class-details>
+        <app-teacher-class-details [activeClass]="activeClass" (activeClassChange)="updateActiveClass($event)" *ngIf="activeClass"></app-teacher-class-details>
         
     </div>
     

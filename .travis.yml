@@ -1,2 +1,22 @@
-language:
- - java
+--- 
+addons: 
+  packages: 
+    - google-chrome-stable
+  sources: 
+    - google-chrome
+before_script: 
+  - "cd  /home/travis/build/veitej/Project2-Gradebook/Project2"
+cache: 
+  directories: 
+    - ./node_modules
+dist: trusty
+services:
+ - docker
+language: node_js
+node_js: node
+
+before_install: npm i -g npm@6;
+ docker pull veitej/project2-gradebook
+ 
+script: 
+  - npm install npm run test --watch=false --no-progress -docker build

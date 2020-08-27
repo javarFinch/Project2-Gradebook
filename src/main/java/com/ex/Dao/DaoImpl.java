@@ -1,5 +1,6 @@
 package com.ex.Dao;
 
+import com.ex.Models.APIThrowaways.*;
 import com.ex.Models.AssignmentEntity;
 import com.ex.Models.ClazzEntity;
 import com.ex.Models.UsersEntity;
@@ -9,7 +10,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +24,24 @@ public class DaoImpl implements Dao {
 
     SessionFactory sessionFactory;
 
+    @Override
+    public double format(double input) {
+        System.out.println("intput to format: "+input);
+        if(Double.isNaN(input)){
+            input=-1;
+
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        return Double.parseDouble(df.format(input));
+
+    }
+
     @Autowired
     public DaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public UsersEntity logIn(int ID, String password) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -48,6 +65,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public ArrayList<ClazzEntity> getClassForStudent(int studentID) {
 
         ArrayList<ClazzEntity> list = new ArrayList<>();
@@ -83,6 +101,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public ArrayList<AssignmentEntity> getAssignmentsForStudentPerClass(int clazzID, int studentID) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -119,6 +138,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public String[] createUser() {
         Session session = sessionFactory.getCurrentSession();
 
@@ -141,17 +161,50 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
+    public ClazzEntity createClass(String name, String subject, int teacherID) {
+        Session session = sessionFactory.getCurrentSession();
+        ClazzEntity clazz = new ClazzEntity();
+
+        SQLQuery query = session.createSQLQuery("insert into class (class_name, class_subject, teacher_id, " +
+                "test_weight, quiz_weight, homework_weight, participation_weight) values (?, " +
+                "?, ?, 40, 20, 30, 10)");
+        query.setString(0, name);
+        query.setString(1, subject);
+        query.setInteger(2, teacherID);
+
+        if (query.executeUpdate()!=0) {
+            SQLQuery query1 = session.createSQLQuery("select * from class where class_name = ?");
+            query1.setString(0, name);
+
+            List<Object[]> classInfo = query1.list();
+            for (Object[] row : classInfo) {
+                clazz.setId(Integer.parseInt(row[0].toString()));
+                clazz.setClassName(row[1].toString());
+                clazz.setClassSubject(row[2].toString());
+                clazz.setTeacherId(Integer.parseInt(row[3].toString()));
+                clazz.setTestWeight(40);
+                clazz.setQuizWeight(20);
+                clazz.setHomeworkWeight(30);
+                clazz.setParticipationWeight(10);
+                return clazz;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public UsersEntity updateUser(int ID, String firstName, String lastName, String password, String type) {
         Session session = sessionFactory.getCurrentSession();
 
         UsersEntity user = new UsersEntity();
 
-        SQLQuery query = session.createSQLQuery("update users set first_name = ?, last_name = ?, type = ? where id = ? and password = ?");
+        SQLQuery query = session.createSQLQuery("update users set first_name = ?, last_name = ?, type = ? ,password = ? where id = ?");
         query.setString(0, firstName);
         query.setString(1, lastName);
         query.setString(2, type);
-        query.setInteger(3, ID);
-        query.setString(4, password);
+        query.setInteger(4, ID);
+        query.setString(3, password);
 
         if (query.executeUpdate()!=0) {
             user.setId(ID);
@@ -164,6 +217,7 @@ public class DaoImpl implements Dao {
         return null;
     }
 
+    @Override
     public String getTeacherName(int ID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -184,12 +238,13 @@ public class DaoImpl implements Dao {
         return null;
     }
 
-    public boolean updatePassword (String oldPassword, String newPassword) {
+    @Override
+    public boolean updatePassword (int userId, String newPassword) {
         Session session = sessionFactory.getCurrentSession();
 
-        SQLQuery query = session.createSQLQuery("update users set password = ? where password = ?");
+        SQLQuery query = session.createSQLQuery("update users set password = ? where id = ?");
         query.setString(0, newPassword);
-        query.setString(1, oldPassword);
+        query.setInteger(1, userId);
 
         if (query.executeUpdate()!=0) {
             return true;
@@ -197,6 +252,7 @@ public class DaoImpl implements Dao {
         return false;
     }
 
+    @Override
     public boolean deleteUser(int ID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -209,6 +265,7 @@ public class DaoImpl implements Dao {
         return false;
     }
 
+    @Override
     public int getPairID(int classID, int studentID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -224,23 +281,27 @@ public class DaoImpl implements Dao {
         return pairID.get(0);
     }
 
-    public int assignmentTypeGrade(int pairID, String type) {
+    @Override
+    public double assignmentTypeGrade(int pairID, String type) {
         Session session = sessionFactory.getCurrentSession();
 
-        SQLQuery query = session.createSQLQuery("select actual_points from assignment where pair_id = ? and assignment_type = ? and actual_points is not null");
+        SQLQuery query = session.createSQLQuery("select actual_points, total_points from assignment where pair_id = ? and assignment_type = ? and actual_points is not null");
         query.setInteger(0, pairID);
         query.setString(1, type);
-        List<Integer> grades = query.list();
-        int sum = 0;
-        for (int i : grades) {
-            sum += i;
+        List<Object[]> grades = query.list();
+        double sum = 0;
+        double den = 0;
+        for (Object[] i : grades) {
+            sum += Double.parseDouble(i[0].toString());
+            den += Double.parseDouble(i[1].toString());
         }
         if(grades.isEmpty()) {
             return -1;
         }
-        return (sum)/(grades.size());
+        return format((sum*100)/(den));
     }
 
+    @Override
     public ClazzEntity getClazzById(int ID) {
         Session session = sessionFactory.getCurrentSession();
         ClazzEntity clazz = new ClazzEntity();
@@ -265,6 +326,7 @@ public class DaoImpl implements Dao {
         return clazz;
     }
 
+    @Override
     public double overAllGrade(int pairID) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -335,11 +397,11 @@ public class DaoImpl implements Dao {
             weight+=participationW;
         }
 
-        return (overAll/weight)*100;
+        return format((overAll/weight)*100);
     }
 
     @Override
-    public ArrayList<Map<String, Object>> getAssignmentListByClassID(int id) {
+    public ArrayList<TeacherAssignment> getAssignmentListByClassID(int id) {
         Session session = sessionFactory.getCurrentSession();
 
         SQLQuery query1 = session.createSQLQuery("select distinct assignment_name, assignment_type, total_points,due_date from public.assignment join class_student on assignment.pair_id = class_student.pair_id where class_id = ?;");
@@ -348,15 +410,14 @@ public class DaoImpl implements Dao {
         if (assignment_info.isEmpty()) {
             return null;
         }
-        ArrayList<Map<String,Object>> assignmentList = new ArrayList<>();
+        ArrayList<TeacherAssignment> assignmentList = new ArrayList<>();
         for (Object[] assignment : assignment_info) {
-            Map<String,Object> assignment_object = new HashMap<>();
+            TeacherAssignment assignment_object = new TeacherAssignment();
             //put assignment details into object
-            assignment_object.put("assignmentName",(String)assignment[0]);
-            System.out.println(assignment[0]);
-            assignment_object.put("assignmentType",(String)assignment[1]);
-            assignment_object.put("totalPoints",(int)assignment[2]);
-            assignment_object.put("dueDate",(String)assignment[3]);
+            assignment_object.setAssignmentName((String)assignment[0]);
+            assignment_object.setAssignmentType((String)assignment[1]);
+            assignment_object.setTotalPoints((int)assignment[2]);
+            assignment_object.setDueDate((String)assignment[3]);
 
 
             //for each assignment create the list of students and their grade
@@ -367,23 +428,22 @@ public class DaoImpl implements Dao {
             query2.setString(2,(String)assignment[1]);
             List<Object[]> studentList= query2.list();
 
-            ArrayList<Map<String,Object>> gradeList = new ArrayList<>();
+            ArrayList<StudentGrade> gradeList = new ArrayList<>();
             for(Object[] student:studentList){
-                System.out.println("\""+student[0]+"\"");
-                Map<String,Object> grade = new HashMap<>();
-                grade.put("studentID",(int)student[0]);
-                grade.put("firstName",(String)student[1]);
-                grade.put("lastName",(String)student[2]);
+                StudentGrade grade = new StudentGrade();
+                grade.setStudentID((int)student[0]);
+                grade.setFirstName((String)student[1]);
+                grade.setLastName((String)student[2]);
                 if(student[3]==null){
-                    grade.put("points",-1);
+                    grade.setPoints(-1);
                 }else{
-                    grade.put("points",(int)student[3]);
+                    grade.setPoints((int)student[3]);
                 }
 
                 gradeList.add(grade);
             }
 
-            assignment_object.put("gradeList",gradeList);
+            assignment_object.setGradeList(gradeList);
             assignmentList.add(assignment_object);
 
         }
@@ -395,7 +455,6 @@ public class DaoImpl implements Dao {
 
     }
 
-
     @Override
     public ArrayList<ClazzEntity> getClassForTeacher(int teacherID) {
         ArrayList<ClazzEntity> list = new ArrayList<>();
@@ -406,7 +465,7 @@ public class DaoImpl implements Dao {
         query2.setInteger(0, teacherID);
 
         List<Object[]> classData = query2.list();
-        for (Object [] row : classData) {
+        for (Object[] row : classData) {
             ClazzEntity clazz = new ClazzEntity();
             clazz.setId(Integer.parseInt(row[0].toString()));
             clazz.setClassName(row[1].toString());
@@ -439,5 +498,268 @@ public class DaoImpl implements Dao {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean createAssignmentAndAssign(String name, String type, int total, String dueDate, int classID) {
+        Session session = sessionFactory.getCurrentSession();
+        boolean ret = true;
+
+        SQLQuery query1 = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query1.setInteger(0, classID);
+
+        List<Integer> pairID = query1.list();
+        if (pairID.isEmpty()) {
+            return false;
+        }
+        for (int i=0; i<pairID.size(); i++) {
+            // Use the class id instead of pair id. Use all the pair id that come from that and use a for loop for each pair id
+            SQLQuery query = session.createSQLQuery("insert into assignment (assignment_name, assignment_type, " +
+                    "total_points, due_date, pair_id) values (?, ?, ?, ?, ?)");
+            query.setString(0, name);
+            query.setString(1, type);
+            query.setInteger(2, total);
+            query.setString(3, dueDate);
+            query.setInteger(4, pairID.get(i));
+
+            if (query.executeUpdate()==0) {
+                ret = false;
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public boolean assignStudent(int classID, int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("insert into class_student (class_id, student_id) values " +
+                "(?, ?)");
+        query.setInteger(0, classID);
+        query.setInteger(1, studentID);
+
+        if (query.executeUpdate()!=0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int numberOfClassesForStudent(int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select class_id from class_student where student_id = ?");
+        query.setInteger(0, studentID);
+
+        return query.list().size();
+    }
+
+    @Override
+    public int numberOfClassesForTeacher(int teacherID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select id from class where teacher_id = ?");
+        query.setInteger(0, teacherID);
+
+        return query.list().size();
+    }
+
+    @Override
+    public int numberOfStudentsInClass(int class_id) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select student_id from class_student where class_id = ?");
+        query.setInteger(0, class_id);
+
+        return query.list().size();
+    }
+
+    @Override
+    public Map<String, Double> classAveragePerType(int classID) {
+        Session session = sessionFactory.getCurrentSession();
+        Map<String, Double> map = new HashMap<>();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query.setInteger(0, classID);
+
+        double test = 0.0;
+        double quiz = 0.0;
+        double homework = 0.0;
+        double participation = 0.0;
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return null;
+        }
+        int g=0, j=0, k=0, l=0;
+        for (int i=0; i<pairID.size(); i++) {
+            if (assignmentTypeGrade(pairID.get(i), "test") != -1) {
+                test += assignmentTypeGrade(pairID.get(i), "test");
+            } else {
+                g++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "quiz") != -1) {
+                quiz += assignmentTypeGrade(pairID.get(i), "quiz");
+            } else {
+                j++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "homework") != -1) {
+                homework += assignmentTypeGrade(pairID.get(i), "homework");
+            } else {
+                k++;
+            }
+            if (assignmentTypeGrade(pairID.get(i), "participation") != -1) {
+                participation += assignmentTypeGrade(pairID.get(i), "participation");
+            } else {
+                l++;
+            }
+        }
+        if (g!=pairID.size()) {
+            test = test/(pairID.size()-g);
+        }
+        if (j!=pairID.size()) {
+            quiz = quiz/(pairID.size()-j);
+        }
+        if (k!=pairID.size()) {
+            homework = homework/(pairID.size()-k);
+        }
+        if (l!=pairID.size()) {
+            participation = participation/(pairID.size()-l);
+        }
+
+        map.put("test", format(test));
+        map.put("quiz", format(quiz));
+        map.put("homework", format(homework));
+        map.put("participation", format(participation));
+        return map;
+    }
+
+    @Override
+    public double classAverage(int classID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where class_id = ?");
+        query.setInteger(0, classID);
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return -1;
+        }
+        double sum = 0;
+        double den = 0;
+        for (int i : pairID) {
+            sum += overAllGrade(i);
+            den += 1;
+        }
+        return format(sum/den);
+    }
+
+    @Override
+    public double studentGPA(int studentID) {
+        Session session = sessionFactory.getCurrentSession();
+
+        SQLQuery query = session.createSQLQuery("select pair_id from class_student where student_id = ?");
+        query.setInteger(0, studentID);
+
+        List<Integer> pairID = query.list();
+        if (pairID.isEmpty()) {
+            return -1;
+        }
+        ArrayList<Double> array = new ArrayList<>();
+        for (Integer i : pairID) {
+            array.add(overAllGrade(i));
+        }
+        //double gpa = 0;
+        double sum=0;
+        int count = 0;
+        for (int i=0;i<pairID.size();i++) {
+//            if (array.get(i) >= 90) {
+//                gpa += 4;
+//            } else if (array.get(i) >= 80) {
+//                gpa += 3;
+//            } else if (array.get(i) >= 70) {
+//                gpa += 2;
+//            } else if (array.get(i) >= 60) {
+//                gpa += 1;
+//            } else if (array.get(i) < 60) {
+//                gpa += 0;
+//            }
+            if(array.get(i)<0){
+                //do nothing, no overall grade
+            }else{
+                sum+=array.get(i);
+                count++;
+            }
+        }
+        double avg=(sum/count)/100;
+        //return format(gpa/pairID.size());
+        return format(4*avg);
+    }
+
+    @Override
+    public ArrayList<StudentList> getStudentList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<StudentList> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("Select id, first_name, last_name from users where type = 'student'");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row : results) {
+            StudentList sList = new StudentList();
+            sList.setId(Integer.parseInt(row[0].toString()));
+            sList.setfName(row[1].toString());
+            sList.setlName(row[2].toString());
+            sList.setNumberClasses(numberOfClassesForStudent(Integer.parseInt(row[0].toString())));
+            sList.setGpa(studentGPA(Integer.parseInt(row[0].toString())));
+            list.add(sList);
+        }
+        return list;
+    }
+
+    @Override
+    public ArrayList<TeacherList> getTeacherList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<TeacherList> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("Select id, first_name, last_name from users where type = 'teacher'");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row : results) {
+            TeacherList tList = new TeacherList();
+            tList.setId(Integer.parseInt(row[0].toString()));
+            tList.setfName(row[1].toString());
+            tList.setlName(row[2].toString());
+            tList.setNumberClasses(numberOfClassesForTeacher(Integer.parseInt(row[0].toString())));
+            list.add(tList);
+        }
+        return list;
+    }
+
+    @Override
+    public ArrayList<AllClasses> getClassList() {
+        Session session = sessionFactory.getCurrentSession();
+        ArrayList<AllClasses> list = new ArrayList<>();
+
+        SQLQuery query = session.createSQLQuery("select id, class_name, class_subject, teacher_id from class");
+
+        List<Object[]> results = query.list();
+        if (results.isEmpty()) {
+            return null;
+        }
+        for (Object[] row: results) {
+            AllClasses cList = new AllClasses();
+            cList.setName(row[1].toString());
+            cList.setSubject(row[2].toString());
+            cList.setTeacherName(getTeacherName(Integer.parseInt(row[3].toString())));
+            cList.setNumberStudents(numberOfStudentsInClass(Integer.parseInt(row[0].toString())));
+            list.add(cList);
+        }
+        return list;
     }
 }

@@ -1,10 +1,10 @@
 export class Assignment {
 
-    public AssignmentName: string;
-    public AssignmentType: string;
-    public DueDate: string;
-    public TotalPoints: number;
-    public ActualPoints: number;
+    public assignmentName: string;
+    public assignmentType: string;
+    public dueDate: string;
+    public totalPoints: number;
+    public actualPoints: number;
 
     constructor() {}
 }

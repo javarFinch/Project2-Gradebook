@@ -17,7 +17,6 @@ export class TeacherAssignmentComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('got here')
     this.averagePoints=0;
     var total=0;
     for(var grade of this.assignment.gradeList){
@@ -28,7 +27,6 @@ export class TeacherAssignmentComponent implements OnInit {
       
     }
     this.averagePoints=this.averagePoints/total;
-    console.log("Average Points: "+ this.averagePoints)
   }
 
 }

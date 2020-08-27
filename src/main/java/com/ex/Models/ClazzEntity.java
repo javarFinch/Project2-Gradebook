@@ -1,12 +1,9 @@
 package com.ex.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
-
+@Entity
 @Table(name = "class", schema = "public", catalog = "postgres")
 public class ClazzEntity {
     private int id;
@@ -17,6 +14,21 @@ public class ClazzEntity {
     private int quizWeight;
     private int homeworkWeight;
     private int participationWeight;
+
+    public ClazzEntity() {
+
+    }
+
+    public ClazzEntity(int id, String className, String classSubject, int teacherId, int testWeight, int quizWeight, int homeworkWeight, int participationWeight) {
+        this.id = id;
+        this.className = className;
+        this.classSubject = classSubject;
+        this.teacherId = teacherId;
+        this.testWeight = testWeight;
+        this.quizWeight = quizWeight;
+        this.homeworkWeight = homeworkWeight;
+        this.participationWeight = participationWeight;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

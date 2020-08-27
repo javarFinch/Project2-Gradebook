@@ -1,9 +1,6 @@
 package com.ex.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Table(name = "users", schema = "public", catalog = "postgres")
@@ -13,6 +10,16 @@ public class UsersEntity {
     private String lastName;
     private String password;
     private String type;
+
+    public UsersEntity(){}
+
+    public UsersEntity(int id, String firstName, String lastName, String password, String type) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.type = type;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

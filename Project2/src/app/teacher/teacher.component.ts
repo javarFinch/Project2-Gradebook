@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TeacherClass } from '../Models/teacher/teacher-class';
 import { ClassService } from '../services/class-service.service';
 import { User } from '../Models/user';
+import { Router } from '@angular/router';
+import { PasswordModalComponent } from '../password-modal/password-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -15,28 +18,49 @@ export class TeacherComponent implements OnInit {
   user:User;
   classList: TeacherClass[];
   activeClass:TeacherClass;
+  activeIndex:number;
 
 
   newClassList: TeacherClass[];
 
-  constructor(private classService: ClassService) {
+  constructor(public router:Router,private classService: ClassService,private modalService: NgbModal) {
    
     this.activeClass=null;
+    this.activeIndex=null;
   }
 
   setActiveClass(state){
+    this.activeIndex=this.newClassList.findIndex(x=>x.id===state.Id);
     this.activeClass=state;
   }
 
   ngOnInit(): void {
-    console.log(history.state)
     this.user=history.state;
     this.username=this.user.firstName+" "+this.user.lastName;
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);console.log(this.newClassList);console.log('done')});
+    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);});
     
   }
 
+  updateActiveClass($event){
+    this.newClassList[this.activeIndex]=$event
+  }
+
+  logout(){
+    this.router.navigate(['login']);
+  }
+
+  openModal(){
+    const modalRef = this.modalService.open(PasswordModalComponent, {size:'lg'});
+    modalRef.componentInstance.user = this.user;
+    modalRef.result.then((result) => {
+
+      if(result=='Update'){
+        //this.classService.updateClass(this.activeClass.Id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
+        
+      }
+    });
+  }
 }
