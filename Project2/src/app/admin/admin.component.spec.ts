@@ -13,7 +13,7 @@ describe('AdminComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminComponent ],
-      imports: [NgbNav] 
+      imports: [NgbNavModule] 
     })
     .compileComponents();
   }));

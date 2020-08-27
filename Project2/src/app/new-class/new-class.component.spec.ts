@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewClassComponent } from './new-class.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('NewClassComponent', () => {
   let component: NewClassComponent;
@@ -8,7 +9,8 @@ describe('NewClassComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewClassComponent ]
+      declarations: [ NewClassComponent ],
+      providers: [ NgbActiveModal]
     })
     .compileComponents();
   }));

@@ -13,7 +13,7 @@ describe('StudentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StudentComponent],
-      imports: [NgbNav],
+      imports: [NgbNavModule],
       providers: [ClassService, HttpClient, HttpHandler ]
     })
     .compileComponents();
