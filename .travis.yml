@@ -42,7 +42,7 @@ deploy:
   secret_access_key: $AWS_SECRET_ACCESS_KEY
   region: "us-west-2"
   app: "JERC - Gradebook"
-  env: "JercGradebook-env.eba-jizsyuvy.us-west-2.elasticbeanstalk.com"
+  env: "JercGradebook-env"
   bucket_name: "elasticbeanstalk-us-west-2-129309335899"
   on:
     branch: master
