@@ -97,6 +97,13 @@ describe('AdminComponent', () => {
   //   })
   // }));
 
+  it('should have username "username"', () => {
+    component.username = 'username';
+    fixture.detectChanges();
+    expect(component.username).toBeTruthy();
+    expect(component.username).toEqual('username');
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
