@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminTeacherComponent } from './admin-teacher.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AdminTeacher } from '../Models/admin/admin-teacher';
 
 describe('AdminTeacherComponent', () => {
   let component: AdminTeacherComponent;
@@ -20,9 +21,19 @@ describe('AdminTeacherComponent', () => {
     fixture = TestBed.createComponent(AdminTeacherComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    let tList = new AdminTeacher();
+    tList.id = 2;
+    tList.fName = 'fName';
+    tList.lName = 'lName';
+    tList.numberClasses = 2;
+    component.teacherList=[tList];
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

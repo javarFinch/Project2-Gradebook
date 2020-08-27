@@ -98,7 +98,7 @@ public class AdminController {
                 int i = id.indexOf('-');
                 id = id.substring(0, i);
                 ClazzEntity clazz = dao.createClass(check.get("name").toString(), check.get("subject").toString(), Integer.parseInt(id));
-                String studentIds = check.get("studentList").toString();
+                String studentIds = check.get("studentIds").toString();
                 String[] str = studentIds.split(", ");
                 for (int j=0; j<str.length; j++) {
                     if (str[j].contains("[")||str[j].contains("]")) {

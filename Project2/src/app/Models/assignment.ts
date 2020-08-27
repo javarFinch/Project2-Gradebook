@@ -6,7 +6,9 @@ export class Assignment {
     public totalPoints: number;
     public actualPoints: number;
 
-    constructor() {}
+    constructor() {
+        
+    }
 }
 
 

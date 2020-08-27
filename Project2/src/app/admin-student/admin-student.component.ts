@@ -30,7 +30,7 @@ export class AdminStudentComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)});
+        this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)},(error)=>console.log(error));
         
       }
     });

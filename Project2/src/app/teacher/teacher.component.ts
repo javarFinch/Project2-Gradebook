@@ -23,7 +23,7 @@ export class TeacherComponent implements OnInit {
 
   newClassList: TeacherClass[];
 
-  constructor(public router:Router,private classService: ClassService,private modalService: NgbModal) {
+  constructor(public router:Router,public classService: ClassService,private modalService: NgbModal) {
    
     this.activeClass=null;
     this.activeIndex=null;
@@ -35,12 +35,12 @@ export class TeacherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user=history.state;
+    this.user=this.classService.user;
     this.username=this.user.firstName+" "+this.user.lastName;
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);});
+    this.classService.getTeacherClassList(this.user.id).subscribe((c: TeacherClass[]) => {(this.newClassList = c);},(error)=>console.log(error));
     
   }
 

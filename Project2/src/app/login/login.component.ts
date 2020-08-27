@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  model=new User();
+  model:User;
   user: User;
 
   nextLink:string;
@@ -27,12 +27,12 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+    this.model=new User();
     this.errorMessage=' ';
   }
 
   onSubmit():void{
-    this.classService.getUserByName(this.model.username,this.model.password).subscribe((c: User) => {(this.user = c); this.changePages()});
+    this.classService.getUserByName(this.model.id,this.model.password).subscribe((c: User) => {(this.user = c); this.changePages()},(error)=>console.log(error));
     
   }
 
@@ -41,14 +41,17 @@ export class LoginComponent implements OnInit {
     if(this.user){
       this.errorMessage=' '
       if(this.user.type=='student'){
-        console.log('route to student')
+
+        this.classService.user=this.user;
         this.router.navigate(['student'],{state:this.user});
       }else if(this.user.type=='admin'){
-        console.log('route to admin')
+ 
+        this.classService.user=this.user;
         this.router.navigate(['admin'],{state:this.user});
       }
       else if(this.user.type=='teacher'){
-        console.log('route to teacher')
+
+        this.classService.user=this.user;
         this.router.navigate(['teacher'],{state:this.user});
       }
     }else{
