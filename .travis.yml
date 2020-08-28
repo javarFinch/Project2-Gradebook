@@ -65,7 +65,7 @@ jobs:
         - docker
       script:
         - ls  
-        - docker build -t project2 --build-arg DB_USER=$DB_USER --build-arg DB_PASSWORD=$DB_PASSWORD .
+        - docker build -t project2 --build-arg DB_USER=$DOCKER_USER --build-arg DB_PASS=$DOCKER_PASSWORD .
       after_success:
         - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         - docker images
