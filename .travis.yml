@@ -28,7 +28,6 @@ jobs:
       script:
         - ng test --watch=false --no-progress --browsers=ChromeHeadless
         - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
-        - ls
       workspaces:
         create:
           name: ws1
@@ -48,6 +47,7 @@ jobs:
       script:
         - ls ./Project2
         - mvn package -DskipTests
+        - ls
     - stage: deployment
       language: generic
       git:
@@ -60,6 +60,7 @@ jobs:
       services:
         - docker
       script:
+        - ls
         - docker --version  # document the version travis is using
         - pip install --user awscli # install aws cli w/o sudo
         - export PATH=$PATH:$HOME/.local/bin # put aws in the path
