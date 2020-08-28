@@ -22,7 +22,6 @@
     <junit.version>4.12</junit.version>
     <j2ee.version>3.0.1</j2ee.version>
     <hibernate.version>4.3.11.Final</hibernate.version>
-    <h2.version>1.4.200</h2.version>
     <jdbc.version>42.2.12</jdbc.version>
 
   </properties>
@@ -57,12 +56,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
@@ -92,12 +85,6 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${jdbc.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>${h2.version}</version>
     </dependency>
 
     <dependency>
