@@ -12,6 +12,11 @@ sudo: required
 branches:
   only:
     - master
+    
+git:
+  clone: false
+install:
+  - git clone https://github.com/veitej/Project2-Gradebook.git
 jobs:
   include:
     - stage: angular
