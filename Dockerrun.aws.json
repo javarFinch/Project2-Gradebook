@@ -1,14 +1,11 @@
 {
-  "AWSEBDockerrunVersion":1,
-  "containerDefinitions":[
-    "name": "api",
-    "image":"veitej/project2:latest",
-    "essential":true,
-    "portMappings":[
+  "AWSEBDockerrunVersion":"1",
+  "Name": "latest",
+   "Image":"veitej/project2:latest",
+   "Ports":[
       {
-        "hostPort":8080,
-        "containerPort":8080
+        "HostPort":8080,
+        "ContainerPort":8080
       }
-    ]
-  ]
+    ] 
 }
