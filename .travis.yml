@@ -17,12 +17,7 @@ jobs:
     - stage: angular
       language: node_js
       node_js:
-        - 10
-      workspaces:
-        create:
-          name: ws1
-            path: /home/travis/build/veitej/Project2-Gradebook
-         
+        - 10         
       addons:
         chrome: stable
       before_script:
@@ -34,6 +29,10 @@ jobs:
         - ng test --watch=false --no-progress --browsers=ChromeHeadless
         - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
         - ls
+      workspaces:
+        create:
+          name: ws1
+            path: /home/travis/build/veitej/Project2-Gradebook
       
         
     - stage: api
