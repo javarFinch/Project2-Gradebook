@@ -47,7 +47,7 @@ jobs:
         - cd  /home/travis/build/veitej/Project2-Gradebook
       script:
         - ls ./Project2
-        - mvn package -dskipTests
+        - mvn package -DskipTests
     - stage: deployment
       language: generic
       git:
