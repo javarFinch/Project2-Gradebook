@@ -1,11 +1,10 @@
-FROM node:alpine as builder
-WORKDIR '/app'
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM tomcat:9.0-alpine
 
-FROM nginx
 
-COPY --from=builder /app/dist/* /usr/share/nginx/html
-EXPOSE 3000
+ADD ./target/wtfisgoingonhelpmepls.war /usr/local/tomcat/webapps/
+
+EXPOSE 8080
+
+
+
+CMD ["catalina.sh", "run"]
