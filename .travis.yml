@@ -12,10 +12,6 @@ sudo: required
 branches:
   only:
     - master
-cache:
-  directories:
-    - /home/travis/build/veitej/Project-Gradebook/Project
-
 jobs:
   include:
     - stage: angular
