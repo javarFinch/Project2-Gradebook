@@ -14,7 +14,7 @@ branches:
     - master
 cache:
   directories:
-    - ./node_modules
+    - /home/travis/build/veitej/Project-Gradebook/Project
 
 jobs:
   include:
