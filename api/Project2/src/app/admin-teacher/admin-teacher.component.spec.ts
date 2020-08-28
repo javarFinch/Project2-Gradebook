@@ -26,11 +26,17 @@ describe('AdminTeacherComponent', () => {
     tList.fName = 'fName';
     tList.lName = 'lName';
     tList.numberClasses = 2;
+    component.input = 'help';
     component.teacherList=[tList];
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should search', () => {
+    component.searchTable()
+    expect(component.input).toContain('help');
   });
 
   afterEach(() => {

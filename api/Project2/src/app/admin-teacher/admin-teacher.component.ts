@@ -58,7 +58,6 @@ export class AdminTeacherComponent implements OnInit {
             if (dir == "asc") {
                 if(n==0 || n==3){
                     //check numbers
-                    console.log(x.lastChild.innerHTML,">",y.lastChild.innerHTML)
                     if (parseFloat(x.lastChild.innerHTML) > parseFloat(y.lastChild.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
@@ -111,9 +110,6 @@ export class AdminTeacherComponent implements OnInit {
 
 searchTable() {
     // Declare variables
-    console.log('Start Search')
-    
-      console.log('Search table for: ',this.input)
       var filter, table, tr, td, i, txtValue;
       filter = this.input.toUpperCase();
       table = document.getElementById("teacher-body");

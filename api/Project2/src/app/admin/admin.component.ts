@@ -54,15 +54,12 @@ export class AdminComponent implements OnInit {
   }
   updateStudentList($event){
     this.studentList=$event
-    console.log("student list updated")
   }
   updateClassList($event){
     this.classList=$event
-    console.log("class list updated")
   }
   updateTeacherList($event){
     this.teacherList=$event
-    console.log("teacher list updated")
   }
 
 }

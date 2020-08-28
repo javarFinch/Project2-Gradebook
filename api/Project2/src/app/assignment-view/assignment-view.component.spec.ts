@@ -1,31 +1,38 @@
+import { AssignmentModalComponent } from './../assignment-modal/assignment-modal.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignmentViewComponent } from './assignment-view.component';
-import { Assignment } from '../Models/assignment';
+
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
-describe('AssignmentViewComponent', () => {
-  let component: AssignmentViewComponent;
-  let fixture: ComponentFixture<AssignmentViewComponent>;
+
+describe('AssignmentModalComponent', () => {
+  let component: AssignmentModalComponent;
+  let fixture: ComponentFixture<AssignmentModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssignmentViewComponent ],
-      providers: [ Assignment ]
+      declarations: [ AssignmentModalComponent ],
+      imports: [FormsModule,NgbModule],
+      providers: [NgbActiveModal, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssignmentViewComponent);
+    fixture = TestBed.createComponent(AssignmentModalComponent);
     component = fixture.componentInstance;
-    component.assignment = new Assignment();
-    component.assignment.assignmentName = 'Test';
-    component.assignment.assignmentType = 'Type';
-    component.assignment.dueDate = '28-08-2020';
-    component.assignment.totalPoints = 100;
-    component.assignment.actualPoints = 80;
     fixture.detectChanges();
+  });
+
+  it('should check assignment', () => {
+    component.type = '';
+  
+    const result = component.checkAssignment();
+    expect(result).toBe(false);
+  
   });
 
   it('should create', () => {

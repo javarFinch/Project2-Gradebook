@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
   }
 
   changePages():void{
-    console.log('user: ',this.user)
     if(this.user){
       this.errorMessage=' '
       if(this.user.type=='student'){

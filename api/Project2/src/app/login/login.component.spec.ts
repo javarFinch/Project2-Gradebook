@@ -30,6 +30,10 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('It should return error', ()=>{
+    component.changePages();
+    expect(component.errorMessage).toContain('Invalid Username or Password')
+  })
   afterEach(() => {
     TestBed.resetTestingModule();
   });

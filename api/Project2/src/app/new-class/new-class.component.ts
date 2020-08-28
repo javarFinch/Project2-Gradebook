@@ -33,7 +33,6 @@ export class NewClassComponent implements OnInit {
   count:number;
 
   constructor(public activeModal: NgbActiveModal,private classService: ClassService) {
-    console.log('students: ',this.studentList)
     this.count=0;
    }
 
@@ -42,9 +41,7 @@ export class NewClassComponent implements OnInit {
   }
 
   newClass(formData){
-    console.log("Form Validation: ",formData.value)
     if(this.formValidation()){
-      console.log("Form Sent:",formData.value);
       this.classService.newClass(formData.value).subscribe( c=>{this.activeModal.close('Update')},(error)=>console.log(error));
       
     }
@@ -151,7 +148,6 @@ export class NewClassComponent implements OnInit {
             if (dir == "asc") {
                 if(n==1 || n==4){
                     //check numbers
-                    console.log(x.lastChild.innerHTML,">",y.lastChild.innerHTML)
                     if (parseFloat(x.lastChild.innerHTML) > parseFloat(y.lastChild.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
@@ -204,9 +200,6 @@ export class NewClassComponent implements OnInit {
 
 searchTable() {
     // Declare variables
-    console.log('Start Search')
-    
-      console.log('Search table for: ',this.input)
       var filter, table, tr, td, i, txtValue;
       filter = this.input.toUpperCase();
       table = document.getElementById("student-body");

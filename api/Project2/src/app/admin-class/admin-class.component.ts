@@ -48,7 +48,7 @@ export class AdminClassComponent implements OnInit {
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);console.log(this.classList);this.classListChange.emit(this.classList)},(error)=>console.log(error));
+        this.classService.getAdminClass().subscribe((c: AdminClass[]) => {(this.classList = c);this.classListChange.emit(this.classList)},(error)=>console.log(error));
         this.classService.getAdminStudent().subscribe((c: AdminStudent[]) => {(this.studentList = c);this.studentListChange.emit(this.studentList)},(error)=>console.log(error));
         this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)},(error)=>console.log(error));
         
@@ -82,7 +82,6 @@ export class AdminClassComponent implements OnInit {
             if (dir == "asc") {
                 if(n==3){
                     //check numbers
-                    console.log(x.lastChild.innerHTML,">",y.lastChild.innerHTML)
                     if (parseFloat(x.lastChild.innerHTML) > parseFloat(y.lastChild.innerHTML)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
@@ -135,9 +134,6 @@ export class AdminClassComponent implements OnInit {
 
 searchTable() {
     // Declare variables
-    console.log('Start Search')
-    
-      console.log('Search table for: ',this.input)
       var filter, table, tr, td, i, txtValue;
       filter = this.input.toUpperCase();
       table = document.getElementById("class-body");
