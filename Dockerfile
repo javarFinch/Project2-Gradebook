@@ -8,7 +8,7 @@ WORKDIR $CATALINA_HOME
 ARG WAR_FILE=./target/*.war
 
 #copy the war file to the webapps directory of tomcat
-COPY $WAR_FILE ./webapps
+COPY $WAR_FILE ./webapps/ROOT.war
 
 # expose port 8080
 EXPOSE 8080
