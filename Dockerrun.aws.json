@@ -4,10 +4,10 @@
     "Name": "veitej/project2:latest",
     "Update": "false"
   }
-   "Ports":[
-      {
-        "HostPort":8080,
-        "ContainerPort":8080
-      }
-    ] 
+  "Ports": [
+     {
+       "HostPort":8080,
+       "ContainerPort":8080
+     }
+  ] 
 }
