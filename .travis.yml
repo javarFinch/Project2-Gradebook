@@ -26,7 +26,7 @@ jobs:
         - npm install
       script:
         - ng test --watch=false --no-progress --browsers=ChromeHeadless
-        - ng build
+        - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
         
     - stage: api
       language: java
