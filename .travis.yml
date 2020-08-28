@@ -27,7 +27,7 @@ jobs:
         - npm install
       script:
         - ng test --watch=false --no-progress --browsers=ChromeHeadless
-        - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
+        - ng build --prod
       workspaces:
         create:
           name: ws1
@@ -64,14 +64,14 @@ jobs:
       services:
         - docker
       script:
-        - ls
-        - docker --version  # document the version travis is using
-        - pip install --user awscli # install aws cli w/o sudo
-        - export PATH=$PATH:$HOME/.local/bin # put aws in the path
-        - $(aws ecr get-login --no-include-email --region us-east-2) #need AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-        - docker build -t project2 .
-        - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
-        - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+        - ls  
+        - docker build -t project2 --build-arg DB_USER=$DOCKER_USER --build-arg DB_PASS=$DOCKER_PASSWORD .
+      after_success:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        - docker images
+        - docker tag project2 $DOCKER_USER/project2:latest
+        - docker push $DOCKER_USER/project2:latest
+
       deploy:
         provider: elasticbeanstalk
         access_key_id: $AWS_ACCESS_KEY_ID
