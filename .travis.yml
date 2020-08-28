@@ -73,7 +73,7 @@ jobs:
         - docker tag project2:latest 129309335899.dkr.ecr.us-west-2.amazonaws.com/project2:latest
         - docker push 129309335899.dkr.ecr.us-west-2.amazonaws.com/project2:latest
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push veitej/project2
+        - docker push veitej/project2:latest
 
       deploy:
         provider: elasticbeanstalk
