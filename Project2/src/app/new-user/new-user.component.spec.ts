@@ -28,4 +28,23 @@ describe('NewUserComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(NewUserComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h4').textContent).toBe('New ');
+  });
+
+  it('should confirm', () => {
+    component.firstName = '';
+    const result = component.formValidation();
+    expect(result).toBe(false);
+  
+  });
+
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

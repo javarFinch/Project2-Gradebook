@@ -27,4 +27,14 @@ describe('NewClassComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(NewClassComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('h4').textContent).toContain('New');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

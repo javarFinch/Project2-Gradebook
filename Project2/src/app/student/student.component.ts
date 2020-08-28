@@ -20,7 +20,7 @@ export class StudentComponent implements OnInit {
 
   newClassList: Class[];
 
-  constructor(public router:Router,private classService: ClassService,private modalService: NgbModal) {
+  constructor(public router:Router,public classService: ClassService,private modalService: NgbModal) {
    
     this.activeClass=null;
   }
@@ -30,12 +30,12 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user=history.state;
+    this.user=this.classService.user;
     this.username=this.user.firstName+" "+this.user.lastName;
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getClassList(this.user.id).subscribe((c: Class[]) => {(this.newClassList = c);console.log(this.newClassList);});
+    this.classService.getClassList(this.user.id).subscribe((c: Class[]) => {(this.newClassList = c);console.log(this.newClassList);}),(error)=>console.log(error);
     
   }
   logout(){

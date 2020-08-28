@@ -55,7 +55,6 @@ export class TeacherClassDetailsComponent implements OnInit {
  
       if(result=='Update'){
         this.classService.updateClass(this.activeClass.id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
-        
       }
     });
   }

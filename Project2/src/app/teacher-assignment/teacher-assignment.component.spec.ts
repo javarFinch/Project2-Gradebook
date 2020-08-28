@@ -18,12 +18,16 @@ describe('TeacherAssignmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TeacherAssignmentComponent);
     component = fixture.componentInstance;
+    let grade = new Grade(1001, 'testFirst', 'testLast', 100)
+    component.assignment= new TeacherAssignment ([grade], '07/25/2020', 100, 'Assignment1', 'Assignment')
+    
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    let grade = new Grade(1001, 'testFirst', 'testLast', 100)
-    let teacherAssignment = new TeacherAssignment ([grade], '07/25/2020', 100, 'Assignment1', 'Assignment')
     expect(component).toBeTruthy();
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

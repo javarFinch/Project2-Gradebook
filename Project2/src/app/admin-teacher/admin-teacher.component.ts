@@ -1,8 +1,8 @@
-import { NewClassComponent } from './../new-class/new-class.component';
 import { AdminTeacher } from './../Models/admin/admin-teacher';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ClassService } from '../services/class-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewUserComponent } from '../new-user/new-user.component';
 
 @Component({
   selector: 'app-admin-teacher',
@@ -21,12 +21,12 @@ export class AdminTeacherComponent implements OnInit {
   ngOnInit(): void {
   }
   openModal(){
-    const modalRef = this.modalService.open(NewClassComponent, {size:'md'});
-    modalRef.componentInstance.type = 'class';
+    const modalRef = this.modalService.open(NewUserComponent, {size:'md'});
+    modalRef.componentInstance.type = 'teacher';
     modalRef.result.then((result) => {
 
       if(result=='Update'){
-        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)});
+        this.classService.getAdminTeacher().subscribe((c: AdminTeacher[]) => {(this.teacherList = c);this.teacherListChange.emit(this.teacherList)},(error)=>console.log(error));
         
       }
     });

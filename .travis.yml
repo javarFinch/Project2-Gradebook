@@ -1,22 +1,84 @@
---- 
-addons: 
-  packages: 
-    - google-chrome-stable
-  sources: 
-    - google-chrome
-before_script: 
-  - "cd  /home/travis/build/veitej/Project2-Gradebook/Project2"
-cache: 
-  directories: 
-    - ./node_modules
+notifications:
+  email:
+    - roberte.flaherty@gmail.com
+    
+stages:
+  - angular
+  - api
+  - deployment
+  
 dist: trusty
-services:
- - docker
-language: node_js
-node_js: node
-
-before_install: npm i -g npm@6;
- docker pull veitej/project2-gradebook
- 
-script: 
-  - npm install npm run test --watch=false --no-progress -docker build
+sudo: required
+branches:
+  only:
+    - master
+jobs:
+  include:
+    - stage: angular
+      language: node_js
+      node_js:
+        - 10         
+      addons:
+        chrome: stable
+      before_script:
+        - cd /
+        - cd  /home/travis/build/veitej/Project2-Gradebook/Project2
+        - npm install -g @angular/cli
+        - npm install
+      script:
+        - ng test --watch=false --no-progress --browsers=ChromeHeadless
+        - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
+      workspaces:
+        create:
+          name: ws1
+          paths: /home/travis/build/veitej/Project2-Gradebook
+      
+        
+    - stage: api
+      language: java
+      jdk: oraclejdk8
+      git:
+        clone: false
+      workspaces:
+        use: ws1
+      before_script:
+        - cd /
+        - cd  /home/travis/build/veitej/Project2-Gradebook
+      script:
+        - ls ./Project2
+        - mvn package -DskipTests
+        - ls
+      workspaces:
+        create:
+          name: ws2
+          paths: /home/travis/build/veitej/Project2-Gradebook
+    - stage: deployment
+      language: generic
+      git:
+        clone: false
+      workspaces:
+        use: ws2
+      before_script:
+        - cd /
+        - cd  /home/travis/build/veitej/Project2-Gradebook
+      services:
+        - docker
+      script:
+        - ls
+        - docker --version  # document the version travis is using
+        - pip install --user awscli # install aws cli w/o sudo
+        - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+        - $(aws ecr get-login --no-include-email --region us-east-2) #need AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+        - docker build -t project2 .
+        - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+        - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+      deploy:
+        provider: elasticbeanstalk
+        access_key_id: $AWS_ACCESS_KEY_ID
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+        region: "us-west-2"
+        app: "JERC - Gradebook"
+        env: "JercGradebook-env"
+        bucket_name: "elasticbeanstalk-us-west-2-129309335899"
+        on:
+          branch: master

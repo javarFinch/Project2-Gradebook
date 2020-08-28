@@ -6,7 +6,7 @@
         <button class="btn btn-outline-none" style="background-color: transparent;"id="dropdownBasic1" ngbDropdownToggle>{{username}}</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem (click)="openModal()">Change Password</button>
-          <button ngbDropdownItem (click)="logout()">Logout</button>
+          <button ngbDropdownItem id="logout" (click)="logout()">Logout</button>
           
         </div>
       </div>
@@ -40,7 +40,7 @@
     <app-admin-student [studentList]="studentList" (studentListChange)="updateStudentList($event)"></app-admin-student>
   </div>
   <div *ngIf="active=='Teacher'">
-    <app-admin-teacher [teacherList]="teacherList" (teacherListChange)="updateClassList($event)"></app-admin-teacher>
+    <app-admin-teacher [teacherList]="teacherList" (teacherListChange)="updateTeacherList($event)"></app-admin-teacher>
   </div>
   <div *ngIf="active=='Class'">
     <app-admin-class [classList]="classList" (classListChange)="updateClassList($event)"
