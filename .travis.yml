@@ -60,12 +60,12 @@ jobs:
         use: ws2
       before_script:
         - cd /
-        - cd  /home/travis/build/veitej/Project2-Gradebook/api
+        - cd  /home/travis/build/veitej/Project2-Gradebook
       services:
         - docker
       script:
         - ls  
-        - docker build -t project2 --build-arg DB_USER=$DOCKER_USER --build-arg DB_PASS=$DOCKER_PASSWORD .
+        - docker build -t project2 --build-arg DB_USER=$DOCKER_USER --build-arg DB_PASS=$DOCKER_PASSWORD ./api
       after_success:
         - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         - docker images
