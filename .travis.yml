@@ -21,6 +21,7 @@ jobs:
       workspaces:
         create:
           name: ws1
+            path: /home/travis/build/veitej/Project2-Gradebook
          
       addons:
         chrome: stable
