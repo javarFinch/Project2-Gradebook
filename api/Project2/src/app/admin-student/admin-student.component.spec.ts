@@ -34,6 +34,13 @@ describe('AdminStudentComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should return GPA', () => {
+    const check = '90';
+    const result = component.gpa(check);
+    expect(result).toBe('90.00');
+    
+  });
+
   
 
   afterEach(() => {

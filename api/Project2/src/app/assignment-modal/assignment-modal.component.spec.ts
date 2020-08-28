@@ -25,6 +25,14 @@ describe('AssignmentModalComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should check assignment', () => {
+    component.type = '';
+  
+    const result = component.checkAssignment();
+    expect(result).toBe(false);
+  
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
