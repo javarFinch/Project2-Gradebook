@@ -38,6 +38,9 @@ jobs:
       script:
         -mvn package -dskipTests
     - stage: deployment
+      language: generic
+      services:
+        - docker
       script:
         - docker --version  # document the version travis is using
         - pip install --user awscli # install aws cli w/o sudo
