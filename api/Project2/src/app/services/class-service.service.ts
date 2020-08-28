@@ -15,10 +15,11 @@ export class ClassService {
 
   public user:User;
 
-  const apiUrl: string = window.location.protocol + "//" + window.location.host + window.location.pathname + "api";
+  public apiUrl: string = window.location.protocol + "//" + window.location.host + "/api";
+  
 
   constructor(private http: HttpClient) {
-
+    // console.log("host",window.)
    }
 
    getClassList(id:number): Observable<Class[]> {
