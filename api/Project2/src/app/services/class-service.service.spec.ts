@@ -36,13 +36,13 @@ describe('ClassServiceService', () => {
     user.lastName='lName';
     user.type='student'
     user.password= 'password'
-
+     
     service.getUserByName(1,'password').subscribe((check: User) => {
       expect(check.id).toEqual(1);
     });
-
+    const apiUrl = window.location.protocol + "//" + window.location.host + "/api";
     const req = httpMock.expectOne(
-      'http://localhost:8080/api/user/1/password'
+      apiUrl+'/user/1/password'
     );
     expect(req.request.method).toBe('GET');
     req.flush(user); // send response
@@ -61,9 +61,9 @@ describe('ClassServiceService', () => {
     service.updateUser(new FormData()).subscribe((check: User) => {
       expect(check.id).toEqual(1);
     });
-
+    const apiUrl = window.location.protocol + "//" + window.location.host + "/api";
     const req = httpMock.expectOne(
-      'http://localhost:8080/api/user/update/'
+      apiUrl+'/user/update/'
     );
     expect(req.request.method).toBe('PUT');
     req.flush(user); // send response
@@ -82,9 +82,9 @@ describe('ClassServiceService', () => {
     service.newUser(new FormData()).subscribe((check: User) => {
       expect(check.id).toEqual(1);
     });
-
+    const apiUrl = window.location.protocol + "//" + window.location.host + "/api";
     const req = httpMock.expectOne(
-      'http://localhost:8080/api/admin/newUser'
+      apiUrl+'/admin/newUser'
     );
     expect(req.request.method).toBe('POST');
     req.flush(user); // send response
