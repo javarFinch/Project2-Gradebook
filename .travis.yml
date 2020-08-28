@@ -25,7 +25,7 @@ jobs:
         - npm install -g @angular/cli
         - npm install
       script:
-        ng test --watch=false --no-progress
+        ng test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
         ng build
     - stage: api
       language: java
