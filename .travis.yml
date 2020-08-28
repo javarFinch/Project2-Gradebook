@@ -1,6 +1,6 @@
 notifications:
   email:
-    -roberte.flaherty@gmail.com
+    - roberte.flaherty@gmail.com
     
 stages:
   - angular
