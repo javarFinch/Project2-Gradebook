@@ -22,7 +22,7 @@ jobs:
         chrome: stable
       before_script:
         - cd /
-        - cd  /home/travis/build/veitej/Project2-Gradebook/Project2
+        - cd  /home/travis/build/veitej/Project2-Gradebook/api/Project2
         - npm install -g @angular/cli
         - npm install
       script:
@@ -46,7 +46,7 @@ jobs:
           paths: /home/travis/build/veitej/Project2-Gradebook
       before_script:
         - cd /
-        - cd  /home/travis/build/veitej/Project2-Gradebook
+        - cd  /home/travis/build/veitej/Project2-Gradebook/api
       script:
         - ls ./Project2
         - mvn package -DskipTests
@@ -60,7 +60,7 @@ jobs:
         use: ws2
       before_script:
         - cd /
-        - cd  /home/travis/build/veitej/Project2-Gradebook
+        - cd  /home/travis/build/veitej/Project2-Gradebook/api
       services:
         - docker
       script:
