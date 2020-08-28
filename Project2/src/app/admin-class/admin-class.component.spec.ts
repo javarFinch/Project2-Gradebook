@@ -28,6 +28,7 @@ describe('AdminClassComponent', () => {
     let teacherList : AdminTeacher[];
     teacherList =[{id: 1001, fName: 'firstName', lName: 'lastName', numberClasses: 10 }];
 
+    component.input = 'help';
 
     let studentList: AdminStudent[];
     studentList = [{id: 1001, fName: 'firstName', lName: 'lastName', numberClasses: 10, gpa: 3.5}];
@@ -41,6 +42,16 @@ describe('AdminClassComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should search', () => {
+    component.searchTable()
+    expect(component.input).toContain('help');
+  });
+
+  it('should sort descending', () => {
+    let x = 4;
+
+  })
   
   afterEach(() => {
     TestBed.resetTestingModule();
