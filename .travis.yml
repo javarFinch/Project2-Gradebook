@@ -5,6 +5,8 @@ notifications:
 stages:
   - angular
   - api
+  - docker
+  - deploy
   
 dist: trusty
 sudo: required
@@ -36,32 +38,25 @@ jobs:
         - cd  /home/travis/build/veitej/Project2-Gradebook
       script:
         -mvn package -dskipTest
-        
-after_success:
-
-  - docker --version  # document the version travis is using
-
-  - pip install --user awscli # install aws cli w/o sudo
-
-  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
-
-  - $(aws ecr get-login --no-include-email --region us-east-2) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-
-  - docker build -t project2 .
-
-  - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
-
-  - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
-  
-deploy:
-  provider: elasticbeanstalk
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  region: "us-west-2"
-  app: "JERC - Gradebook"
-  env: "JercGradebook-env"
-  bucket_name: "elasticbeanstalk-us-west-2-129309335899"
-  on:
-    branch: master
+    - stage: docker
+      script:
+        - docker --version  # document the version travis is using
+        - pip install --user awscli # install aws cli w/o sudo
+        - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+        - $(aws ecr get-login --no-include-email --region us-east-2) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+        - docker build -t project2 .
+        - docker tag project2:latest 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+        - docker push 276969704730.dkr.ecr.us-east-2.amazonaws.com/project2:latest
+    - stage: deploy
+     deploy:
+       provider: elasticbeanstalk
+       access_key_id: $AWS_ACCESS_KEY_ID
+       secret_access_key: $AWS_SECRET_ACCESS_KEY
+       region: "us-west-2"
+       app: "JERC - Gradebook"
+       env: "JercGradebook-env"
+       bucket_name: "elasticbeanstalk-us-west-2-129309335899"
+       on:
+         branch: master
   
 
