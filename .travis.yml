@@ -54,6 +54,9 @@ jobs:
         clone: false
       workspaces:
         use: ws1
+      before_script:
+        - cd /
+        - cd  /home/travis/build/veitej/Project2-Gradebook
       services:
         - docker
       script:
