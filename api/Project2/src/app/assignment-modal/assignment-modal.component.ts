@@ -73,14 +73,11 @@ export class AssignmentModalComponent implements OnInit {
     else{
       this.dateError="";
     }
-    console.log(confirm)
     return confirm;
   }
 
   sendAssignment(formData){
-    console.log("Form Validation: ",formData.value)
     if(this.checkAssignment()){
-      console.log("Form Sent:",formData.value);
       this.classService.newAssignment(formData.value).subscribe(c=>{this.activeModal.close('Update')},(error)=>console.log(error));
       
     }

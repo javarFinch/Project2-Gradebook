@@ -26,7 +26,6 @@ export class NewUserComponent implements OnInit {
   }
 
   newUser(formData){
-    console.log("new user")
     if(this.formValidation()){
       this.classService.newUser(formData.value).subscribe((c:User)=>{this.showUser(c)},(error)=>console.log(error));
     }

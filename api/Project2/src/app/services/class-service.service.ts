@@ -19,7 +19,6 @@ export class ClassService {
   
 
   constructor(private http: HttpClient) {
-    // console.log("host",window.)
    }
 
    getClassList(id:number): Observable<Class[]> {

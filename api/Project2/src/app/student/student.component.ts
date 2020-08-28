@@ -35,7 +35,7 @@ export class StudentComponent implements OnInit {
 
     //When the Observable is being returned, we can subscribe and listen to the changes.
     // It will continuously change as long as there is data coming in.
-    this.classService.getClassList(this.user.id).subscribe((c: Class[]) => {(this.newClassList = c);console.log(this.newClassList);}),(error)=>console.log(error);
+    this.classService.getClassList(this.user.id).subscribe((c: Class[]) => {(this.newClassList = c);}),(error)=>console.log(error);
     
   }
   logout(){
