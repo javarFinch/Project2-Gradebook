@@ -1,13 +1,12 @@
 {
-  "AWSEBDockerrunVersion":"1",
-  "Image":{
-    "Name": "veitej/project2:latest",
-    "Update": "false"
-  }
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "veitej/project2:latest"
+  },
   "Ports": [
-     {
-       "HostPort":8080,
-       "ContainerPort":8080
-     }
-  ] 
+    {
+      "ContainerPort": 8080,
+      "HostPort": 8000
+    }
+  ]
 }
