@@ -35,7 +35,7 @@ jobs:
         - cd /
         - cd  /home/travis/build/veitej/Project2-Gradebook
       script:
-        -mvn package -dskipTest
+        -mvn package -dskipTests
         
 after_success:
 
