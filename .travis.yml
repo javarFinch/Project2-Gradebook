@@ -28,6 +28,7 @@ jobs:
       script:
         - ng test --watch=false --no-progress --browsers=ChromeHeadless
         - ng build --prod --base-href https://github.com/veitej/Project2-Gradebook.git
+        - ls
         
     - stage: api
       language: java
@@ -36,7 +37,8 @@ jobs:
         - cd /
         - cd  /home/travis/build/veitej/Project2-Gradebook
       script:
-        -mvn package -dskipTests
+        - ls ./Project2
+        - mvn package -dskipTests
     - stage: deployment
       language: generic
       services:
