@@ -48,12 +48,16 @@ jobs:
         - ls ./Project2
         - mvn package -DskipTests
         - ls
+      workspaces:
+        create:
+          name: ws2
+          paths: /home/travis/build/veitej/Project2-Gradebook
     - stage: deployment
       language: generic
       git:
         clone: false
       workspaces:
-        use: ws1
+        use: ws2
       before_script:
         - cd /
         - cd  /home/travis/build/veitej/Project2-Gradebook
