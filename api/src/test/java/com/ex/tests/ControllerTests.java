@@ -116,7 +116,7 @@ public class ControllerTests {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(Integer.parseInt(student1[0]));
         list.add(Integer.parseInt(student2[0]));
-        map.put("studentList", list);
+        map.put("studentIds", list);
         mvc.perform(MockMvcRequestBuilders
                 .post("/admin/newClass")
                 .content(asJsonString(map))
@@ -172,6 +172,7 @@ public class ControllerTests {
         map.put("name", "test");
         map.put("type", "test");
         map.put("data", list);
+        map.put("classId", clazz.getId());
 
         mvc.perform(MockMvcRequestBuilders
                 .post("/teacher/update")

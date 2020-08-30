@@ -52,10 +52,10 @@ public class DaoImplTests {
         dao.assignStudent(clazz.getId(), Integer.parseInt(student2[0]));
         dao.createAssignmentAndAssign("test", "test", 100, "28-08-2020", clazz.getId());
         dao.createAssignmentAndAssign("quiz", "quiz", 75, "28-08-2020", clazz.getId());
-        dao.updateGrade("test", "test", Integer.parseInt(student1[0]), 80);
-        dao.updateGrade("test", "test", Integer.parseInt(student2[0]), 70);
-        dao.updateGrade("quiz", "quiz", Integer.parseInt(student1[0]), 50);
-        dao.updateGrade("quiz", "quiz", Integer.parseInt(student2[0]), 60);
+        dao.updateGrade("test", "test", Integer.parseInt(student1[0]), 80, clazz.getId());
+        dao.updateGrade("test", "test", Integer.parseInt(student2[0]), 70, clazz.getId());
+        dao.updateGrade("quiz", "quiz", Integer.parseInt(student1[0]), 50, clazz.getId());
+        dao.updateGrade("quiz", "quiz", Integer.parseInt(student2[0]), 60, clazz.getId());
     }
 
     @Test
@@ -195,10 +195,10 @@ public class DaoImplTests {
         assignmentList.add(ts1);
         assignmentList.add(ts2);
 
-        Assert.assertEquals(assignmentList.get(0).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(0).getPoints(), 0);
-        Assert.assertEquals(assignmentList.get(1).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(0).getPoints(), 0);
-        Assert.assertEquals(assignmentList.get(0).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(1).getPoints(), 0);
-        Assert.assertEquals(assignmentList.get(1).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(1).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(0).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(0).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(1).getGradeList().get(0).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(0).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(0).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(1).getGradeList().get(1).getPoints(), 0);
+        Assert.assertEquals(assignmentList.get(1).getGradeList().get(1).getPoints(), dao.getAssignmentListByClassID(clazz.getId()).get(0).getGradeList().get(1).getPoints(), 0);
     }
 
     @Test
@@ -216,8 +216,8 @@ public class DaoImplTests {
     @Rollback
     public void updateGradeTest() {
 
-        Assert.assertTrue(dao.updateGrade("test", "test", Integer.parseInt(student1[0]), 85));
-        Assert.assertFalse(dao.updateGrade("doesnotexist", "doesnotexist", 0000, 0));
+        Assert.assertTrue(dao.updateGrade("test", "test", Integer.parseInt(student1[0]), 85, clazz.getId()));
+        Assert.assertFalse(dao.updateGrade("doesnotexist", "doesnotexist", 0000, 0, clazz.getId()));
     }
 
     @Test

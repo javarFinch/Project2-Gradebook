@@ -34,7 +34,18 @@ public class UserController {
         }
     }
 
-    //@RequestParam int id,@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String type
+    //@RequestParam String oldPassword,@RequestParam String newPassword
+    @RequestMapping(path = "/newpassword/{userId}/{newPassword}")
+    @ResponseBody
+    public ResponseEntity<String> changePassword (@PathVariable int userId, @PathVariable String newPassword) {
+        boolean check = dao.updatePassword(userId, newPassword);
+        if (!check) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
+
     @PutMapping(path = "/update", produces = "application/json")
     @ResponseBody
     public ResponseEntity<UsersEntity> update(@RequestBody String data) throws JsonProcessingException {
