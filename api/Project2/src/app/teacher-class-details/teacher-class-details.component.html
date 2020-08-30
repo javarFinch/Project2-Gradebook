@@ -1,5 +1,5 @@
 <div class="center">
-    <h2>{{activeClass.className}}</h2>  
+    <h2>{{activeClass.className}}</h2>
 </div>
 
 
@@ -10,7 +10,7 @@
         <button type="button" class="btn btn-outline-primary" (click)="newAssignment()">New Assignment</button>
     </div>
     <div class="center col-8">
-        <h5>Overall: <span *ngIf="activeClass.overAllAverage>=0"> {{activeClass.overAllAverage | number:'1.2-2'}}%</span></h5>  
+        <h5>Overall: <span *ngIf="activeClass.overAllAverage>=0"> {{activeClass.overAllAverage | number:'1.2-2'}}%</span></h5>
     </div>
     <div class="col-2">
         <div ngbDropdown class="d-inline-block " placement="bottom-right auto">
@@ -20,7 +20,7 @@
               <p ngbDropdownItem>Quiz - {{activeClass.quizWeight | number:'1.2-2'}}%</p>
               <p ngbDropdownItem>Homework - {{activeClass.homeworkWeight | number:'1.2-2'}}%</p>
               <p ngbDropdownItem>Participation - {{activeClass.participationWeight | number:'1.2-2'}}%</p>
-              
+
             </div>
           </div>
     </div>
@@ -34,14 +34,14 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='test'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-12">
         <div id="quiz-label" (click)="quizCollapsed=!quizCollapsed">
             <p>Quiz -<span *ngIf="activeClass.quizAverage>=0"> {{activeClass.quizAverage | number:'1.2-2'}}%</span></p>
@@ -50,14 +50,14 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='quiz'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-12 odd">
         <div id="homework-label" (click)="homeworkCollapsed=!homeworkCollapsed">
             <p>Homework -<span *ngIf="activeClass.homeworkAverage>=0"> {{activeClass.homeworkAverage | number:'1.2-2'}}%</span></p>
@@ -66,14 +66,14 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='homework'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-12">
         <div id="participation-label" (click)="participationCollapsed=!participationCollapsed">
             <p>Participation -<span *ngIf="activeClass.participationAverage>=0"> {{activeClass.participationAverage | number:'1.2-2'}}%</span></p>
@@ -82,15 +82,15 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='participation'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
-                        
+                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
 
 </div>
 
