@@ -20,11 +20,11 @@ export class TeacherClassDetailsComponent implements OnInit {
   public participationCollapsed:boolean;
   public homeworkCollapsed: boolean;
   public size:string;
- 
 
 
 
-  constructor(private modalService: NgbModal,private classService: ClassService) { 
+
+  constructor(private modalService: NgbModal,private classService: ClassService) {
     this.testCollapsed=true;
     this.quizCollapsed=true;
     this.participationCollapsed=true;
@@ -33,17 +33,18 @@ export class TeacherClassDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   openModal(state){
     const modalRef = this.modalService.open(GradeModalComponent, {size:'lg'});
     modalRef.componentInstance.assignment = state;
+    modalRef.componentInstance.classId = this.activeClass.id;
     modalRef.result.then((result) => {
 
       if(result=='Update'){
         this.classService.updateClass(this.activeClass.id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
-        
+
       }
     });
   }
@@ -52,7 +53,7 @@ export class TeacherClassDetailsComponent implements OnInit {
     const modalRef = this.modalService.open(AssignmentModalComponent, {size:'lg'});
     modalRef.componentInstance.classId = this.activeClass.id;
     modalRef.result.then((result) => {
- 
+
       if(result=='Update'){
         this.classService.updateClass(this.activeClass.id).subscribe((c: TeacherClass) => {(this.activeClass = c);this.activeClassChange.emit(this.activeClass)});
       }
