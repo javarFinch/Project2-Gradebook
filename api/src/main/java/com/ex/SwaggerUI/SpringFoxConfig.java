@@ -28,7 +28,7 @@ public class SpringFoxConfig {
                 "A website to replace your general school gradebook",
                 "API TOS",
                 "Terms of service",
-                new Contact("Project2", "http://localhost:8080", "revatureProject2"),
+                new Contact("Project2", "http://jercgradebook-env.eba-jizsyuvy.us-west-2.elasticbeanstalk.com/", "revatureProject2"),
                 "License of API",
                 "API license URL",
                 Collections.emptyList());
