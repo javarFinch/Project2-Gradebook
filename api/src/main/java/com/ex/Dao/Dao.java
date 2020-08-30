@@ -156,10 +156,11 @@ public interface Dao {
      * @param assignmentType
      * @param userID
      * @param grade
+     * @param classId
      * @return
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean updateGrade (String assignmentName, String assignmentType, int userID, int grade);
+    public boolean updateGrade (String assignmentName, String assignmentType, int userID, int grade, int classId);
 
     /***
      * This is used to create and assignment and assign it to all students in a class

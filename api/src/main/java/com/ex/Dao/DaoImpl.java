@@ -484,15 +484,16 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public boolean updateGrade(String assignmentName, String assignmentType, int userID, int grade) {
+    public boolean updateGrade(String assignmentName, String assignmentType, int userID, int grade, int classId) {
         Session session = sessionFactory.getCurrentSession();
 
         SQLQuery query = session.createSQLQuery("update assignment set actual_points=? from class_student where assignment.pair_id=class_student.pair_id " +
-                                                    "and class_student.student_id=? and assignment_name=? and assignment_type=?;");
+                                                    "and class_student.student_id=? and class_student.class_id=? and assignment_name=? and assignment_type=?;");
         query.setInteger(0, grade);
         query.setInteger(1, userID);
-        query.setString(2,assignmentName);
-        query.setString(3,assignmentType);
+        query.setInteger(2,classId);
+        query.setString(3,assignmentName);
+        query.setString(4,assignmentType);
 
         if (query.executeUpdate()!=0) {
             return true;

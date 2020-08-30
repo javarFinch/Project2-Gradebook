@@ -70,7 +70,7 @@ public class TeacherController {
                 for(String pair : list){
                     String[] a = pair.split("=");
                     System.out.println(a[0]);
-                    dao.updateGrade(check.get("name").toString(),check.get("type").toString(),Integer.parseInt(a[0]),Integer.parseInt(a[1]));
+                    dao.updateGrade(check.get("name").toString(),check.get("type").toString(),Integer.parseInt(a[0]),Integer.parseInt(a[1]),Integer.parseInt(check.get("classId").toString()));
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
