@@ -34,7 +34,7 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='test'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
                     </div>
                     
                 </div>
@@ -50,7 +50,7 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='quiz'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
                     </div>
                     
                 </div>
@@ -66,7 +66,7 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='homework'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
                     </div>
                     
                 </div>
@@ -82,7 +82,7 @@
             <div class="offset-1">
                 <div *ngFor = "let assignment of activeClass.assignmentList">
                     <div *ngIf="assignment.assignmentType=='participation'" (click)="openModal(assignment)">
-                        <app-teacher-assignment [assignment]="assignment"></app-teacher-assignment>
+                        <app-teacher-assignment [classId]="activeClass.id" [assignment]="assignment"></app-teacher-assignment>
                         
                     </div>
                     

@@ -11,6 +11,7 @@ import { TeacherAssignment } from '../Models/teacher/teacher-assignment';
 export class GradeModalComponent implements OnInit {
 
   @Input() assignment:TeacherAssignment;
+  @Input() classId: number;
 
   public output:any;
 
@@ -25,6 +26,7 @@ export class GradeModalComponent implements OnInit {
     this.output={
       name:this.assignment.assignmentName,
       type:this.assignment.assignmentType,
+      classId:this.classId,
       data:formData.value
     }
     this.classService.updateGrades(this.output).subscribe(c=>{this.activeModal.close('Update')},(error)=>console.log(error));
